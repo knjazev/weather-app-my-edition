@@ -37,9 +37,35 @@ class ViewController: UIViewController {
         textField.text = viewModel.city
         binding()
         
+        if traitCollection.userInterfaceStyle == .dark {
+           switchLabel.selectedSegmentIndex = 1
+           weatherConditionImage.tintColor = .white
+        }else if (traitCollection.userInterfaceStyle == .light) {
+            switchLabel.selectedSegmentIndex = 0
+            weatherConditionImage.tintColor = .black
+        }else if (traitCollection.userInterfaceStyle == .unspecified) {
+            switchLabel.selectedSegmentIndex = 0
+            weatherConditionImage.tintColor = .black
+        }
+        
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+
+        switch previousTraitCollection?.userInterfaceStyle {
+        case .light:
+            weatherConditionImage.tintColor = .white
+        case .dark:
+            weatherConditionImage.tintColor = .black
+        case .unspecified :
+            weatherConditionImage.tintColor = .black
+        default:
+            weatherConditionImage.tintColor = .black
+        }
     }
     
     @IBAction func changeMode(_ sender: UISegmentedControl) {
+       
         if (sender.selectedSegmentIndex == 0) {
             overrideUserInterfaceStyle = .light
             weatherConditionImage.tintColor = .black
@@ -52,6 +78,8 @@ class ViewController: UIViewController {
             }
     
     
+   
+
     
     func binding() {
         textField.textPublisher

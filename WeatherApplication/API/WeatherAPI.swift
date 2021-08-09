@@ -26,7 +26,6 @@ class WeatherAPI {
         return urlComponents.url
     }
     
-    // Выборка детальной информации о погоде для города city без Generic "издателя"
        func fetchWeather(for city: String) -> AnyPublisher<WeatherDetail, Never> {
 
            guard let url = absoluteURL(city: city) else {                  // 1
