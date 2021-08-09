@@ -7,8 +7,9 @@
 
 import UIKit
 import Combine
+import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var textField: UITextField! {
         didSet {
@@ -19,27 +20,25 @@ class ViewController: UIViewController {
     
     private let viewModel = ViewModel()
     
-    
-    
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     @IBOutlet weak var pressureLabel: UILabel!
     @IBOutlet weak var weatherConditionImage: UIImageView!
-    
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var switchLabel: UISegmentedControl!
-    
-    
+    @IBOutlet weak var latitudeLabel: UILabel!
+    @IBOutlet weak var longitudeLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         textField.text = viewModel.city
+        
+        viewModel.delegateLocation()
         binding()
         
         if traitCollection.userInterfaceStyle == .dark {
-           switchLabel.selectedSegmentIndex = 1
-           weatherConditionImage.tintColor = .white
+            switchLabel.selectedSegmentIndex = 1
+            weatherConditionImage.tintColor = .white
         }else if (traitCollection.userInterfaceStyle == .light) {
             switchLabel.selectedSegmentIndex = 0
             weatherConditionImage.tintColor = .black
@@ -51,7 +50,7 @@ class ViewController: UIViewController {
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-
+        
         switch previousTraitCollection?.userInterfaceStyle {
         case .light:
             weatherConditionImage.tintColor = .white
@@ -65,21 +64,23 @@ class ViewController: UIViewController {
     }
     
     @IBAction func changeMode(_ sender: UISegmentedControl) {
-       
+        
         if (sender.selectedSegmentIndex == 0) {
             overrideUserInterfaceStyle = .light
             weatherConditionImage.tintColor = .black
         }else if (sender.selectedSegmentIndex == 1) {
             overrideUserInterfaceStyle = .dark
             weatherConditionImage.tintColor = .white
-            
         }
-        
-            }
+    }
     
-    
-   
-
+    @IBAction func getLocation(_ sender: UIButton) {
+        viewModel.locationManager.requestLocation()
+        if let latitude = viewModel.locationManager.location?.coordinate.latitude, let longitude = viewModel.locationManager.location?.coordinate.longitude {
+            latitudeLabel.text = String(format: "%.1f", latitude)
+            longitudeLabel.text = String(format: "%.1f", longitude)
+        }
+    }
     
     func binding() {
         textField.textPublisher
@@ -93,11 +94,11 @@ class ViewController: UIViewController {
                     currentWeather.city?.name != nil ?
                     "\((currentWeather.city?.name!)!)"
                     : ""
-                    
-                    self?.temperatureLabel.text =
-                        currentWeather.list?[0].main?.temp != nil ?
-                        "\(Int((currentWeather.list?[0].main?.temp!)!)) ºC"
-                        : " "
+                
+                self?.temperatureLabel.text =
+                    currentWeather.list?[0].main?.temp != nil ?
+                    "\(Int((currentWeather.list?[0].main?.temp!)!)) ºC"
+                    : " "
                 
                 self?.humidityLabel.text =
                     currentWeather.list?[0].main?.humidity != nil ?
@@ -113,10 +114,11 @@ class ViewController: UIViewController {
             }
             )
             .store(in: &cancellable)
+        
     }
     private var cancellable = Set<AnyCancellable>()
+    private var cancellable2 = Set<AnyCancellable>()
 }
-
 
 
 extension UITextField {
