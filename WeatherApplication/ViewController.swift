@@ -9,7 +9,9 @@ import UIKit
 import Combine
 import CoreLocation
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDelegate {
+    
+    var array = [WeatherDetail]()
     
     @IBOutlet weak var textField: UITextField! {
         didSet {
@@ -24,17 +26,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var humidityLabel: UILabel!
     @IBOutlet weak var pressureLabel: UILabel!
     @IBOutlet weak var weatherConditionImage: UIImageView!
-    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel! {
+        didSet {
+            cityLabel.isEnabled = true
+            cityLabel.becomeFirstResponder()
+        }
+    }
     @IBOutlet weak var switchLabel: UISegmentedControl!
     @IBOutlet weak var latitudeLabel: UILabel!
     @IBOutlet weak var longitudeLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textField.text = viewModel.city
         
-        viewModel.delegateLocation()
+        textField.delegate = self
+        textField.text = viewModel.city
+        viewModel.weatherAPI.delegate = self
+        viewModel.delegatation()
+        
         binding()
+        
+        
         
         if traitCollection.userInterfaceStyle == .dark {
             switchLabel.selectedSegmentIndex = 1
@@ -47,6 +59,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             weatherConditionImage.tintColor = .black
         }
         
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -75,10 +92,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func getLocation(_ sender: UIButton) {
+        
+        //        viewModel.city = "Moscow"
+        textField.text = ""
         viewModel.locationManager.requestLocation()
+        
+        
         if let latitude = viewModel.locationManager.location?.coordinate.latitude, let longitude = viewModel.locationManager.location?.coordinate.longitude {
-            latitudeLabel.text = String(format: "%.1f", latitude)
-            longitudeLabel.text = String(format: "%.1f", longitude)
+            
+            cityLabel.text = ""
+            
+            print("\(latitude)")
+            print("\(longitude)")
+            //            latitudeLabel.text = String(format: "%.1f", latitude)
+            //            longitudeLabel.text = String(format: "%.1f", longitude)
+            latitudeLabel.text = "\(latitude)"
+            longitudeLabel.text = "\(longitude)"
+            
         }
     }
     
@@ -110,15 +140,29 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     "\(Int((currentWeather.list?[0].main?.pressure!)!)) hPa"
                     : " "
                 
+                self?.latitudeLabel.text =
+                    currentWeather.city?.coord?.lat != nil ?
+                    "\(Double((currentWeather.city?.coord?.lat!)!))"
+                    : " "
+                self?.longitudeLabel.text =
+                    currentWeather.city?.coord?.lon != nil ?
+                    "\(Double((currentWeather.city?.coord?.lon!)!))"
+                    : " "
+                
                 self?.weatherConditionImage.image = UIImage(systemName: self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800) ?? "sun.max")
+                
+                
+                self?.array.append(currentWeather)
+                
+                
             }
             )
             .store(in: &cancellable)
-        
     }
+    
     private var cancellable = Set<AnyCancellable>()
-    private var cancellable2 = Set<AnyCancellable>()
 }
+
 
 
 extension UITextField {
@@ -131,4 +175,18 @@ extension UITextField {
     }
     
 }
+
+extension ViewController: WeatherAPIDelegate {
+    func didUpdateWeather(_ weatherManager: WeatherAPI, cityName: String) {
+        DispatchQueue.main.async {
+            self.viewModel.city = cityName
+            //            self.cityLabel.text = cityName
+        }
+    }
+    
+    func didFailWithError(error: Error){
+        print(error.localizedDescription)
+    }
+}
+
 

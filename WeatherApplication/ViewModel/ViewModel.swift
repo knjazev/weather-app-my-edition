@@ -12,7 +12,8 @@ import CoreLocation
 final class ViewModel: NSObject, ObservableObject {
     // input
     @Published var city: String = "Minsk"
-    @Published var coordinates: [CLLocationDegrees] = [CLLocationDegrees(0.0), CLLocationDegrees(0.0)]
+    @Published var coordinates: [Double] = [0.0, 0.0]
+    
     // output
     @Published var currentWeather = WeatherDetail.placeholder
     @Published var humidity = WeatherDetail.placeholder
@@ -24,9 +25,12 @@ final class ViewModel: NSObject, ObservableObject {
     @Published var longitude = 0.0
     
     let locationManager = CLLocationManager()
+    var weatherAPI = WeatherAPI()
     
     
- 
+    
+    
+    
     var weatherConditionName: String {
         switch weatherConditionID {
         case 200...232:
@@ -70,12 +74,12 @@ final class ViewModel: NSObject, ObservableObject {
     }
     
     
-    func delegateLocation() {
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
-        
-    }
+        func delegatation() {
+//            weatherAPI.delegate = self
+            locationManager.delegate = self
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestLocation()
+        }
     
     override init() {
         super.init()
@@ -85,25 +89,25 @@ final class ViewModel: NSObject, ObservableObject {
             .removeDuplicates()
             .flatMap { (city:String) -> AnyPublisher <WeatherDetail, Never> in
                 WeatherAPI.shared.fetchWeather(for: city)
-              }
-             .assign(to: \.currentWeather, on: self)
+            }
+            .assign(to: \.currentWeather, on: self)
             .store(in: &self.cancellableSet)
         
-
-        $coordinates
-         .debounce(for: 0.3, scheduler: RunLoop.main)
-         .removeDuplicates()
-         .flatMap { (coordinates: [CLLocationDegrees]) -> AnyPublisher <WeatherDetail, Never> in
-             WeatherAPI.shared.fetchWeather(latitude: coordinates[0], longitude: coordinates[1])
-           }
-          .assign(to: \.currentWeather , on: self)
-         .store(in: &self.cancellableSet2)
+        
+        //        $coordinates
+        //         .debounce(for: 0.3, scheduler: RunLoop.main)
+        //         .removeDuplicates()
+        //         .flatMap { (coordinates: [Double]) -> AnyPublisher <WeatherDetail, Never> in
+        //             WeatherAPI.shared.fetchWeather(latitude: coordinates[0], longitude: coordinates[1])
+        //           }
+        //          .assign(to: \.currentWeather , on: self)
+        //         .store(in: &self.cancellableSet2)
         
     }
     
     private var cancellableSet: Set<AnyCancellable> = []
     private var cancellableSet2: Set<AnyCancellable> = []
-
+    
 }
 
 
@@ -116,7 +120,8 @@ extension ViewModel: CLLocationManagerDelegate {
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let lon  = location.coordinate.longitude
-//            weatherManager.fetchWeather(latitude: lat, longitude: lon)
+
+            weatherAPI.fetchWeather(latitude: lat, longitude: lon)
         }
     }
 
@@ -125,6 +130,33 @@ extension ViewModel: CLLocationManagerDelegate {
     }
 
 }
+
+//extension ViewModel: CLLocationManagerDelegate {
+//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+//        print("error:: \(error.localizedDescription)")
+//    }
+//
+//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+//        if status == .authorizedWhenInUse {
+//            locationManager.requestLocation()
+//        }
+//    }
+//
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//
+//        if locations.first != nil {
+//            locationManager.stopUpdatingLocation()
+//            let lat = locations[0].coordinate.latitude
+//            let lon = locations[0].coordinate.longitude
+//
+//            weatherAPI.fetchWeather(latitude: lat, longitude: lon)
+//        }
+//
+//    }
+//
+//}
+
+
 
 
 
