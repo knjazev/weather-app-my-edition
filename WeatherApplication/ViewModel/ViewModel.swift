@@ -78,7 +78,7 @@ final class ViewModel: NSObject, ObservableObject {
 //            weatherAPI.delegate = self
             locationManager.delegate = self
             locationManager.requestWhenInUseAuthorization()
-            locationManager.requestLocation()
+//            locationManager.requestLocation()
         }
     
     override init() {
