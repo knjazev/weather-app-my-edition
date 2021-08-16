@@ -1,6 +1,6 @@
 //
-//  WeatherCell.swift
-//  WeatherAppSwiftUI
+//  WeatherModel.swift
+//  WeatherApplication
 //
 //  Created by UPIT on 13.08.21.
 //
