@@ -18,10 +18,23 @@ class TabBarController: UITabBarController {
     
 
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-          if item.tag == 1 {
-            let newVC = self.storyboard?.instantiateViewController(withIdentifier:"tvc")
-            newVC?.modalPresentationStyle = .automatic
-            self.present(newVC!, animated: false, completion: nil)
+          if item.tag == 0 {
+            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier:"vc")
+            let tvc = self.storyboard?.instantiateViewController(withIdentifier:"tvc")
+            
+            print(vc?.traitCollection.userInterfaceStyle.rawValue)
+            
+            tvc?.modalPresentationStyle = .automatic
+            self.present(tvc!, animated: false, completion: nil)
+
+            if vc?.traitCollection.userInterfaceStyle == .light {
+               print("hello")
+            }else if vc?.traitCollection.userInterfaceStyle == .dark {
+                print("fuck")
+              
+            }
+            
         }
     }
 

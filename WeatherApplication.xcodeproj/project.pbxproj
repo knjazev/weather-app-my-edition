@@ -26,14 +26,10 @@
 		5C7128BA26C6EF8F0085148D /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7128B926C6EF8F0085148D /* WeatherModel.swift */; };
 		5C7128BC26C6F7830085148D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7128BB26C6F7830085148D /* LocationManager.swift */; };
 		5C7128E226C946C00085148D /* AnotherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7128E126C946C00085148D /* AnotherVC.swift */; };
-		5C7128E826C9691F0085148D /* cloud.snow.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C7128E526C9691F0085148D /* cloud.snow.json */; };
-		5C7128E926C9691F0085148D /* cloud.drizzle.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C7128E626C9691F0085148D /* cloud.drizzle.json */; };
-		5C7128EA26C9691F0085148D /* cloud.fog.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C7128E726C9691F0085148D /* cloud.fog.json */; };
-		5C7128EF26C9692B0085148D /* cloud.bolt.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C7128EB26C9692B0085148D /* cloud.bolt.json */; };
-		5C7128F026C9692B0085148D /* cloudy.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C7128EC26C9692B0085148D /* cloudy.json */; };
-		5C7128F126C9692B0085148D /* sun.max.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C7128ED26C9692B0085148D /* sun.max.json */; };
-		5C7128F226C9692B0085148D /* cloud.rain.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C7128EE26C9692B0085148D /* cloud.rain.json */; };
 		5C7128F626CAD5990085148D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7128F526CAD5990085148D /* TabBarController.swift */; };
+		5CB04D5626CC1E7D000C82B2 /* share2.json in Resources */ = {isa = PBXBuildFile; fileRef = 5CB04D5326CC1E7C000C82B2 /* share2.json */; };
+		5CB04D5726CC1E7D000C82B2 /* share.json in Resources */ = {isa = PBXBuildFile; fileRef = 5CB04D5426CC1E7C000C82B2 /* share.json */; };
+		5CB04D5826CC1E7D000C82B2 /* WHOOPASS.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 5CB04D5526CC1E7C000C82B2 /* WHOOPASS.TTF */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,21 +48,16 @@
 		5C5A764D26BD8DCD0045A667 /* Test iOS task for interns.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Test iOS task for interns.pdf"; sourceTree = "<group>"; };
 		5C5A765026BD8F3B0045A667 /* ResultState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultState.swift; sourceTree = "<group>"; };
 		5C5A765326BD92B40045A667 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
-		5C5A765926C28B7C0045A667 /* Minsk_location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Minsk_location.gpx; sourceTree = "<group>"; };
 		5C5A765A26C409E60045A667 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		5C5A766026C423E00045A667 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		5C7128B726C6E5FE0085148D /* TableCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellModel.swift; sourceTree = "<group>"; };
 		5C7128B926C6EF8F0085148D /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		5C7128BB26C6F7830085148D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		5C7128E126C946C00085148D /* AnotherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnotherVC.swift; sourceTree = SOURCE_ROOT; };
-		5C7128E526C9691F0085148D /* cloud.snow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cloud.snow.json; sourceTree = "<group>"; };
-		5C7128E626C9691F0085148D /* cloud.drizzle.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cloud.drizzle.json; sourceTree = "<group>"; };
-		5C7128E726C9691F0085148D /* cloud.fog.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cloud.fog.json; sourceTree = "<group>"; };
-		5C7128EB26C9692B0085148D /* cloud.bolt.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cloud.bolt.json; sourceTree = "<group>"; };
-		5C7128EC26C9692B0085148D /* cloudy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cloudy.json; sourceTree = "<group>"; };
-		5C7128ED26C9692B0085148D /* sun.max.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sun.max.json; sourceTree = "<group>"; };
-		5C7128EE26C9692B0085148D /* cloud.rain.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cloud.rain.json; sourceTree = "<group>"; };
 		5C7128F526CAD5990085148D /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		5CB04D5326CC1E7C000C82B2 /* share2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share2.json; sourceTree = "<group>"; };
+		5CB04D5426CC1E7C000C82B2 /* share.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share.json; sourceTree = "<group>"; };
+		5CB04D5526CC1E7C000C82B2 /* WHOOPASS.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = WHOOPASS.TTF; sourceTree = "<group>"; };
 		8B061659E2803320D5690685 /* Pods-WeatherApplication.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApplication.release.xcconfig"; path = "Target Support Files/Pods-WeatherApplication/Pods-WeatherApplication.release.xcconfig"; sourceTree = "<group>"; };
 		B182F980D083CE9D3128A903 /* libPods-WeatherApplication.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeatherApplication.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -126,16 +117,11 @@
 				5C5A766026C423E00045A667 /* TableViewCell.swift */,
 				5C5A763826BD4C7C0045A667 /* Main.storyboard */,
 				5C5A763B26BD4C7D0045A667 /* Assets.xcassets */,
+				5CB04D5426CC1E7C000C82B2 /* share.json */,
+				5CB04D5326CC1E7C000C82B2 /* share2.json */,
+				5CB04D5526CC1E7C000C82B2 /* WHOOPASS.TTF */,
 				5C5A763D26BD4C7D0045A667 /* LaunchScreen.storyboard */,
 				5C5A764D26BD8DCD0045A667 /* Test iOS task for interns.pdf */,
-				5C5A765926C28B7C0045A667 /* Minsk_location.gpx */,
-				5C7128E626C9691F0085148D /* cloud.drizzle.json */,
-				5C7128E726C9691F0085148D /* cloud.fog.json */,
-				5C7128E526C9691F0085148D /* cloud.snow.json */,
-				5C7128EB26C9692B0085148D /* cloud.bolt.json */,
-				5C7128EE26C9692B0085148D /* cloud.rain.json */,
-				5C7128EC26C9692B0085148D /* cloudy.json */,
-				5C7128ED26C9692B0085148D /* sun.max.json */,
 				5C5A764026BD4C7D0045A667 /* Info.plist */,
 			);
 			path = WeatherApplication;
@@ -251,17 +237,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C7128F126C9692B0085148D /* sun.max.json in Resources */,
 				5C5A763F26BD4C7D0045A667 /* LaunchScreen.storyboard in Resources */,
-				5C7128EA26C9691F0085148D /* cloud.fog.json in Resources */,
-				5C7128F026C9692B0085148D /* cloudy.json in Resources */,
-				5C7128E926C9691F0085148D /* cloud.drizzle.json in Resources */,
-				5C7128F226C9692B0085148D /* cloud.rain.json in Resources */,
 				5C5A764E26BD8DCD0045A667 /* Test iOS task for interns.pdf in Resources */,
-				5C7128E826C9691F0085148D /* cloud.snow.json in Resources */,
-				5C7128EF26C9692B0085148D /* cloud.bolt.json in Resources */,
+				5CB04D5626CC1E7D000C82B2 /* share2.json in Resources */,
 				5C5A763C26BD4C7D0045A667 /* Assets.xcassets in Resources */,
+				5CB04D5826CC1E7D000C82B2 /* WHOOPASS.TTF in Resources */,
 				5C5A763A26BD4C7C0045A667 /* Main.storyboard in Resources */,
+				5CB04D5726CC1E7D000C82B2 /* share.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

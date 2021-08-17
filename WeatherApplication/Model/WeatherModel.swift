@@ -24,7 +24,7 @@ struct WeatherModel{
         case 200...232:
             return "cloud.bolt"
         case 300...321:
-            return "cloud.drizzle"
+            return "cloud.rain"
         case 500...531:
             return "cloud.rain"
         case 600...622:
@@ -34,7 +34,7 @@ struct WeatherModel{
         case 800:
             return "sun.max"
         case 801...804:
-            return "cloud.bolt"
+            return "cloud"
         default:
             return "cloud"
         }
@@ -45,7 +45,7 @@ struct WeatherModel{
         case 200...232:
             return "cloud.bolt"
         case 300...321:
-            return "cloud.drizzle"
+            return "cloud.rain"
         case 500...531:
             return "cloud.rain"
         case 600...622:
@@ -55,7 +55,7 @@ struct WeatherModel{
         case 800:
             return "sun.max"
         case 801...804:
-            return "cloud.bolt"
+            return "cloud"
         default:
             return "cloud"
         }

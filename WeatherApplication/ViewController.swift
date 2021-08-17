@@ -27,12 +27,17 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     @IBOutlet weak var pressureLabel: UILabel!
+
+    @IBOutlet weak var windLabel: UILabel!
     @IBOutlet weak var weatherConditionImage: UIImageView!
     @IBOutlet weak var cityLabel: UILabel!
     
     @IBOutlet weak var switchLabel: UISegmentedControl!
-    @IBOutlet weak var latitudeLabel: UILabel!
-    @IBOutlet weak var longitudeLabel: UILabel!
+
+    @IBOutlet weak var tempImageLabel: UIImageView!
+    @IBOutlet weak var humidityImageLabel: UIImageView!
+    @IBOutlet weak var pressureImageLabel: UIImageView!
+    @IBOutlet weak var windImageLabel: UIImageView!
     
     var animation: Animation!
     var animationView: AnimationView!
@@ -41,6 +46,16 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
     
     
     override func viewDidLoad() {
+        
+        
+        for family: String in UIFont.familyNames
+        {
+            print(family)
+            for names: String in UIFont.fontNames(forFamilyName: family)
+            {
+                print("== \(names)")
+            }
+        }
         super.viewDidLoad()
         
         textField.delegate = self
@@ -72,13 +87,19 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
         
     }
     
+    
+    private func initialize() {
+        view.backgroundColor = .white
+//
+//        let label
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        
         switch previousTraitCollection?.userInterfaceStyle {
         case .light:
             weatherConditionImage.tintColor = .white
@@ -92,29 +113,27 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
     }
     
     @IBAction func changeMode(_ sender: UISegmentedControl) {
-        
         if (sender.selectedSegmentIndex == 0) {
             overrideUserInterfaceStyle = .light
             weatherConditionImage.tintColor = .black
-        }else if (sender.selectedSegmentIndex == 1) {
-            overrideUserInterfaceStyle = .dark
-            weatherConditionImage.tintColor = .white
-        }
-    }
-    
-    
-    @IBAction func buttonTapped(_ sender: UIButton) {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "table") as? TableViewController {
             
-            if let cityLabel = cityLabel.text {
-                
-            }
+            
+        }else if (sender.selectedSegmentIndex == 1) {
+//            overrideUserInterfaceStyle = .dark
+            weatherConditionImage.tintColor = .white
+            
         }
     }
+    
+    
+//    @IBAction func buttonTapped(_ sender: UIButton) {
+//        if let vc = storyboard?.instantiateViewController(withIdentifier: "table") as? TableViewController {
+//
+//    }
+//    }
+    
+    
     @IBAction func getLocation(_ sender: UIButton) {
-        
-      
-        
         
         viewModel.locationManager.requestLocation()
         let lat = viewModel.locationManager.location?.coordinate.latitude as! Double
@@ -149,27 +168,19 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
                     "\(Int((currentWeather.list?[0].main?.humidity!)!)) %"
                     : " "
                 
+                self?.windLabel.text =
+                    currentWeather.list?[0].main?.humidity != nil ?
+                    "\(Int((currentWeather.list?[0].main?.humidity!)!)) %"
+                    : " "
+                
                 self?.pressureLabel.text =
                     currentWeather.list?[0].main?.pressure != nil ?
                     "\(Int((currentWeather.list?[0].main?.pressure!)!)) hPa"
                     : " "
                 
-                self?.latitudeLabel.text =
-                    currentWeather.city?.coord?.lat != nil ?
-                    "\(Double((currentWeather.city?.coord?.lat!)!))"
-                    : " "
-                self?.longitudeLabel.text =
-                    currentWeather.city?.coord?.lon != nil ?
-                    "\(Double((currentWeather.city?.coord?.lon!)!))"
-                    : " "
+                self?.weatherConditionImage.image = UIImage(named:  self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 100) ?? "sun.max")
+
                 
-                self?.weatherConditionImage.image = UIImage(systemName: self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800) ?? "sun.max")
-                
-                //                self?.jsonName = self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800) ?? "sun.max"
-                
-                self?.jsonName = (self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800))!
-                
-                self?.animationView.play()
             }
             )
             .store(in: &cancellable)
@@ -182,6 +193,61 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
         
         viewModel.$currentWeather
             .sink(receiveValue: {[weak self] currentWeather in
+                
+                var one = currentWeather.list?[0].weather?[0].main?.rawValue
+                
+                switch currentWeather.list?[0].weather?[0].main?.rawValue {
+                case "Clear":
+                    self?.view.backgroundColor = UIColor(red: 254/255, green: 202/255, blue: 202/255, alpha: 1)
+                    
+                    self?.tempImageLabel.image = UIImage(named: "temp_sun")
+                    self?.windImageLabel.image = UIImage(named: "wind_sun")
+                    self?.humidityImageLabel.image = UIImage(named: "humidity_sun")
+                    self?.pressureImageLabel.image = UIImage(named: "pressure_sun")
+                    
+                    self?.cityLabel.textColor = UIColor(red: 255/255, green: 117/255, blue: 62/255, alpha: 1)
+                    self?.temperatureLabel.textColor = UIColor(red: 255/255, green: 117/255, blue: 62/255, alpha: 1)
+                    self?.humidityLabel.textColor = UIColor(red: 255/255, green: 117/255, blue: 62/255, alpha: 1)
+                    self?.pressureLabel.textColor = UIColor(red: 255/255, green: 117/255, blue: 62/255, alpha: 1)
+                    self?.windLabel.textColor = UIColor(red: 255/255, green: 117/255, blue: 62/255, alpha: 1)
+                    
+                    
+                    
+                    
+                case "Rain":
+                    self?.view.backgroundColor = UIColor(red: 11/255, green: 97/255, blue: 241/255, alpha: 1)
+                    
+                    self?.tempImageLabel.image = UIImage(named: "temp_rain")
+                    self?.windImageLabel.image = UIImage(named: "wind_rain")
+                    self?.humidityImageLabel.image = UIImage(named: "humidity_rain")
+                    self?.pressureImageLabel.image = UIImage(named: "pressure_rain")
+                    
+                    self?.cityLabel.textColor = UIColor(red: 11/255, green: 97/255, blue: 241/255, alpha: 1)
+                    self?.temperatureLabel.textColor = UIColor(red: 11/255, green: 97/255, blue: 241/255, alpha: 1)
+                    self?.humidityLabel.textColor = UIColor(red: 11/255, green: 97/255, blue: 241/255, alpha: 1)
+                    self?.pressureLabel.textColor = UIColor(red: 11/255, green: 97/255, blue: 241/255, alpha: 1)
+                    self?.windLabel.textColor = UIColor(red: 11/255, green: 97/255, blue: 241/255, alpha: 1)
+                    
+                    
+                case "Clouds":
+                    self?.view.backgroundColor = UIColor(red: 6/255, green: 128/255, blue: 93/255, alpha: 1)
+                    
+                    self?.tempImageLabel.image = UIImage(named: "temp_cloud")
+                    self?.windImageLabel.image = UIImage(named: "wind_cloud")
+                    self?.humidityImageLabel.image = UIImage(named: "humidity_cloud")
+                    self?.pressureImageLabel.image = UIImage(named: "pressure_cloud")
+                    
+                    self?.cityLabel.textColor = UIColor(red: 254/255, green: 153/255, blue: 169/255, alpha: 1)
+                    
+                    self?.temperatureLabel.textColor = UIColor(red: 254/255, green: 153/255, blue: 169/255, alpha: 1)
+                    self?.humidityLabel.textColor = UIColor(red: 254/255, green: 153/255, blue: 169/255, alpha: 1)
+                    self?.pressureLabel.textColor = UIColor(red: 254/255, green: 153/255, blue: 169/255, alpha: 1)
+                    self?.windLabel.textColor = UIColor(red: 254/255, green: 153/255, blue: 169/255, alpha: 1)
+                
+                    
+                default:
+                    print("default")
+                }
                 
                 self?.cityLabel.text =
                     currentWeather.city?.name != nil ?
@@ -198,28 +264,24 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
                     "\(Int((currentWeather.list?[0].main?.humidity!)!)) %"
                     : " "
                 
+                self?.windLabel.text =
+                    currentWeather.list?[0].main?.humidity != nil ?
+                    "\(Int((currentWeather.list?[0].main?.humidity!)!)) %"
+                    : " "
+                
                 self?.pressureLabel.text =
                     currentWeather.list?[0].main?.pressure != nil ?
                     "\(Int((currentWeather.list?[0].main?.pressure!)!)) hPa"
                     : " "
                 
-                self?.latitudeLabel.text =
-                    currentWeather.city?.coord?.lat != nil ?
-                    "\(Double((currentWeather.city?.coord?.lat!)!))"
-                    : " "
-                self?.longitudeLabel.text =
-                    currentWeather.city?.coord?.lon != nil ?
-                    "\(Double((currentWeather.city?.coord?.lon!)!))"
-                    : " "
-                
-                self?.weatherConditionImage.image = UIImage(systemName: self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800) ?? "sun.max")
+                self?.weatherConditionImage.image = UIImage(named:  self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 100) ?? "sun.max")
                 
                 //                self?.jsonName = self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800) ?? "sun.max"
                 
                 self?.jsonName = (self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800))!
                 
                 self?.animationView.play()
-                print(self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 400))
+          
                 
                 //                self?.playAnimation()
                 

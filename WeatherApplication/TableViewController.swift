@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class TableViewController: UITableViewController, UITabBarDelegate {
+class TableViewController: UITableViewController {
     
     private let viewModel = ViewModel()
     private var cancellable = Set<AnyCancellable>()
@@ -16,20 +16,26 @@ class TableViewController: UITableViewController, UITabBarDelegate {
     var setOfDates = Set<String>()
     var number = 0
     
-    
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        tableView.reloadData()
-    }
-   
-    
     override func viewWillAppear(_ animated: Bool) {
-       
-       print("viewWillAppear")
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad")
+        
+
+//        if traitCollection.userInterfaceStyle == .dark {
+//            switchLabel.selectedSegmentIndex = 1
+//            weatherConditionImage.tintColor = .white
+//        }else if (traitCollection.userInterfaceStyle == .light) {
+//            switchLabel.selectedSegmentIndex = 0
+//            weatherConditionImage.tintColor = .black
+//        }else if (traitCollection.userInterfaceStyle == .unspecified) {
+//            switchLabel.selectedSegmentIndex = 0
+//            weatherConditionImage.tintColor = .black
+//        }
+        
+        
         viewModel.$currentWeather
             .sink(receiveValue: { [weak self] currentWeather in
                 self?.title = currentWeather.city?.name != nil ?
