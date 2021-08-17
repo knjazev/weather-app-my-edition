@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WeatherCell: Identifiable {
+struct Weather: Identifiable {
     var id = UUID()
     var conditionImage: String
 //    var time: String

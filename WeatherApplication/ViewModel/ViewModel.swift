@@ -11,25 +11,26 @@ import CoreLocation
 
 final class ViewModel: NSObject, ObservableObject {
     // input
-    @Published var city: String = "Minsk"
-    @Published var coordinates: [Double] = [0.0, 0.0]
-    
+    @Published var city: String = WeatherAPI.cityStatic
+    @Published var coordinates = WeatherAPI.coordinates
     // output
     @Published var currentWeather = WeatherDetail.placeholder
+    
+    
+    
+    
+    
+    @Published var currentWeather2 = WeatherDetail.placeholder
+    
+    
+    
     @Published var humidity = WeatherDetail.placeholder
     @Published var pressure = WeatherDetail.placeholder
+    @Published var temperature = WeatherDetail.placeholder
     @Published var weatherConditionID: Int = 800
-    
-    @Published var cityName = WeatherDetail.placeholder
-    @Published var latitude = 0.0
-    @Published var longitude = 0.0
-    
+
     let locationManager = CLLocationManager()
     var weatherAPI = WeatherAPI()
-    
-    
-    
-    
     
     var weatherConditionName: String {
         switch weatherConditionID {
@@ -75,15 +76,13 @@ final class ViewModel: NSObject, ObservableObject {
     
     
         func delegatation() {
-//            weatherAPI.delegate = self
             locationManager.delegate = self
             locationManager.requestWhenInUseAuthorization()
-//            locationManager.requestLocation()
         }
     
     override init() {
         super.init()
-        
+
         $city
             .debounce(for: 0.3, scheduler: RunLoop.main)
             .removeDuplicates()
@@ -93,21 +92,20 @@ final class ViewModel: NSObject, ObservableObject {
             .assign(to: \.currentWeather, on: self)
             .store(in: &self.cancellableSet)
         
+        $coordinates
+            .debounce(for: 0.3, scheduler: RunLoop.main)
+            .removeDuplicates()
+            .flatMap { (coordinate: [Double]) -> AnyPublisher <WeatherDetail, Never> in
+                     WeatherAPI.shared.fetchWeather(latitude: coordinate[0], longitude: coordinate[1])
+            }
+            .assign(to: \.currentWeather2, on: self)
+            .store(in: &self.cancellableSet)
         
-        //        $coordinates
-        //         .debounce(for: 0.3, scheduler: RunLoop.main)
-        //         .removeDuplicates()
-        //         .flatMap { (coordinates: [Double]) -> AnyPublisher <WeatherDetail, Never> in
-        //             WeatherAPI.shared.fetchWeather(latitude: coordinates[0], longitude: coordinates[1])
-        //           }
-        //          .assign(to: \.currentWeather , on: self)
-        //         .store(in: &self.cancellableSet2)
-        
-    }
     
+   
+}
+
     private var cancellableSet: Set<AnyCancellable> = []
-    private var cancellableSet2: Set<AnyCancellable> = []
-    
 }
 
 
@@ -117,11 +115,16 @@ extension ViewModel: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
+            print("from didUpdateLocations: lat: \(location.coordinate.latitude), lon: \(location.coordinate.longitude)")
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let lon  = location.coordinate.longitude
-
+                
+            
             weatherAPI.fetchWeather(latitude: lat, longitude: lon)
+//            coordinates = [lat, lon]
+            
+            
         }
     }
 
@@ -130,35 +133,3 @@ extension ViewModel: CLLocationManagerDelegate {
     }
 
 }
-
-//extension ViewModel: CLLocationManagerDelegate {
-//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-//        print("error:: \(error.localizedDescription)")
-//    }
-//
-//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-//        if status == .authorizedWhenInUse {
-//            locationManager.requestLocation()
-//        }
-//    }
-//
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//
-//        if locations.first != nil {
-//            locationManager.stopUpdatingLocation()
-//            let lat = locations[0].coordinate.latitude
-//            let lon = locations[0].coordinate.longitude
-//
-//            weatherAPI.fetchWeather(latitude: lat, longitude: lon)
-//        }
-//
-//    }
-//
-//}
-
-
-
-
-
-
-

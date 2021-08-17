@@ -8,82 +8,138 @@
 import UIKit
 import Combine
 
-class TableViewController: UITableViewController {
-    
-    var array = [WeatherDetail]()
+class TableViewController: UITableViewController, UITabBarDelegate {
     
     private let viewModel = ViewModel()
-    var viewController = ViewController()
-
+    private var cancellable = Set<AnyCancellable>()
+    
+    var setOfDates = Set<String>()
+    var number = 0
+    
+    
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        tableView.reloadData()
+    }
+   
+    
+    override func viewWillAppear(_ animated: Bool) {
+       
+       print("viewWillAppear")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
+        print("viewDidLoad")
+        viewModel.$currentWeather
+            .sink(receiveValue: { [weak self] currentWeather in
+                self?.title = currentWeather.city?.name != nil ?
+                    "\((currentWeather.city?.name!)!)"
+                    : ""
+            })
+            .store(in: &cancellable)
+        
     }
 
-    private var cancellable = Set<AnyCancellable>()
+  
+//
+    
+    
+//        override func numberOfSections(in tableView: UITableView) -> Int {
+//            viewModel.$currentWeather
+//                .sink(receiveValue: { [weak self] currentWeather in
+//
+                    
+//
+//                    self?.number = currentWeather.list?.count ?? 0
+//                    print("khkjhkj r \(currentWeather.list?.count)")
+//
+//                    if let array = currentWeather.list {
+//
+//                        for date in array {
+//                            var stringDate = date.dtTxt
+//                            stringDate = stringDate?.components(separatedBy: " ")[0]
+//
+//                            self?.setOfDates.insert(stringDate!)
+//                        }
+//                    }
 
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
+//                    for date in currentWeather.list != nil ?? [] {
+//                        var stringDate = date.dtTxt
+//                        stringDate = stringDate?.components(separatedBy: " ")[0]
 
+//                    }
+//
+//                }
+//                )
+//                .store(in: &cancellable)
+//
+//            print(number)
+//
+//            return number
+//        }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            
-        return 0
+        viewModel.$currentWeather
+            .sink(receiveValue: { [weak self] currentWeather in
+                self?.number = currentWeather.list?.count ?? 0
+            })
+            .store(in: &cancellable)
+        return 40
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
+        
+        viewModel.$currentWeather
+            .sink(receiveValue: {[weak self] currentWeather in
+
+                cell.cityLabel.text =
+                    currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[0] != nil ?
+                    "\(( currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[0])!)"
+                    : ""
+                
+                cell.timeLabel.text =
+                    currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[1] != nil ?
+                    "\(( currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[1])!)"
+                    : ""
+                
+                cell.tempLabel.text =
+                    currentWeather.list?[indexPath.row].main?.temp != nil ?
+                    "\(Int((currentWeather.list?[indexPath.row].main?.temp!)!)) ºC"
+                    : " "
+                
+                cell.humidityLabel.text =
+                    currentWeather.list?[indexPath.row].main?.humidity != nil ?
+                    "\(Int((currentWeather.list?[indexPath.row].main?.humidity!)!)) %"
+                    : " "
+                
+                cell.pressureLabel.text =
+                    currentWeather.list?[indexPath.row].main?.pressure != nil ?
+                    "\(Int((currentWeather.list?[indexPath.row].main?.pressure!)!)) hPa"
+                    : " "
+                
+                cell.imageLabel.image = UIImage(systemName: self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[indexPath.row].weather?[0].id! ?? 800) ?? "sun.max")
+                
+
+                
+           
+            }
+            )
+            .store(in: &cancellable)
 
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+       let array = Array(setOfDates)
+        if section < array.count {
+            
+            
+            return array[section]
+        }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+        return nil
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

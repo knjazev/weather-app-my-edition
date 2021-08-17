@@ -43,10 +43,6 @@ final class ViewModel: NSObject, ObservableObject {
 
     var weatherAPI = WeatherAPI()
     
-    
-    
-    
-    
     var weatherConditionName: String {
         switch weatherConditionID {
         case 200...232:

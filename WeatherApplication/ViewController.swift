@@ -8,17 +8,19 @@
 import UIKit
 import Combine
 import CoreLocation
+import Lottie
 
-class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
     
     var array = [WeatherDetail]()
+    var jsonName = ""
     
-    @IBOutlet weak var textField: UITextField! {
-        didSet {
-            textField.isEnabled = true
-            textField.becomeFirstResponder()
-        }
-    }
+    var testTableView = TableViewController()
+    var tabBar = TabBarController()
+    
+    var arrayOfCityNames: [String] = []
+    
+    @IBOutlet weak var textField: UITextField!
     
     private let viewModel = ViewModel()
     
@@ -26,26 +28,35 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
     @IBOutlet weak var humidityLabel: UILabel!
     @IBOutlet weak var pressureLabel: UILabel!
     @IBOutlet weak var weatherConditionImage: UIImageView!
-    @IBOutlet weak var cityLabel: UILabel! {
-        didSet {
-            cityLabel.isEnabled = true
-            cityLabel.becomeFirstResponder()
-        }
-    }
+    @IBOutlet weak var cityLabel: UILabel!
+    
     @IBOutlet weak var switchLabel: UISegmentedControl!
     @IBOutlet weak var latitudeLabel: UILabel!
     @IBOutlet weak var longitudeLabel: UILabel!
+    
+    var animation: Animation!
+    var animationView: AnimationView!
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         textField.delegate = self
         textField.text = viewModel.city
-        viewModel.weatherAPI.delegate = self
         viewModel.delegatation()
         
-        binding()
         
+        animation = Animation.named(jsonName)
+        animationView = AnimationView(animation: animation)
+        animationView.frame = CGRect(x: 150, y: 150, width: 150, height: 150)
+        
+        
+        //        view.addSubview((animationView)!)
+        
+        
+        binding()
         
         
         if traitCollection.userInterfaceStyle == .dark {
@@ -91,27 +102,79 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
         }
     }
     
-    @IBAction func getLocation(_ sender: UIButton) {
-        
-        //        viewModel.city = "Moscow"
-        textField.text = ""
-        viewModel.locationManager.requestLocation()
-        
-        
-        if let latitude = viewModel.locationManager.location?.coordinate.latitude, let longitude = viewModel.locationManager.location?.coordinate.longitude {
+    
+    @IBAction func buttonTapped(_ sender: UIButton) {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "table") as? TableViewController {
             
-            cityLabel.text = ""
-            
-            print("\(latitude)")
-            print("\(longitude)")
-            //            latitudeLabel.text = String(format: "%.1f", latitude)
-            //            longitudeLabel.text = String(format: "%.1f", longitude)
-            latitudeLabel.text = "\(latitude)"
-            longitudeLabel.text = "\(longitude)"
-            
+            if let cityLabel = cityLabel.text {
+                
+            }
         }
     }
-    
+    @IBAction func getLocation(_ sender: UIButton) {
+        
+      
+        
+        
+        viewModel.locationManager.requestLocation()
+        let lat = viewModel.locationManager.location?.coordinate.latitude as! Double
+        let lon = viewModel.locationManager.location?.coordinate.longitude as! Double
+        let publisher = [lat,lon].publisher
+        let publisher2 = [lon,lat].publisher
+
+        
+        
+        publisher
+            .assign(to: \.coordinates[1], on: viewModel)
+            .store(in: &cancellable)
+        publisher2
+            .assign(to: \.coordinates[0], on: viewModel)
+            .store(in: &cancellable)
+        
+        viewModel.$currentWeather2
+            .sink(receiveValue: {[weak self] currentWeather in
+                
+                self?.cityLabel.text =
+                    currentWeather.city?.name != nil ?
+                    "\((currentWeather.city?.name!)!)"
+                    : ""
+                
+                self?.temperatureLabel.text =
+                    currentWeather.list?[0].main?.temp != nil ?
+                    "\(Int((currentWeather.list?[0].main?.temp!)!)) ºC"
+                    : " "
+                
+                self?.humidityLabel.text =
+                    currentWeather.list?[0].main?.humidity != nil ?
+                    "\(Int((currentWeather.list?[0].main?.humidity!)!)) %"
+                    : " "
+                
+                self?.pressureLabel.text =
+                    currentWeather.list?[0].main?.pressure != nil ?
+                    "\(Int((currentWeather.list?[0].main?.pressure!)!)) hPa"
+                    : " "
+                
+                self?.latitudeLabel.text =
+                    currentWeather.city?.coord?.lat != nil ?
+                    "\(Double((currentWeather.city?.coord?.lat!)!))"
+                    : " "
+                self?.longitudeLabel.text =
+                    currentWeather.city?.coord?.lon != nil ?
+                    "\(Double((currentWeather.city?.coord?.lon!)!))"
+                    : " "
+                
+                self?.weatherConditionImage.image = UIImage(systemName: self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800) ?? "sun.max")
+                
+                //                self?.jsonName = self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800) ?? "sun.max"
+                
+                self?.jsonName = (self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800))!
+                
+                self?.animationView.play()
+            }
+            )
+            .store(in: &cancellable)
+    }
+
     func binding() {
         textField.textPublisher
             .assign(to: \.city, on: viewModel)
@@ -151,9 +214,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
                 
                 self?.weatherConditionImage.image = UIImage(systemName: self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800) ?? "sun.max")
                 
+                //                self?.jsonName = self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800) ?? "sun.max"
                 
-                self?.array.append(currentWeather)
+                self?.jsonName = (self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800))!
                 
+                self?.animationView.play()
+                print(self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 400))
+                
+                //                self?.playAnimation()
                 
             }
             )
@@ -163,8 +231,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDe
     private var cancellable = Set<AnyCancellable>()
 }
 
-
-
 extension UITextField {
     var textPublisher: AnyPublisher<String, Never> {
         NotificationCenter.default
@@ -173,20 +239,4 @@ extension UITextField {
             .map { $0.text ?? "" }
             .eraseToAnyPublisher()
     }
-    
 }
-
-extension ViewController: WeatherAPIDelegate {
-    func didUpdateWeather(_ weatherManager: WeatherAPI, cityName: String) {
-        DispatchQueue.main.async {
-            self.viewModel.city = cityName
-            //            self.cityLabel.text = cityName
-        }
-    }
-    
-    func didFailWithError(error: Error){
-        print(error.localizedDescription)
-    }
-}
-
-
