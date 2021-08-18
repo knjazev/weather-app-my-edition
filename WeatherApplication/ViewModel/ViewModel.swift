@@ -15,11 +15,7 @@ final class ViewModel: NSObject, ObservableObject {
     @Published var coordinates = WeatherAPI.coordinates
     // output
     @Published var currentWeather = WeatherDetail.placeholder
-    
-    
-    
-    
-    
+
     @Published var currentWeather2 = WeatherDetail.placeholder
     
     
@@ -28,6 +24,8 @@ final class ViewModel: NSObject, ObservableObject {
     @Published var pressure = WeatherDetail.placeholder
     @Published var temperature = WeatherDetail.placeholder
     @Published var weatherConditionID: Int = 800
+    
+    private var cancellableSet: Set<AnyCancellable> = []
 
     let locationManager = CLLocationManager()
     var weatherAPI = WeatherAPI()
@@ -98,6 +96,7 @@ final class ViewModel: NSObject, ObservableObject {
             .flatMap { (coordinate: [Double]) -> AnyPublisher <WeatherDetail, Never> in
                      WeatherAPI.shared.fetchWeather(latitude: coordinate[0], longitude: coordinate[1])
             }
+//            .assign(to: \.currentWeather2, on: self)
             .assign(to: \.currentWeather2, on: self)
             .store(in: &self.cancellableSet)
         
@@ -105,7 +104,7 @@ final class ViewModel: NSObject, ObservableObject {
    
 }
 
-    private var cancellableSet: Set<AnyCancellable> = []
+ 
 }
 
 
@@ -120,9 +119,8 @@ extension ViewModel: CLLocationManagerDelegate {
             let lat = location.coordinate.latitude
             let lon  = location.coordinate.longitude
                 
-            
             weatherAPI.fetchWeather(latitude: lat, longitude: lon)
-//            coordinates = [lat, lon]
+
             
             
         }

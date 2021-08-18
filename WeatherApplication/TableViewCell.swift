@@ -7,71 +7,60 @@
 
 import UIKit
 import Combine
+import SnapKit
 
 class TableViewCell: UITableViewCell {
     
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var tempLabel: UILabel!
-    @IBOutlet weak var humidityLabel: UILabel!
-    @IBOutlet weak var pressureLabel: UILabel!
-    @IBOutlet weak var imageLabel: UIImageView!
-    @IBOutlet weak var timeLabel: UILabel!
-    
-    
-    private let viewModel = ViewModel()
-  
-    private var cancellable = Set<AnyCancellable>()
+    let dayLabel = UILabel()
+    let tempLabel = UILabel()
+    let monthLabel = UILabel()
+    let imageLabel = UIImageView()
+    let timeLabel = UILabel()
 
     override func awakeFromNib() {
         super.awakeFromNib()
-//
-//        viewModel.$currentWeather
-//            .sink(receiveValue: {[weak self] currentWeather in
-//
-//                self?.cityLabel.text =
-//                    currentWeather.city?.name != nil ?
-//                    "\((currentWeather.city?.name!)!)"
-//                    : ""
-//
-//                self?.tempLabel.text =
-//                    currentWeather.list?[0].main?.temp != nil ?
-//                    "\(Int((currentWeather.list?[0].main?.temp!)!)) ºC"
-//                    : " "
-//
-//                self?.humidityLabel.text =
-//                    currentWeather.list?[0].main?.humidity != nil ?
-//                    "\(Int((currentWeather.list?[0].main?.humidity!)!)) %"
-//                    : " "
-//
-//                self?.pressureLabel.text =
-//                    currentWeather.list?[0].main?.pressure != nil ?
-//                    "\(Int((currentWeather.list?[0].main?.pressure!)!)) hPa"
-//                    : " "
-//
-//
-//                self?.imageLabel.image = UIImage(systemName: self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800) ?? "sun.max")
-//
-//                //                self?.jsonName = self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800) ?? "sun.max"
-//
-//
-//
-//                //                self?.playAnimation()
-//
-//            }
-//            )
-//            .store(in: &cancellable)
-//    }
-//
-//
-   
-    
-        
-    }
 
+        addSubview(dayLabel)
+        addSubview(tempLabel)
+        addSubview(monthLabel)
+        addSubview(imageLabel)
+        addSubview(timeLabel)
+        
+        imageLabel.snp.makeConstraints { maker in
+            maker.right.equalToSuperview().inset(0)
+            maker.width.equalTo(imageLabel.snp.height).multipliedBy(1.0/1.0)
+        }
+        
+        tempLabel.font = UIFont(name: "Montserrat-Thin", size: 70)
+        tempLabel.adjustsFontSizeToFitWidth = true
+        tempLabel.snp.makeConstraints { maker in
+            maker.right.equalTo(imageLabel).inset(100)
+            maker.width.equalTo(imageLabel.snp.height).multipliedBy(1.0/1.0)
+            maker.height.equalTo(100)
+            maker.width.equalTo(100)
+        }
+        
+        dayLabel.font = UIFont(name: "Montserrat-Medium", size: 50)
+        dayLabel.snp.makeConstraints { maker in
+            maker.left.equalToSuperview().inset(10)
+            maker.top.equalToSuperview().inset(10)
+        }
+        
+        monthLabel.font = UIFont(name: "Montserrat-Thin", size: 30)
+        monthLabel.snp.makeConstraints { maker in
+            maker.left.equalTo(70)
+            maker.top.equalToSuperview().inset(10)
+        }
+        
+        timeLabel.font = UIFont(name: "Montserrat-Medium", size: 30)
+        timeLabel.snp.makeConstraints { maker in
+            
+            maker.top.equalTo(monthLabel.snp.bottom).inset(-10)
+            maker.left.equalTo(dayLabel.snp.left).inset(10)
+        }
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
-
 }

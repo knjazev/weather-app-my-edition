@@ -64,5 +64,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>MONTSERRAT-EXTRABOLD.TTF</string>
+		<string>MONTSERRAT-MEDIUM.TTF</string>
+		<string>MONTSERRAT-THIN.TTF</string>
+	</array>
 </dict>
 </plist>

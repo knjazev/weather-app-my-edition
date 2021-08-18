@@ -14,26 +14,23 @@ class TableViewController: UITableViewController {
     private var cancellable = Set<AnyCancellable>()
     
     var setOfDates = Set<String>()
-    var number = 0
-    
-    override func viewWillAppear(_ animated: Bool) {
-
-    }
+    var number: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.tableView.rowHeight = 100
 
-//        if traitCollection.userInterfaceStyle == .dark {
-//            switchLabel.selectedSegmentIndex = 1
-//            weatherConditionImage.tintColor = .white
-//        }else if (traitCollection.userInterfaceStyle == .light) {
-//            switchLabel.selectedSegmentIndex = 0
-//            weatherConditionImage.tintColor = .black
-//        }else if (traitCollection.userInterfaceStyle == .unspecified) {
-//            switchLabel.selectedSegmentIndex = 0
-//            weatherConditionImage.tintColor = .black
-//        }
+        
+        //        if traitCollection.userInterfaceStyle == .dark {
+        //            switchLabel.selectedSegmentIndex = 1
+        //            weatherConditionImage.tintColor = .white
+        //        }else if (traitCollection.userInterfaceStyle == .light) {
+        //            switchLabel.selectedSegmentIndex = 0
+        //            weatherConditionImage.tintColor = .black
+        //        }else if (traitCollection.userInterfaceStyle == .unspecified) {
+        //            switchLabel.selectedSegmentIndex = 0
+        //            weatherConditionImage.tintColor = .black
+        //        }
         
         
         viewModel.$currentWeather
@@ -46,48 +43,11 @@ class TableViewController: UITableViewController {
         
     }
 
-  
-//
-    
-    
-//        override func numberOfSections(in tableView: UITableView) -> Int {
-//            viewModel.$currentWeather
-//                .sink(receiveValue: { [weak self] currentWeather in
-//
-                    
-//
-//                    self?.number = currentWeather.list?.count ?? 0
-//                    print("khkjhkj r \(currentWeather.list?.count)")
-//
-//                    if let array = currentWeather.list {
-//
-//                        for date in array {
-//                            var stringDate = date.dtTxt
-//                            stringDate = stringDate?.components(separatedBy: " ")[0]
-//
-//                            self?.setOfDates.insert(stringDate!)
-//                        }
-//                    }
-
-//                    for date in currentWeather.list != nil ?? [] {
-//                        var stringDate = date.dtTxt
-//                        stringDate = stringDate?.components(separatedBy: " ")[0]
-
-//                    }
-//
-//                }
-//                )
-//                .store(in: &cancellable)
-//
-//            print(number)
-//
-//            return number
-//        }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.$currentWeather
             .sink(receiveValue: { [weak self] currentWeather in
                 self?.number = currentWeather.list?.count ?? 0
+                print(self?.number)
             })
             .store(in: &cancellable)
         return 40
@@ -95,57 +55,176 @@ class TableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
         
-        viewModel.$currentWeather
-            .sink(receiveValue: {[weak self] currentWeather in
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
+        
+       
+        
+       
+        
+        switch WeatherAPI.trigger {
+        case 0:
+            viewModel.$currentWeather
+                .sink(receiveValue: {[weak self] currentWeather in
+                    
+                    if let weatherConditionID = currentWeather.list?[indexPath.row].weather?[0].id {
+                        
+                        switch weatherConditionID {
+                        case 200...232:
+                            cell.backgroundColor = UIColor.BackgroundColor.thunderColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.thunderColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.thunderColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.thunderColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.thunderColor
+                        case 300...321:
+                            cell.backgroundColor = UIColor.BackgroundColor.rainColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.rainColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.rainColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.rainColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.rainColor
+                        case 500...531:
+                            cell.backgroundColor = UIColor.BackgroundColor.rainColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.rainColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.rainColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.rainColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.rainColor
+                        case 600...622:
+                            cell.backgroundColor = UIColor.BackgroundColor.snowColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.snowColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.snowColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.snowColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.snowColor
+                        case 701...781:
+                            cell.backgroundColor = UIColor.BackgroundColor.fogColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.fogColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.fogColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.fogColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.fogColor
+                        case 800:
+                            cell.backgroundColor = UIColor.BackgroundColor.sunColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.sunColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.sunColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.sunColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.sunColor
+                        case 801...804:
+                            cell.backgroundColor = UIColor.BackgroundColor.cloudColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.cloudColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.cloudColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.cloudColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.cloudColor
+                        default:
+                            return cell.backgroundColor = UIColor.BackgroundColor.cloudColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.cloudColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.cloudColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.cloudColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.cloudColor
+                        }
+   
+                    }
+                    
+                    cell.dayLabel.text = currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[0].components(separatedBy: "-")[2] != nil ?
+                        "\((currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[0].components(separatedBy: "-")[2])!)" : ""
+                    
+                    cell.monthLabel.text =
+                        currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[0].components(separatedBy: "-")[1] != nil ?
+                        "\(( currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[0].components(separatedBy: "-")[1])!)" : ""
+                    
+                    cell.timeLabel.text =
+                        currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[1].components(separatedBy: ":")[0] != nil ?
+                        "\(( currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[1].components(separatedBy: ":")[0] )!) :00" : ""
+   
+                    cell.tempLabel.text = currentWeather.list?[indexPath.row].main?.temp != nil ? "\(Int((currentWeather.list?[indexPath.row].main?.temp!)!)) ºC" : " "
+                    
+                    cell.monthLabel.text = currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[0].components(separatedBy: "-")[1] != nil ?
+                        "\(( currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[0].components(separatedBy: "-")[1])!)" : ""
 
-                cell.cityLabel.text =
-                    currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[0] != nil ?
-                    "\(( currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[0])!)"
-                    : ""
-                
-                cell.timeLabel.text =
-                    currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[1] != nil ?
-                    "\(( currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[1])!)"
-                    : ""
-                
-                cell.tempLabel.text =
-                    currentWeather.list?[indexPath.row].main?.temp != nil ?
-                    "\(Int((currentWeather.list?[indexPath.row].main?.temp!)!)) ºC"
-                    : " "
-                
-                cell.humidityLabel.text =
-                    currentWeather.list?[indexPath.row].main?.humidity != nil ?
-                    "\(Int((currentWeather.list?[indexPath.row].main?.humidity!)!)) %"
-                    : " "
-                
-                cell.pressureLabel.text =
-                    currentWeather.list?[indexPath.row].main?.pressure != nil ?
-                    "\(Int((currentWeather.list?[indexPath.row].main?.pressure!)!)) hPa"
-                    : " "
-                
-                cell.imageLabel.image = UIImage(systemName: self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[indexPath.row].weather?[0].id! ?? 800) ?? "sun.max")
-                
-
-                
-           
-            }
-            )
-            .store(in: &cancellable)
-
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-       let array = Array(setOfDates)
-        if section < array.count {
+                    cell.imageLabel.image = UIImage(named: self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[indexPath.row].weather?[0].id! ?? 800) ?? "sun.max")
+                })
+                .store(in: &cancellable)
             
+        case 1:
+            viewModel.$currentWeather2
+                .sink(receiveValue: {[weak self] currentWeather in
+                    
+                    if let weatherConditionID = currentWeather.list?[indexPath.row].weather?[0].id {
+                        
+                        switch weatherConditionID {
+                        case 200...232:
+                            cell.backgroundColor = UIColor.BackgroundColor.thunderColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.thunderColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.thunderColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.thunderColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.thunderColor
+                        case 300...321:
+                            cell.backgroundColor = UIColor.BackgroundColor.rainColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.rainColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.rainColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.rainColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.rainColor
+                        case 500...531:
+                            cell.backgroundColor = UIColor.BackgroundColor.rainColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.rainColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.rainColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.rainColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.rainColor
+                        case 600...622:
+                            cell.backgroundColor = UIColor.BackgroundColor.snowColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.snowColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.snowColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.snowColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.snowColor
+                        case 701...781:
+                            cell.backgroundColor = UIColor.BackgroundColor.fogColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.fogColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.fogColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.fogColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.fogColor
+                        case 800:
+                            cell.backgroundColor = UIColor.BackgroundColor.sunColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.sunColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.sunColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.sunColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.sunColor
+                        case 801...804:
+                            cell.backgroundColor = UIColor.BackgroundColor.cloudColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.cloudColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.cloudColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.cloudColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.cloudColor
+                        default:
+                            return cell.backgroundColor = UIColor.BackgroundColor.cloudColor
+                            cell.tempLabel.textColor = UIColor.ElementColor.cloudColor
+                            cell.dayLabel.textColor = UIColor.ElementColor.cloudColor
+                            cell.monthLabel.textColor = UIColor.ElementColor.cloudColor
+                            cell.timeLabel.textColor = UIColor.ElementColor.cloudColor
+                        }
+   
+                    }
+                    
+                    cell.dayLabel.text = currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[0].components(separatedBy: "-")[2] != nil ?
+                        "\((currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[0].components(separatedBy: "-")[2])!)" : ""
+                    
+                    cell.monthLabel.text =
+                        currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[0].components(separatedBy: "-")[1] != nil ?
+                        "\(( currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[0].components(separatedBy: "-")[1])!)" : ""
+                    
+                    cell.timeLabel.text =
+                        currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[1].components(separatedBy: ":")[0] != nil ?
+                        "\(( currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[1].components(separatedBy: ":")[0] )!) :00" : ""
+   
+                    cell.tempLabel.text = currentWeather.list?[indexPath.row].main?.temp != nil ? "\(Int((currentWeather.list?[indexPath.row].main?.temp!)!)) ºC" : " "
+                    
+                    cell.monthLabel.text = currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[0].components(separatedBy: "-")[1] != nil ?
+                        "\(( currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[0].components(separatedBy: "-")[1])!)" : ""
+
+                    cell.imageLabel.image = UIImage(named: self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[indexPath.row].weather?[0].id! ?? 800) ?? "sun.max")
+                })
+                .store(in: &cancellable)
             
-            return array[section]
+        default:
+            print("somthing went wrong")
         }
 
-        return nil
+        return cell
     }
 }

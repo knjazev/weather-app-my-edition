@@ -11,8 +11,10 @@ import UIKit
 import CoreLocation
 
 class WeatherAPI {
+    
     static let shared = WeatherAPI()
     
+    static var trigger = 0
     static var cityStatic = "Riga"
     static var coordinates = [0.0, 0.0]
     static var numberOfSections = 0
