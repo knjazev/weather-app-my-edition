@@ -56,7 +56,7 @@ class TableViewCell: UITableViewCell {
         timeLabel.snp.makeConstraints { maker in
             
             maker.top.equalTo(monthLabel.snp.bottom).inset(-10)
-            maker.left.equalTo(dayLabel.snp.left).inset(10)
+            maker.left.equalTo(dayLabel.snp.left).inset(0)
         }
     }
     
