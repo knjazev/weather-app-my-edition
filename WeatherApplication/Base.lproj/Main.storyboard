@@ -15,19 +15,6 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gfb-qz-c1d">
-                                <rect key="frame" x="342" y="768" width="52" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Light Mode"/>
-                                    <segment title="Dark Mode"/>
-                                </segments>
-                                <connections>
-                                    <action selector="changeMode:" destination="BYZ-38-t0r" eventType="valueChanged" id="7hL-r1-UgO"/>
-                                </connections>
-                            </segmentedControl>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
@@ -140,6 +127,21 @@
             </objects>
             <point key="canvasLocation" x="6444.9275362318849" y="281.91964285714283"/>
         </scene>
+        <!--Color View Controller-->
+        <scene sceneID="Jhq-oT-xH3">
+            <objects>
+                <viewController id="Nsr-7r-DOM" customClass="ColorViewController" customModule="WeatherApplication" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iXx-dp-Q4J">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="75F-An-4nh"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oS8-Zy-LhS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7581.1594202898559" y="306.69642857142856"/>
+        </scene>
         <!--Item-->
         <scene sceneID="hUc-s0-BhO">
             <objects>
@@ -197,6 +199,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="kI5-ct-kEf" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="pI4-Jv-i9d">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -214,6 +217,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="bfD-E6-h1V" customClass="TabBarController" customModule="WeatherApplication" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ukG-zQ-n0p">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>

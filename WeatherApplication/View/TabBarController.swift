@@ -13,10 +13,6 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//              tabBar.backgroundColor = .black
-//               tabBar.tintColor = .black
-                tabBar.barTintColor = .black
-
     }
     
 
@@ -38,9 +34,9 @@ class TabBarController: UITabBarController {
             
 
             if vc?.traitCollection.userInterfaceStyle == .light {
-               print("hello")
+               print("1")
             }else if vc?.traitCollection.userInterfaceStyle == .dark {
-                print("fuck")
+                print("2")
               
             }
             

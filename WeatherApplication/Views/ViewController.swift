@@ -12,36 +12,10 @@ import Lottie
 import SnapKit
 
 class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
-    
-    var array = [WeatherDetail]()
-    var jsonName = ""
-    
-    var testTableView = TableViewController()
-    var tabBar = TabBarController()
-    
-    var arrayOfCityNames: [String] = []
-    
+
 //    @IBOutlet weak var textField: UITextField!
     
     private let viewModel = ViewModel()
-    
-//    @IBOutlet weak var temperatureLabel: UILabel!
-//    @IBOutlet weak var humidityLabel: UILabel!
-//    @IBOutlet weak var pressureLabel: UILabel!
-//
-//    @IBOutlet weak var windLabel: UILabel!
-//    @IBOutlet weak var weatherConditionImage: UIImageView!
-//    @IBOutlet weak var cityLabel: UILabel!
-//
-//    @IBOutlet weak var switchLabel: UISegmentedControl!
-//
-//    @IBOutlet weak var tempImageLabel: UIImageView!
-//    @IBOutlet weak var humidityImageLabel: UIImageView!
-//    @IBOutlet weak var pressureImageLabel: UIImageView!
-//    @IBOutlet weak var windImageLabel: UIImageView!
-//
-//    @IBOutlet weak var getLocationButton: UIButton!
-    
     
     let cityLabel = UILabel()
     let textField = UITextField()
@@ -50,106 +24,108 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
     let humidityLabel = UILabel()
     let pressureLabel = UILabel()
     let windLabel = UILabel()
-    
-    
-//        let switchLabel = UISegmentedControl()
-    
+    let switchLabel = UISegmentedControl()
     let tempImageLabel = UIImageView()
     let humidityImageLabel = UIImageView()
     let pressureImageLabel = UIImageView()
     let windImageLabel = UIImageView()
-    
     let getLocationButton = UIButton()
     
-    
-    
-    
-    var animation: Animation!
-    var animationView: AnimationView!
     private var cancellable = Set<AnyCancellable>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-  
-        getLocationButton.addTarget(self, action: #selector(getLocation), for: .touchUpInside)
-
         initialize()
+     
+        
+        if traitCollection.userInterfaceStyle == .light {
+            print("инт 1")
+            binding()
+        }else if traitCollection.userInterfaceStyle == .dark {
+            print("инт 2")
+            bindingDark()
+        }
+        
+        getLocationButton.addTarget(self, action: #selector(getLocation), for: .touchUpInside)
 
         textField.delegate = self
         textField.text = viewModel.city
-        viewModel.delegatation()
         
-        animation = Animation.named(jsonName)
-        animationView = AnimationView(animation: animation)
-        animationView.frame = CGRect(x: 150, y: 150, width: 150, height: 150)
+       
+
         
-        
-        //        view.addSubview((animationView)!)
-        
-        
-        binding()
-     
 
 //        if traitCollection.userInterfaceStyle == .dark {
-//            switchLabel.selectedSegmentIndex = 1
-//            weatherConditionImage.tintColor = .white
+////            switchLabel.selectedSegmentIndex = 1
+//
 //        }else if (traitCollection.userInterfaceStyle == .light) {
-//            switchLabel.selectedSegmentIndex = 0
-//            weatherConditionImage.tintColor = .black
+////            switchLabel.selectedSegmentIndex = 0
+//
 //        }else if (traitCollection.userInterfaceStyle == .unspecified) {
-//            switchLabel.selectedSegmentIndex = 0
-//            weatherConditionImage.tintColor = .black
+////            switchLabel.selectedSegmentIndex = 0
 //        }
+        
+        switchLabel.addTarget(self, action: #selector(changeMode), for: .allEvents)
+      
+        
+        // MARK: - Hide Keyboard using gesture
+        
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
         
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+            super.traitCollectionDidChange(previousTraitCollection)
+        
+        if previousTraitCollection?.userInterfaceStyle == .dark {
+            
+            bindingDark()
+        }else {
+            bindingDark()
+        }
+
+        
+        }
+
     
-   
+    // MARK: - Hide Keyboard using return keyboard button
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        switch previousTraitCollection?.userInterfaceStyle {
-        case .light:
-            weatherConditionImage.tintColor = .white
-        case .dark:
-            weatherConditionImage.tintColor = .black
-        case .unspecified :
-            weatherConditionImage.tintColor = .black
-        default:
-            weatherConditionImage.tintColor = .black
-        }
-    }
+    // MARK: - Dark / Light mode
     
-    @IBAction func changeMode(_ sender: UISegmentedControl) {
-        if (sender.selectedSegmentIndex == 0) {
-            overrideUserInterfaceStyle = .light
-            weatherConditionImage.tintColor = .black
-            
-        } else if (sender.selectedSegmentIndex == 1) {
-//            overrideUserInterfaceStyle = .dark
-            weatherConditionImage.tintColor = .white
-            
-        }
-    }
-    
-    
-//    @IBAction func buttonTapped(_ sender: UIButton) {
-//        if let vc = storyboard?.instantiateViewController(withIdentifier: "table") as? TableViewController {
+//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+//            super.traitCollectionDidChange(previousTraitCollection)
 //
-//    }
-//    }
+//            setColors()
+//        }
+    
+    @objc func changeMode(_sender: UISegmentedControl) {
+        
+        if switchLabel.selectedSegmentIndex == 0 {
+
+            traitCollectionDidChange(UITraitCollection(userInterfaceStyle: .dark))
+           
+        }else if switchLabel.selectedSegmentIndex == 1 {
+            traitCollectionDidChange(UITraitCollection(userInterfaceStyle: .light))
+
+           
+        }
+        
+        
+    }
 
     @objc func getLocation(_ sender: UIButton) {
 
         WeatherAPI.trigger = 1
-        viewModel.locationManager.requestLocation()
+        viewModel.delegatation()
         
-        let lat = viewModel.locationManager.location?.coordinate.latitude as! Double
-        let lon = viewModel.locationManager.location?.coordinate.longitude as! Double
+        let lat = Double(viewModel.locationManager.location?.coordinate.latitude ?? 0.0)
+        let lon = Double(viewModel.locationManager.location?.coordinate.longitude ?? 0.0)
         let publisher = [lat,lon].publisher
         let publisher2 = [lon,lat].publisher
 
@@ -162,10 +138,11 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
         
         viewModel.$currentWeather2
             .sink(receiveValue: {[weak self] currentWeather in
-                
+ 
                 switch currentWeather.list?[0].weather?[0].main?.rawValue {
-                
+               
                 case "Clear":
+                    print("Clear")
                     self?.view.backgroundColor = UIColor.BackgroundColor.sunColor
                     
                     self?.getLocationButton.setImage(UIImage(named: "location.sun.max"), for: UIControl.State.normal)
@@ -188,6 +165,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
         
                     
                 case "Rain":
+                    print("Rain")
                     self?.view.backgroundColor = UIColor.BackgroundColor.rainColor
                     
                     self?.getLocationButton.setImage(UIImage(named: "location.cloud.rain"), for: UIControl.State.normal)
@@ -197,12 +175,12 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
                     self?.humidityImageLabel.image = UIImage(named: "humidity.cloud.rain")
                     self?.pressureImageLabel.image = UIImage(named: "pressure.cloud.rain")
                     
-                    self?.cityLabel.textColor = UIColor.BackgroundColor.rainColor
-                    self?.temperatureLabel.textColor = UIColor.BackgroundColor.rainColor
-                    self?.humidityLabel.textColor = UIColor.BackgroundColor.rainColor
-                    self?.pressureLabel.textColor = UIColor.BackgroundColor.rainColor
-                    self?.windLabel.textColor = UIColor.BackgroundColor.rainColor
-                    self?.textField.backgroundColor = UIColor.BackgroundColor.rainColor
+                    self?.cityLabel.textColor = UIColor.ElementColor.rainColor
+                    self?.temperatureLabel.textColor = UIColor.ElementColor.rainColor
+                    self?.humidityLabel.textColor = UIColor.ElementColor.rainColor
+                    self?.pressureLabel.textColor = UIColor.ElementColor.rainColor
+                    self?.windLabel.textColor = UIColor.ElementColor.rainColor
+                    self?.textField.backgroundColor = UIColor.ElementColor.rainColor
                     
                     self?.tabBarController?.tabBar.barTintColor = UIColor.BackgroundColor.rainColor
                     self?.tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud.rain")
@@ -210,6 +188,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
                     
                     
                 case "Clouds":
+                    print("Clouds")
                     self?.view.backgroundColor = UIColor.BackgroundColor.cloudColor
                     
                     self?.getLocationButton.setImage(UIImage(named: "location.cloud"), for: UIControl.State.normal)
@@ -231,6 +210,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
                     self?.tabBarController?.tabBar.tintColor = UIColor.BackgroundColor.cloudColor
                     
                 case "Thunderstorm":
+                    print("Thunderstorm")
                     self?.view.backgroundColor = UIColor.BackgroundColor.thunderColor
                     
                     self?.getLocationButton.setImage(UIImage(named: "location.cloud.bolt"), for: UIControl.State.normal)
@@ -298,6 +278,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
                     self?.tabBarController?.tabBar.tintColor = UIColor.BackgroundColor.fogColor
 
                 default:
+                    print("default")
                     self?.view.backgroundColor = UIColor.BackgroundColor.sunColor
                     
                     self?.getLocationButton.setImage(UIImage(named: "location.sun.max"), for: UIControl.State.normal)
@@ -346,19 +327,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
                 
                 self?.weatherConditionImage.image = UIImage(named:  self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 100) ?? "sun.max")
                 
-                //                self?.jsonName = self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800) ?? "sun.max"
-                
-                self?.jsonName = (self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800))!
-                
-                self?.animationView.play()
-          
-                
-                //                self?.playAnimation()
-                
             }
             )
             .store(in: &cancellable)
-
         textField.text = ""
     }
 
@@ -561,20 +532,226 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
                     : " "
                 
                 self?.weatherConditionImage.image = UIImage(named:  self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 100) ?? "sun.max")
-                
-                //                self?.jsonName = self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800) ?? "sun.max"
-                
-                self?.jsonName = (self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 800))!
-                
-                self?.animationView.play()
-          
-                
-                //                self?.playAnimation()
-                
             }
             )
             .store(in: &cancellable)
     }
+    
+    func bindingDark() {
+        textField.textPublisher
+            .assign(to: \.city, on: viewModel)
+            .store(in: &cancellable)
+        
+        viewModel.$currentWeather
+            .sink(receiveValue: {[weak self] currentWeather in
+                switch currentWeather.list?[0].weather?[0].main?.rawValue {
+               
+                case "Clear":
+                    print("Clear")
+                    self?.view.backgroundColor = UIColor.BackgroundColorDark.sunColor
+                    
+                    self?.getLocationButton.setImage(UIImage(named: "location.sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor), for: UIControl.State.normal)
+                    self?.getLocationButton.backgroundColor = UIColor.BackgroundColorDark.sunColor
+                    self?.tempImageLabel.image = UIImage(named: "temp.sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor)
+                    self?.windImageLabel.image = UIImage(named: "wind.sun")?.withTintColor(UIColor.ElementColorDark.sunColor)
+                    self?.humidityImageLabel.image = UIImage(named: "humidity.sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor)
+                    self?.pressureImageLabel.image = UIImage(named: "pressure.sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor)
+                    self?.weatherConditionImage.image = UIImage(named: "sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor)
+                    
+                    self?.cityLabel.textColor = UIColor.ElementColorDark.sunColor
+                    self?.temperatureLabel.textColor = UIColor.ElementColorDark.sunColor
+                    self?.humidityLabel.textColor = UIColor.ElementColorDark.sunColor
+                    self?.pressureLabel.textColor = UIColor.ElementColorDark.sunColor
+                    self?.windLabel.textColor = UIColor.ElementColorDark.sunColor
+                    self?.textField.backgroundColor = UIColor.ElementColorDark.sunColor
+                    self?.textField.textColor = .black
+                    
+                    self?.tabBarController?.tabBar.barTintColor = UIColor.BackgroundColorDark.sunColor
+                    self?.tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor)
+                    self?.tabBarController?.tabBar.tintColor = UIColor.BackgroundColorDark.sunColor
+        
+                    
+                case "Rain":
+                    print("Rain")
+                    self?.view.backgroundColor = UIColor.BackgroundColorDark.rainColor
+                    
+                    self?.getLocationButton.setImage(UIImage(named: "location.cloud.rain")?.withTintColor(UIColor.ElementColorDark.rainColor), for: UIControl.State.normal)
+                    self?.getLocationButton.backgroundColor = UIColor.BackgroundColorDark.rainColor
+                    self?.tempImageLabel.image = UIImage(named: "temp.cloud.rain")?.withTintColor(UIColor.ElementColorDark.rainColor)
+                    self?.windImageLabel.image = UIImage(named: "wind.cloud.rain")?.withTintColor(UIColor.ElementColorDark.rainColor)
+                    self?.humidityImageLabel.image = UIImage(named: "humidity.cloud.rain")?.withTintColor(UIColor.ElementColorDark.rainColor)
+                    self?.pressureImageLabel.image = UIImage(named: "pressure.cloud.rain")?.withTintColor(UIColor.ElementColorDark.rainColor)
+                    self?.weatherConditionImage.image = UIImage(named: "cloud.rain")?.withTintColor(UIColor.ElementColorDark.rainColor)
+                    
+                    self?.cityLabel.textColor = UIColor.ElementColorDark.rainColor
+                    self?.temperatureLabel.textColor = UIColor.ElementColorDark.rainColor
+                    self?.humidityLabel.textColor = UIColor.ElementColorDark.rainColor
+                    self?.pressureLabel.textColor = UIColor.ElementColorDark.rainColor
+                    self?.windLabel.textColor = UIColor.ElementColorDark.rainColor
+                    self?.textField.backgroundColor = UIColor.ElementColorDark.rainColor
+                    self?.textField.textColor = UIColor.BackgroundColorDark.rainColor
+                    
+                    self?.tabBarController?.tabBar.barTintColor = UIColor.BackgroundColorDark.rainColor
+                    self?.tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud.rain")?.withTintColor(UIColor.ElementColorDark.rainColor)
+                    self?.tabBarController?.tabBar.tintColor = UIColor.BackgroundColorDark.rainColor
+                    
+                    
+                case "Clouds":
+                    print("Clouds")
+                    self?.view.backgroundColor = UIColor.BackgroundColorDark.cloudColor
+                    
+                    self?.getLocationButton.setImage(UIImage(named: "location.cloud")?.withTintColor(UIColor.ElementColorDark.cloudColor), for: UIControl.State.normal)
+                    self?.getLocationButton.backgroundColor = UIColor.BackgroundColorDark.cloudColor
+                    self?.tempImageLabel.image = UIImage(named: "temp.cloud")?.withTintColor(UIColor.ElementColorDark.cloudColor)
+                    self?.windImageLabel.image = UIImage(named: "wind.cloud")?.withTintColor(UIColor.ElementColorDark.cloudColor)
+                    self?.humidityImageLabel.image = UIImage(named: "humidity.cloud")?.withTintColor(UIColor.ElementColorDark.cloudColor)
+                    self?.pressureImageLabel.image = UIImage(named: "pressure.cloud")?.withTintColor(UIColor.ElementColorDark.cloudColor)
+                    self?.weatherConditionImage.image = UIImage(named: "cloud")?.withTintColor(UIColor.ElementColorDark.cloudColor)
+                    
+                    self?.cityLabel.textColor = UIColor.ElementColorDark.cloudColor
+                    self?.temperatureLabel.textColor = UIColor.ElementColorDark.cloudColor
+                    self?.humidityLabel.textColor = UIColor.ElementColorDark.cloudColor
+                    self?.pressureLabel.textColor = UIColor.ElementColorDark.cloudColor
+                    self?.windLabel.textColor = UIColor.ElementColorDark.cloudColor
+                    self?.textField.backgroundColor = UIColor.ElementColorDark.cloudColor
+                    self?.textField.textColor = UIColor.BackgroundColorDark.cloudColor
+                    
+                    self?.tabBarController?.tabBar.barTintColor = UIColor.BackgroundColorDark.cloudColor
+                    self?.tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud")
+                    self?.tabBarController?.tabBar.tintColor = UIColor.BackgroundColorDark.cloudColor
+                    
+                case "Thunderstorm":
+                    print("Thunderstorm")
+                    self?.view.backgroundColor = UIColor.BackgroundColorDark.thunderColor
+                    
+                    self?.getLocationButton.setImage(UIImage(named: "location.cloud.bolt")?.withTintColor(UIColor.ElementColorDark.thunderColor), for: UIControl.State.normal)
+                    self?.getLocationButton.backgroundColor = UIColor.BackgroundColorDark.thunderColor
+                    self?.tempImageLabel.image = UIImage(named: "temp.cloud.bolt")?.withTintColor(UIColor.ElementColorDark.thunderColor)
+                    self?.windImageLabel.image = UIImage(named: "wind.cloud.bolt")?.withTintColor(UIColor.ElementColorDark.thunderColor)
+                    self?.humidityImageLabel.image = UIImage(named: "humidity.cloud.bolt")?.withTintColor(UIColor.ElementColorDark.thunderColor)
+                    self?.pressureImageLabel.image = UIImage(named: "pressure.cloud.bolt")?.withTintColor(UIColor.ElementColorDark.thunderColor)
+                    self?.weatherConditionImage.image = UIImage(named: "cloud.bolt")?.withTintColor(UIColor.ElementColorDark.thunderColor)
+                    
+                    self?.cityLabel.textColor = UIColor.ElementColorDark.thunderColor
+                    
+                    self?.temperatureLabel.textColor = UIColor.ElementColorDark.thunderColor
+                    self?.humidityLabel.textColor = UIColor.ElementColorDark.thunderColor
+                    self?.pressureLabel.textColor = UIColor.ElementColorDark.thunderColor
+                    self?.windLabel.textColor = UIColor.ElementColorDark.thunderColor
+                    self?.textField.backgroundColor = UIColor.ElementColorDark.thunderColor
+                    self?.textField.textColor = UIColor.BackgroundColorDark.thunderColor
+                    
+                    self?.tabBarController?.tabBar.barTintColor = UIColor.BackgroundColorDark.thunderColor
+                    self?.tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud.bolt")
+                    self?.tabBarController?.tabBar.tintColor = UIColor.BackgroundColorDark.thunderColor
+                    
+                case "Snow":
+                    self?.view.backgroundColor = UIColor.BackgroundColorDark.snowColor
+                    
+                    self?.getLocationButton.setImage(UIImage(named: "location.cloud.snow")?.withTintColor(UIColor.ElementColorDark.snowColor), for: UIControl.State.normal)
+                    self?.getLocationButton.backgroundColor = UIColor.BackgroundColorDark.snowColor
+                    self?.tempImageLabel.image = UIImage(named: "temp.cloud.snow")?.withTintColor(UIColor.ElementColorDark.snowColor)
+                    self?.windImageLabel.image = UIImage(named: "wind.cloud.snow")?.withTintColor(UIColor.ElementColorDark.snowColor)
+                    self?.humidityImageLabel.image = UIImage(named: "humidity.cloud.snow")?.withTintColor(UIColor.ElementColorDark.snowColor)
+                    self?.pressureImageLabel.image = UIImage(named: "pressure.cloud.snow")?.withTintColor(UIColor.ElementColorDark.snowColor)
+                    self?.weatherConditionImage.image = UIImage(named: "cloud.snow")?.withTintColor(UIColor.ElementColorDark.snowColor)
+                    
+                    self?.cityLabel.textColor = UIColor.ElementColorDark.snowColor
+                    
+                    self?.temperatureLabel.textColor = UIColor.ElementColorDark.snowColor
+                    self?.humidityLabel.textColor = UIColor.ElementColorDark.snowColor
+                    self?.pressureLabel.textColor = UIColor.ElementColorDark.snowColor
+                    self?.windLabel.textColor = UIColor.ElementColorDark.snowColor
+                    self?.textField.backgroundColor = UIColor.ElementColorDark.snowColor
+                    self?.textField.textColor = UIColor.BackgroundColorDark.snowColor
+                    
+                    self?.tabBarController?.tabBar.barTintColor = UIColor.BackgroundColorDark.snowColor
+                    self?.tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud.snow")
+                    self?.tabBarController?.tabBar.tintColor = UIColor.BackgroundColorDark.snowColor
+                    
+                case "Fog", "Tornado", "Haze", "Dust", "Fog",  "Sand", "Dust", "Ash", "Squall" :
+                    
+                    self?.view.backgroundColor = UIColor.BackgroundColorDark.fogColor
+                    
+                    self?.getLocationButton.setImage(UIImage(named: "location.cloud.fog")?.withTintColor(UIColor.ElementColorDark.fogColor), for: UIControl.State.normal)
+                    self?.getLocationButton.backgroundColor = UIColor.BackgroundColorDark.fogColor
+                    self?.tempImageLabel.image = UIImage(named: "temp.cloud.fog")?.withTintColor(UIColor.ElementColorDark.fogColor)
+                    self?.windImageLabel.image = UIImage(named: "wind.cloud.fog")?.withTintColor(UIColor.ElementColorDark.fogColor)
+                    self?.humidityImageLabel.image = UIImage(named: "humidity.cloud.fog")?.withTintColor(UIColor.ElementColorDark.fogColor)
+                    self?.pressureImageLabel.image = UIImage(named: "pressure.cloud.fog")?.withTintColor(UIColor.ElementColorDark.fogColor)
+                    self?.weatherConditionImage.image = UIImage(named: "cloud.fog")?.withTintColor(UIColor.ElementColorDark.fogColor)
+                    
+                    self?.cityLabel.textColor = UIColor.ElementColorDark.fogColor
+                    
+                    self?.temperatureLabel.textColor = UIColor.ElementColorDark.fogColor
+                    self?.humidityLabel.textColor = UIColor.ElementColorDark.fogColor
+                    self?.pressureLabel.textColor = UIColor.ElementColorDark.fogColor
+                    self?.windLabel.textColor = UIColor.ElementColorDark.fogColor
+                    self?.textField.backgroundColor = UIColor.ElementColorDark.fogColor
+                    self?.textField.textColor = UIColor.BackgroundColorDark.fogColor
+                    
+                    self?.tabBarController?.tabBar.barTintColor = UIColor.BackgroundColorDark.fogColor
+                    self?.tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud.fog")
+                    self?.tabBarController?.tabBar.tintColor = UIColor.BackgroundColorDark.fogColor
+
+                default:
+                    print("default")
+                    self?.view.backgroundColor = UIColor.BackgroundColorDark.sunColor
+                    
+                    self?.getLocationButton.setImage(UIImage(named: "location.sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor), for: UIControl.State.normal)
+                    self?.getLocationButton.backgroundColor = UIColor.BackgroundColor.sunColor
+                    self?.tempImageLabel.image = UIImage(named: "temp.sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor)
+                    self?.windImageLabel.image = UIImage(named: "wind.sun")?.withTintColor(UIColor.ElementColorDark.sunColor)
+                    self?.humidityImageLabel.image = UIImage(named: "humidity.sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor)
+                    self?.pressureImageLabel.image = UIImage(named: "pressure.sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor)
+                    self?.weatherConditionImage.image = UIImage(named: "sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor)
+                    
+                    self?.cityLabel.textColor = UIColor.ElementColorDark.sunColor
+                    self?.temperatureLabel.textColor = UIColor.ElementColorDark.sunColor
+                    self?.humidityLabel.textColor = UIColor.ElementColorDark.sunColor
+                    self?.pressureLabel.textColor = UIColor.ElementColorDark.sunColor
+                    self?.windLabel.textColor = UIColor.ElementColorDark.sunColor
+                    self?.textField.backgroundColor = UIColor.ElementColorDark.sunColor
+                    self?.textField.textColor = UIColor.BackgroundColorDark.sunColor
+                    
+                    self?.tabBarController?.tabBar.barTintColor = UIColor.BackgroundColorDark.sunColor
+                    self?.tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.sun.max")
+                    self?.tabBarController?.tabBar.tintColor = UIColor.BackgroundColorDark.sunColor
+                }
+                    
+                    
+                    self?.cityLabel.text =
+                        currentWeather.city?.name != nil ?
+                        "\((currentWeather.city?.name!)!)"
+                        : ""
+                    
+                    self?.temperatureLabel.text =
+                        currentWeather.list?[0].main?.temp != nil ?
+                        "\(Int((currentWeather.list?[0].main?.temp!)!)) ºC"
+                        : " "
+                    
+                    self?.humidityLabel.text =
+                        currentWeather.list?[0].main?.humidity != nil ?
+                        "\(Int((currentWeather.list?[0].main?.humidity!)!)) %"
+                        : " "
+                    
+                    self?.windLabel.text =
+                        currentWeather.list?[0].wind?.speed != nil ?
+                        "\(Int((currentWeather.list?[0].wind?.speed!)!)) km/h"
+                        : " "
+                    
+                    self?.pressureLabel.text =
+                        currentWeather.list?[0].main?.pressure != nil ?
+                        "\(Int((currentWeather.list?[0].main?.pressure!)!)) hPa"
+                        : " "
+                    
+                    self?.weatherConditionImage.image = UIImage(named:  self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 100) ?? "sun.max")
+                }
+                )
+                .store(in: &cancellable)
+    
+    }
+
 
         private func initialize() {
 
@@ -626,7 +803,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
 //            getLocationButton.backgroundColor = backgrondColor
             view.addSubview(getLocationButton)
             getLocationButton.snp.makeConstraints { maker in
-                
                 maker.top.equalTo(cityLabel).inset(60)
 //                maker.height.equalTo(40)
                 maker.right.equalToSuperview().inset(30)
@@ -732,8 +908,20 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate {
                 maker.right.equalToSuperview().inset(0)
                 maker.left.greaterThanOrEqualTo(0)
                 maker.bottom.equalTo(temperatureLabel).inset(30)
-                temperatureLabel
                 maker.width.equalTo(weatherConditionImage.snp.height).multipliedBy(1.0/1.0)
+            }
+
+            view.addSubview(switchLabel)
+            switchLabel.insertSegment(with: nil, at: 0, animated: true)
+            switchLabel.insertSegment(with: nil, at: 1, animated: true)
+            switchLabel.setTitle("Light", forSegmentAt: 0)
+            switchLabel.setTitle("Dark", forSegmentAt: 1)
+            print("seg \(switchLabel.numberOfSegments)")
+            switchLabel.snp.makeConstraints { maker in
+                maker.bottomMargin.equalToSuperview().inset(35)
+                maker.height.equalTo(30)
+                maker.right.equalToSuperview().inset(10)
+ 
             }
         }
 }
@@ -766,6 +954,35 @@ extension UIColor {
         static var fogColor: UIColor { return UIColor(red: 182/255, green: 182/255, blue: 183/255, alpha: 1) }
         static var snowColor: UIColor { return UIColor(red: 172/255, green: 217/255, blue: 242/255, alpha: 1) }
     }
+    
+    struct BackgroundColorDark {
+        static var sunColor: UIColor  { return UIColor(red: 126/255, green: 100/255, blue: 100/255, alpha: 1) }
+        static var cloudColor: UIColor { return UIColor(red: 2/255, green: 63/255, blue: 46/255, alpha: 1) }
+        static var rainColor: UIColor { return UIColor(red: 5/255, green: 48/255, blue: 120/255, alpha: 1) }
+        static var thunderColor: UIColor { return UIColor(red: 38/255, green: 38/255, blue: 38/255, alpha: 1) }
+        static var fogColor: UIColor { return UIColor(red: 90/255, green: 90/255, blue: 91/255, alpha: 1) }
+        static var snowColor: UIColor { return UIColor(red: 85/255, green: 108/255, blue: 120/255, alpha: 1) }
+    }
+    
+    struct ElementColorDark {
+        static var sunColor: UIColor  { return UIColor(red: 127/255, green: 58/255, blue: 30/255, alpha: 1) }
+        static var cloudColor: UIColor { return UIColor(red: 126/255, green: 76/255, blue: 84/255, alpha: 1)}
+        static var rainColor: UIColor { return UIColor(red: 0/255, green: 108/255, blue: 127/255, alpha: 1) }
+        static var thunderColor: UIColor { return UIColor(red: 123/255, green: 117/255, blue: 62/255, alpha: 1) }
+        static var fogColor: UIColor { return UIColor(red: 38/255, green: 38/255, blue: 38/255, alpha: 1)}
+        static var snowColor: UIColor { return UIColor(red: 40/255, green: 50/255, blue: 69/255, alpha: 1) }
+    }
 }
 
+extension UIViewController {
+    var isDarkMode: Bool {
+        if #available(iOS 13.0, *) {
+            return self.traitCollection.userInterfaceStyle == .dark
+        }
+        else {
+            return false
+        }
+    }
+
+}
 
