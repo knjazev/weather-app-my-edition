@@ -21,7 +21,7 @@ class TabBarController: UITabBarController {
             let vc = self.storyboard?.instantiateViewController(withIdentifier:"vc") as? ViewController
             let tvc = self.storyboard?.instantiateViewController(withIdentifier:"tvc") as? TableViewController
 
-            tvc?.modalPresentationStyle = .automatic
+            tvc?.modalPresentationStyle = .popover
             self.present(tvc!, animated: false, completion: nil)
             
         }
