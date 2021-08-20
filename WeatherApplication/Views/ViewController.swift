@@ -116,7 +116,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     
     
     @objc func getLocation(_ sender: UIButton) {
-        
         WeatherAPI.trigger = 1
         WeatherAPI.getLocationOnView = true
         viewModel.delegatation()
@@ -135,7 +134,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         
         viewModel.$currentWeather2
             .sink(receiveValue: {[weak self] currentWeather in
-                WeatherAPI.trigger = 0
                 WeatherAPI.numberOfRows = currentWeather.list?.count ?? 5
                 if self?.traitCollection.userInterfaceStyle == .light {
                     
@@ -550,7 +548,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         
         viewModel.$currentWeather
             .sink(receiveValue: {[weak self] currentWeather in
-                WeatherAPI.trigger = 0
                 WeatherAPI.numberOfRows = currentWeather.list?.count ?? 5
                 
                 //MARK: Light mode
@@ -1133,6 +1130,19 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     }
 }
 
+
+//extension UITextField {
+//    var textPublisher: AnyPublisher<String, Never> {
+//        NotificationCenter.default
+//            .publisher(for: UITextField.textDidChangeNotification, object: self)
+//            .compactMap { $0.object as? UITextField }
+//            .map { $0.text ?? "" }
+//            .eraseToAnyPublisher()
+//    }
+//}
+
+
+// With errors
 extension UITextField {
     var textPublisher: AnyPublisher<String, Never> {
         NotificationCenter.default

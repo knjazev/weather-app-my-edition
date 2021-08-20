@@ -51,9 +51,11 @@ class TableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
         
         switch WeatherAPI.trigger {
+      
         case 0:
             viewModel.$currentWeather
                 .sink(receiveValue: {[weak self] currentWeather in
+                    print("case 0 \(WeatherAPI.trigger)")
                     
                     if let weatherConditionID = currentWeather.list?[indexPath.row].weather?[0].id {
                         

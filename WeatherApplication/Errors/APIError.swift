@@ -12,6 +12,7 @@ enum APIError: Error {
     case decodingError
     case errorCode(Int)
     case unknown
+    case url
 }
 
 extension APIError: LocalizedError {
@@ -23,6 +24,8 @@ extension APIError: LocalizedError {
             return "\(code) - something went wrong"
         case .unknown:
             return "The error is unknown"
+        case .url:
+            return "Error with url"
         }
     }
 }
