@@ -2,7 +2,7 @@
 
 This is a test app which help me to know about Combine framework. Very good experience.
 
-# Screensots and logo
+# Screenshots and logo
 
 <img src="./WeatherApplication/screenshots/logo.png" alt="screenshot4" style="zoom: 65%;" height="200" />
 
