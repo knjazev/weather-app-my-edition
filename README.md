@@ -1,6 +1,6 @@
 # TheWeather app
 
-This is test app which help me to know about Combine framework. Very good experience.
+This is a test app which help me to know about Combine framework. Very good experience.
 
 # Screensots and logo
 
