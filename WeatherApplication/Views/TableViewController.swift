@@ -19,7 +19,7 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 100
-
+        
         
         //        if traitCollection.userInterfaceStyle == .dark {
         //            switchLabel.selectedSegmentIndex = 1
@@ -40,27 +40,15 @@ class TableViewController: UITableViewController {
                     : ""
             })
             .store(in: &cancellable)
-        
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.$currentWeather
-            .sink(receiveValue: { [weak self] currentWeather in
-                self?.number = currentWeather.list?.count ?? 0
-                print(self?.number)
-            })
-            .store(in: &cancellable)
-        return 40
     }
     
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return WeatherAPI.numberOfRows
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
-        
-       
-        
-       
         
         switch WeatherAPI.trigger {
         case 0:
@@ -114,12 +102,8 @@ class TableViewController: UITableViewController {
                             cell.timeLabel.textColor = UIColor.ElementColor.cloudColor
                         default:
                             return cell.backgroundColor = UIColor.BackgroundColor.cloudColor
-                            cell.tempLabel.textColor = UIColor.ElementColor.cloudColor
-                            cell.dayLabel.textColor = UIColor.ElementColor.cloudColor
-                            cell.monthLabel.textColor = UIColor.ElementColor.cloudColor
-                            cell.timeLabel.textColor = UIColor.ElementColor.cloudColor
                         }
-   
+                        
                     }
                     
                     cell.dayLabel.text = currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[0].components(separatedBy: "-")[2] != nil ?
@@ -132,12 +116,12 @@ class TableViewController: UITableViewController {
                     cell.timeLabel.text =
                         currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[1].components(separatedBy: ":")[0] != nil ?
                         "\(( currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[1].components(separatedBy: ":")[0] )!) :00" : ""
-   
+                    
                     cell.tempLabel.text = currentWeather.list?[indexPath.row].main?.temp != nil ? "\(Int((currentWeather.list?[indexPath.row].main?.temp!)!)) ºC" : " "
                     
                     cell.monthLabel.text = currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[0].components(separatedBy: "-")[1] != nil ?
                         "\(( currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[0].components(separatedBy: "-")[1])!)" : ""
-
+                    
                     cell.imageLabel.image = UIImage(named: self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[indexPath.row].weather?[0].id! ?? 800) ?? "sun.max")
                 })
                 .store(in: &cancellable)
@@ -193,12 +177,8 @@ class TableViewController: UITableViewController {
                             cell.timeLabel.textColor = UIColor.ElementColor.cloudColor
                         default:
                             return cell.backgroundColor = UIColor.BackgroundColor.cloudColor
-                            cell.tempLabel.textColor = UIColor.ElementColor.cloudColor
-                            cell.dayLabel.textColor = UIColor.ElementColor.cloudColor
-                            cell.monthLabel.textColor = UIColor.ElementColor.cloudColor
-                            cell.timeLabel.textColor = UIColor.ElementColor.cloudColor
                         }
-   
+                        
                     }
                     
                     cell.dayLabel.text = currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[0].components(separatedBy: "-")[2] != nil ?
@@ -211,20 +191,19 @@ class TableViewController: UITableViewController {
                     cell.timeLabel.text =
                         currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[1].components(separatedBy: ":")[0] != nil ?
                         "\(( currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[1].components(separatedBy: ":")[0] )!) :00" : ""
-   
+                    
                     cell.tempLabel.text = currentWeather.list?[indexPath.row].main?.temp != nil ? "\(Int((currentWeather.list?[indexPath.row].main?.temp!)!)) ºC" : " "
                     
                     cell.monthLabel.text = currentWeather.list?[indexPath.row].dtTxt?.components(separatedBy: " ")[0].components(separatedBy: "-")[1] != nil ?
                         "\(( currentWeather.list?[indexPath.row].dtTxt!.components(separatedBy: " ")[0].components(separatedBy: "-")[1])!)" : ""
-
+                    
                     cell.imageLabel.image = UIImage(named: self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[indexPath.row].weather?[0].id! ?? 800) ?? "sun.max")
                 })
                 .store(in: &cancellable)
             
         default:
-            print("somthing went wrong")
+            print("Default")
         }
-
         return cell
     }
 }

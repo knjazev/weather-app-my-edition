@@ -14,16 +14,18 @@ class WeatherAPI {
     
     static let shared = WeatherAPI()
     static var trigger = 0
-    static var cityStatic = "Riga"
+    static var cityStatic = "Casablanca"
     static var coordinates = [0.0, 0.0]
+    static var getLocationOnView = false
+    static var numberOfRows = 0
     
-    private let baseaURL = "https://api.openweathermap.org/data/2.5/forecast"
+    private let baseURL = "https://api.openweathermap.org/data/2.5/forecast"
     private let apiKey = "b630bd827224a431dcb7ff436690839b"
     
     //MARK: - URL for city fetching
     
     private func absoluteURL(city: String) -> URL? {
-        let queryURL = URL(string: baseaURL)!
+        let queryURL = URL(string: baseURL)!
         let components = URLComponents(url: queryURL, resolvingAgainstBaseURL: true)
         guard var urlComponents = components else { return nil}
         urlComponents.queryItems = [URLQueryItem(name: "appid", value: apiKey),
@@ -35,7 +37,7 @@ class WeatherAPI {
     //MARK: - URL for latitude and longitude fetching
     
     private func absoluteURL(latitude: CLLocationDegrees, longitude: CLLocationDegrees) -> URL? {
-        let queryURL = URL(string: baseaURL)!
+        let queryURL = URL(string: baseURL)!
         let components = URLComponents(url: queryURL, resolvingAgainstBaseURL: true)
         guard var urlComponents = components else { return nil}
         urlComponents.queryItems = [URLQueryItem(name: "appid", value: apiKey),
@@ -67,7 +69,6 @@ class WeatherAPI {
     
     func fetchWeather(latitude: Double, longitude: Double) -> AnyPublisher<WeatherDetail, Never> {
         WeatherAPI.coordinates = [latitude, longitude]
-        print("3")
         
         guard let url = absoluteURL(latitude: latitude, longitude: longitude) else {
             return Just(WeatherDetail.placeholder)

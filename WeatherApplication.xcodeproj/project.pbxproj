@@ -8,7 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		323FB637441E03DD7443351B /* libPods-WeatherApplication.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B182F980D083CE9D3128A903 /* libPods-WeatherApplication.a */; };
-		5C32A53726CEF33200154AA0 /* ColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A53626CEF33200154AA0 /* ColorViewController.swift */; };
+		5C32A53926CFD00400154AA0 /* share3.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A53826CFD00400154AA0 /* share3.json */; };
+		5C32A53B26CFD29400154AA0 /* arrow.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A53A26CFD29400154AA0 /* arrow.json */; };
+		5C32A53D26CFD3F100154AA0 /* arrows.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A53C26CFD3F100154AA0 /* arrows.json */; };
+		5C32A53F26CFD8B700154AA0 /* dot.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A53E26CFD8B700154AA0 /* dot.json */; };
+		5C32A54126CFD9C200154AA0 /* share4.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54026CFD9C200154AA0 /* share4.json */; };
+		5C32A54326CFDA7900154AA0 /* linkedin2.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54226CFDA7900154AA0 /* linkedin2.json */; };
+		5C32A54526CFDAF000154AA0 /* linkedin.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54426CFDAF000154AA0 /* linkedin.json */; };
+		5C32A54726CFF81800154AA0 /* tap2.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54626CFF81800154AA0 /* tap2.json */; };
 		5C5A763326BD4C7C0045A667 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763226BD4C7C0045A667 /* AppDelegate.swift */; };
 		5C5A763526BD4C7C0045A667 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763426BD4C7C0045A667 /* SceneDelegate.swift */; };
 		5C5A763726BD4C7C0045A667 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763626BD4C7C0045A667 /* ViewController.swift */; };
@@ -33,7 +40,14 @@
 
 /* Begin PBXFileReference section */
 		4F0297EC64762BD0FBFC3B75 /* Pods-WeatherApplication.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApplication.debug.xcconfig"; path = "Target Support Files/Pods-WeatherApplication/Pods-WeatherApplication.debug.xcconfig"; sourceTree = "<group>"; };
-		5C32A53626CEF33200154AA0 /* ColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorViewController.swift; path = ../../../ColorViewController.swift; sourceTree = "<group>"; };
+		5C32A53826CFD00400154AA0 /* share3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share3.json; sourceTree = "<group>"; };
+		5C32A53A26CFD29400154AA0 /* arrow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arrow.json; sourceTree = "<group>"; };
+		5C32A53C26CFD3F100154AA0 /* arrows.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arrows.json; sourceTree = "<group>"; };
+		5C32A53E26CFD8B700154AA0 /* dot.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dot.json; sourceTree = "<group>"; };
+		5C32A54026CFD9C200154AA0 /* share4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share4.json; sourceTree = "<group>"; };
+		5C32A54226CFDA7900154AA0 /* linkedin2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = linkedin2.json; sourceTree = "<group>"; };
+		5C32A54426CFDAF000154AA0 /* linkedin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = linkedin.json; sourceTree = "<group>"; };
+		5C32A54626CFF81800154AA0 /* tap2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tap2.json; sourceTree = "<group>"; };
 		5C5A762F26BD4C7C0045A667 /* WeatherApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C5A763226BD4C7C0045A667 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C5A763426BD4C7C0045A667 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,7 +101,6 @@
 				5C5A763626BD4C7C0045A667 /* ViewController.swift */,
 				5C5A765A26C409E60045A667 /* TableViewController.swift */,
 				5C5A766026C423E00045A667 /* TableViewCell.swift */,
-				5C32A53626CEF33200154AA0 /* ColorViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -106,8 +119,16 @@
 		5C32A53526CEC6EA00154AA0 /* Lottie JSON */ = {
 			isa = PBXGroup;
 			children = (
+				5C32A53C26CFD3F100154AA0 /* arrows.json */,
+				5C32A54426CFDAF000154AA0 /* linkedin.json */,
+				5C32A54626CFF81800154AA0 /* tap2.json */,
+				5C32A54226CFDA7900154AA0 /* linkedin2.json */,
+				5C32A54026CFD9C200154AA0 /* share4.json */,
+				5C32A53A26CFD29400154AA0 /* arrow.json */,
+				5C32A53E26CFD8B700154AA0 /* dot.json */,
 				5CB04D5426CC1E7C000C82B2 /* share.json */,
 				5CB04D5326CC1E7C000C82B2 /* share2.json */,
+				5C32A53826CFD00400154AA0 /* share3.json */,
 			);
 			path = "Lottie JSON";
 			sourceTree = "<group>";
@@ -253,12 +274,20 @@
 				5C5A763F26BD4C7D0045A667 /* LaunchScreen.storyboard in Resources */,
 				5C5A764E26BD8DCD0045A667 /* Test iOS task for interns.pdf in Resources */,
 				5CB04D5626CC1E7D000C82B2 /* share2.json in Resources */,
+				5C32A53F26CFD8B700154AA0 /* dot.json in Resources */,
 				5C5A763C26BD4C7D0045A667 /* Assets.xcassets in Resources */,
+				5C32A53D26CFD3F100154AA0 /* arrows.json in Resources */,
+				5C32A54526CFDAF000154AA0 /* linkedin.json in Resources */,
+				5C32A54326CFDA7900154AA0 /* linkedin2.json in Resources */,
+				5C32A54726CFF81800154AA0 /* tap2.json in Resources */,
 				5CB04D6026CD77CC000C82B2 /* MONTSERRAT-THIN.TTF in Resources */,
+				5C32A53B26CFD29400154AA0 /* arrow.json in Resources */,
+				5C32A53926CFD00400154AA0 /* share3.json in Resources */,
 				5CB04D5826CC1E7D000C82B2 /* WHOOPASS.TTF in Resources */,
 				5CB04D5E26CD77C8000C82B2 /* MONTSERRAT-EXTRABOLD.TTF in Resources */,
 				5C5A763A26BD4C7C0045A667 /* Main.storyboard in Resources */,
 				5CB04D5726CC1E7D000C82B2 /* share.json in Resources */,
+				5C32A54126CFD9C200154AA0 /* share4.json in Resources */,
 				5CB04D5F26CD77CA000C82B2 /* MONTSERRAT-MEDIUM.TTF in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,7 +333,6 @@
 				5C5A764726BD85F80045A667 /* WeatherData.swift in Sources */,
 				5C5A765426BD92B40045A667 /* ViewModel.swift in Sources */,
 				5C5A765B26C409E70045A667 /* TableViewController.swift in Sources */,
-				5C32A53726CEF33200154AA0 /* ColorViewController.swift in Sources */,
 				5C5A764C26BD8D3C0045A667 /* APIError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

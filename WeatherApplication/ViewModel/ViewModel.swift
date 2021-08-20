@@ -23,6 +23,7 @@ final class ViewModel: NSObject, ObservableObject {
     var weatherAPI = WeatherAPI()
     
     func getweatherConditionName(weatherConditionID: Int) -> String {
+
         switch weatherConditionID {
         case 200...232:
             return "cloud.bolt"
@@ -39,7 +40,7 @@ final class ViewModel: NSObject, ObservableObject {
         case 801...804:
             return "cloud"
         default:
-            return "cloud"
+            return "vector_logo"
         }
     }
     
@@ -73,7 +74,6 @@ final class ViewModel: NSObject, ObservableObject {
             .store(in: &self.cancellableSet)
     }
 }
-
 
 //MARK: - CLLocationManagerDelegate
 

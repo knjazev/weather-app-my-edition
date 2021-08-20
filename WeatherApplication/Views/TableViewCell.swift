@@ -16,10 +16,10 @@ class TableViewCell: UITableViewCell {
     let monthLabel = UILabel()
     let imageLabel = UIImageView()
     let timeLabel = UILabel()
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        
         addSubview(dayLabel)
         addSubview(tempLabel)
         addSubview(monthLabel)
