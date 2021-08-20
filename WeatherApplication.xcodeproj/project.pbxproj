@@ -17,6 +17,11 @@
 		5C32A54526CFDAF000154AA0 /* linkedin.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54426CFDAF000154AA0 /* linkedin.json */; };
 		5C32A54726CFF81800154AA0 /* tap2.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54626CFF81800154AA0 /* tap2.json */; };
 		5C32A54926D0340300154AA0 /* WeatherAPI_errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A54826D0340200154AA0 /* WeatherAPI_errors.swift */; };
+		5C32A54F26D0411300154AA0 /* screenshot1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54B26D0411300154AA0 /* screenshot1.jpg */; };
+		5C32A55026D0411300154AA0 /* screenshot4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54C26D0411300154AA0 /* screenshot4.jpg */; };
+		5C32A55126D0411300154AA0 /* screenshot3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54D26D0411300154AA0 /* screenshot3.jpg */; };
+		5C32A55226D0411300154AA0 /* screenshot2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54E26D0411300154AA0 /* screenshot2.jpg */; };
+		5C32A55426D0413D00154AA0 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A55326D0413D00154AA0 /* logo.png */; };
 		5C5A763326BD4C7C0045A667 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763226BD4C7C0045A667 /* AppDelegate.swift */; };
 		5C5A763526BD4C7C0045A667 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763426BD4C7C0045A667 /* SceneDelegate.swift */; };
 		5C5A763726BD4C7C0045A667 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763626BD4C7C0045A667 /* ViewController.swift */; };
@@ -50,6 +55,11 @@
 		5C32A54426CFDAF000154AA0 /* linkedin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = linkedin.json; sourceTree = "<group>"; };
 		5C32A54626CFF81800154AA0 /* tap2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tap2.json; sourceTree = "<group>"; };
 		5C32A54826D0340200154AA0 /* WeatherAPI_errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI_errors.swift; sourceTree = "<group>"; };
+		5C32A54B26D0411300154AA0 /* screenshot1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = screenshot1.jpg; sourceTree = "<group>"; };
+		5C32A54C26D0411300154AA0 /* screenshot4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = screenshot4.jpg; sourceTree = "<group>"; };
+		5C32A54D26D0411300154AA0 /* screenshot3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = screenshot3.jpg; sourceTree = "<group>"; };
+		5C32A54E26D0411300154AA0 /* screenshot2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = screenshot2.jpg; sourceTree = "<group>"; };
+		5C32A55326D0413D00154AA0 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		5C5A762F26BD4C7C0045A667 /* WeatherApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C5A763226BD4C7C0045A667 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C5A763426BD4C7C0045A667 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -135,6 +145,18 @@
 			path = "Lottie JSON";
 			sourceTree = "<group>";
 		};
+		5C32A54A26D0405900154AA0 /* screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				5C32A55326D0413D00154AA0 /* logo.png */,
+				5C32A54B26D0411300154AA0 /* screenshot1.jpg */,
+				5C32A54E26D0411300154AA0 /* screenshot2.jpg */,
+				5C32A54D26D0411300154AA0 /* screenshot3.jpg */,
+				5C32A54C26D0411300154AA0 /* screenshot4.jpg */,
+			);
+			path = screenshots;
+			sourceTree = "<group>";
+		};
 		5C5A762626BD4C7C0045A667 = {
 			isa = PBXGroup;
 			children = (
@@ -167,8 +189,9 @@
 				5C5A763B26BD4C7D0045A667 /* Assets.xcassets */,
 				5C32A53426CEC6CE00154AA0 /* Fonts */,
 				5C32A53526CEC6EA00154AA0 /* Lottie JSON */,
-				5C5A763D26BD4C7D0045A667 /* LaunchScreen.storyboard */,
+				5C32A54A26D0405900154AA0 /* screenshots */,
 				5C5A764D26BD8DCD0045A667 /* Test iOS task for interns.pdf */,
+				5C5A763D26BD4C7D0045A667 /* LaunchScreen.storyboard */,
 				5C5A764026BD4C7D0045A667 /* Info.plist */,
 			);
 			path = WeatherApplication;
@@ -275,17 +298,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C5A763F26BD4C7D0045A667 /* LaunchScreen.storyboard in Resources */,
+				5C32A55426D0413D00154AA0 /* logo.png in Resources */,
 				5C5A764E26BD8DCD0045A667 /* Test iOS task for interns.pdf in Resources */,
 				5CB04D5626CC1E7D000C82B2 /* share2.json in Resources */,
+				5C32A54F26D0411300154AA0 /* screenshot1.jpg in Resources */,
 				5C32A53F26CFD8B700154AA0 /* dot.json in Resources */,
 				5C5A763C26BD4C7D0045A667 /* Assets.xcassets in Resources */,
+				5C32A55126D0411300154AA0 /* screenshot3.jpg in Resources */,
 				5C32A53D26CFD3F100154AA0 /* arrows.json in Resources */,
+				5C32A55026D0411300154AA0 /* screenshot4.jpg in Resources */,
 				5C32A54526CFDAF000154AA0 /* linkedin.json in Resources */,
 				5C32A54326CFDA7900154AA0 /* linkedin2.json in Resources */,
 				5C32A54726CFF81800154AA0 /* tap2.json in Resources */,
 				5CB04D6026CD77CC000C82B2 /* MONTSERRAT-THIN.TTF in Resources */,
 				5C32A53B26CFD29400154AA0 /* arrow.json in Resources */,
 				5C32A53926CFD00400154AA0 /* share3.json in Resources */,
+				5C32A55226D0411300154AA0 /* screenshot2.jpg in Resources */,
 				5CB04D5826CC1E7D000C82B2 /* WHOOPASS.TTF in Resources */,
 				5CB04D5E26CD77C8000C82B2 /* MONTSERRAT-EXTRABOLD.TTF in Resources */,
 				5C5A763A26BD4C7C0045A667 /* Main.storyboard in Resources */,
