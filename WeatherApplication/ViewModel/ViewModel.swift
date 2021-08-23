@@ -20,7 +20,11 @@ final class ViewModel: NSObject, ObservableObject {
     
     private var cancellableSet: Set<AnyCancellable> = []
     let locationManager = CLLocationManager()
+    
     var weatherAPI = WeatherAPI()
+    
+    //try with error
+//    var weatherAPI = WeatherAPI_errors()
     
     func getweatherConditionName(weatherConditionID: Int) -> String {
 
@@ -54,7 +58,7 @@ final class ViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        
+
         $city
             .debounce(for: 0.3, scheduler: RunLoop.main)
             .removeDuplicates()
@@ -63,16 +67,44 @@ final class ViewModel: NSObject, ObservableObject {
             }
             .assign(to: \.currentWeather, on: self)
             .store(in: &self.cancellableSet)
-        
+
         $coordinates
             .debounce(for: 0.3, scheduler: RunLoop.main)
             .removeDuplicates()
+
             .flatMap { (coordinate: [Double]) -> AnyPublisher <WeatherDetail, Never> in
                 WeatherAPI.shared.fetchWeather(latitude: coordinate[0], longitude: coordinate[1])
             }
             .assign(to: \.currentWeather2, on: self)
             .store(in: &self.cancellableSet)
     }
+    
+    
+//    // try with errors
+//    override init() {
+//        super.init()
+//
+//        $city
+//            .debounce(for: 0.3, scheduler: RunLoop.main)
+//            .removeDuplicates()
+//
+//            .flatMap { (city: String) -> AnyPublisher <WeatherDetail, APIError> in
+//                WeatherAPI_errors.shared.fetchWeather(for: city)
+//
+//            }
+//            .assign(to: \.currentWeather, on: self)
+//            .store(in: &self.cancellableSet)
+//
+//        $coordinates
+//            .debounce(for: 0.3, scheduler: RunLoop.main)
+//            .removeDuplicates()
+//            .flatMap { (coordinate: [Double]) -> AnyPublisher <WeatherDetail, APIError> in
+//                WeatherAPI_errors.shared.fetchWeather(latitude: coordinate[0], longitude: coordinate[1])
+//            }
+//            .assign(to: \.currentWeather2, on: self)
+//            .store(in: &self.cancellableSet)
+//
+//}
 }
 
 //MARK: - CLLocationManagerDelegate

@@ -1,20 +1,24 @@
 PODS:
   - lottie-ios (3.2.1)
+  - ReachabilitySwift (5.0.0)
   - SnapKit (5.0.1)
 
 DEPENDENCIES:
   - lottie-ios
+  - ReachabilitySwift
   - SnapKit (~> 5.0.0)
 
 SPEC REPOS:
   trunk:
     - lottie-ios
+    - ReachabilitySwift
     - SnapKit
 
 SPEC CHECKSUMS:
   lottie-ios: 106e92eaf11fbed0a76590b4cdb9b5ec26123ff7
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: d5361893ee975c40c7fbdb22ed5e729d3b0d62bb
+PODFILE CHECKSUM: dbfb3b573cc63104ffef44368b79527732fadbad
 
 COCOAPODS: 1.10.1

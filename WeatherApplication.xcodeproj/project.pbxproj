@@ -23,6 +23,9 @@
 		5C32A55226D0411300154AA0 /* screenshot2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54E26D0411300154AA0 /* screenshot2.jpg */; };
 		5C32A55426D0413D00154AA0 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A55326D0413D00154AA0 /* logo.png */; };
 		5C32A55626D04AFA00154AA0 /* screenshot0.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A55526D04AFA00154AA0 /* screenshot0.gif */; };
+		5C32A55926D3B0C200154AA0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A55826D3B0C200154AA0 /* Extensions.swift */; };
+		5C32A55B26D3B9CC00154AA0 /* remarks.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A55A26D3B9CC00154AA0 /* remarks.txt */; };
+		5C32A55E26D3EC9300154AA0 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A55D26D3EC9300154AA0 /* NetworkMonitor.swift */; };
 		5C5A763326BD4C7C0045A667 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763226BD4C7C0045A667 /* AppDelegate.swift */; };
 		5C5A763526BD4C7C0045A667 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763426BD4C7C0045A667 /* SceneDelegate.swift */; };
 		5C5A763726BD4C7C0045A667 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763626BD4C7C0045A667 /* ViewController.swift */; };
@@ -62,6 +65,9 @@
 		5C32A54E26D0411300154AA0 /* screenshot2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = screenshot2.jpg; sourceTree = "<group>"; };
 		5C32A55326D0413D00154AA0 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		5C32A55526D04AFA00154AA0 /* screenshot0.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = screenshot0.gif; sourceTree = "<group>"; };
+		5C32A55826D3B0C200154AA0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		5C32A55A26D3B9CC00154AA0 /* remarks.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = remarks.txt; sourceTree = "<group>"; };
+		5C32A55D26D3EC9300154AA0 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		5C5A762F26BD4C7C0045A667 /* WeatherApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C5A763226BD4C7C0045A667 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C5A763426BD4C7C0045A667 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -160,9 +166,26 @@
 			path = screenshots;
 			sourceTree = "<group>";
 		};
+		5C32A55726D3B09200154AA0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5C32A55826D3B0C200154AA0 /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5C32A55C26D3EC7C00154AA0 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				5C32A55D26D3EC9300154AA0 /* NetworkMonitor.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		5C5A762626BD4C7C0045A667 = {
 			isa = PBXGroup;
 			children = (
+				5C32A55C26D3EC7C00154AA0 /* Network */,
 				5C5A763126BD4C7C0045A667 /* WeatherApplication */,
 				5C5A763026BD4C7C0045A667 /* Products */,
 				E653EC56131D8AB1CCE2DA02 /* Pods */,
@@ -181,6 +204,7 @@
 		5C5A763126BD4C7C0045A667 /* WeatherApplication */ = {
 			isa = PBXGroup;
 			children = (
+				5C32A55726D3B09200154AA0 /* Extensions */,
 				5C5A763226BD4C7C0045A667 /* AppDelegate.swift */,
 				5C5A763426BD4C7C0045A667 /* SceneDelegate.swift */,
 				5C5A765626BD96D50045A667 /* API */,
@@ -194,6 +218,7 @@
 				5C32A53526CEC6EA00154AA0 /* Lottie JSON */,
 				5C32A54A26D0405900154AA0 /* screenshots */,
 				5C5A764D26BD8DCD0045A667 /* Test iOS task for interns.pdf */,
+				5C32A55A26D3B9CC00154AA0 /* remarks.txt */,
 				5C5A763D26BD4C7D0045A667 /* LaunchScreen.storyboard */,
 				5C5A764026BD4C7D0045A667 /* Info.plist */,
 			);
@@ -320,6 +345,7 @@
 				5C32A55226D0411300154AA0 /* screenshot2.jpg in Resources */,
 				5CB04D5826CC1E7D000C82B2 /* WHOOPASS.TTF in Resources */,
 				5CB04D5E26CD77C8000C82B2 /* MONTSERRAT-EXTRABOLD.TTF in Resources */,
+				5C32A55B26D3B9CC00154AA0 /* remarks.txt in Resources */,
 				5C5A763A26BD4C7C0045A667 /* Main.storyboard in Resources */,
 				5CB04D5726CC1E7D000C82B2 /* share.json in Resources */,
 				5C32A54126CFD9C200154AA0 /* share4.json in Resources */,
@@ -366,7 +392,9 @@
 				5C5A763526BD4C7C0045A667 /* SceneDelegate.swift in Sources */,
 				5C5A766126C423E00045A667 /* TableViewCell.swift in Sources */,
 				5C32A54926D0340300154AA0 /* WeatherAPI_errors.swift in Sources */,
+				5C32A55926D3B0C200154AA0 /* Extensions.swift in Sources */,
 				5C5A764726BD85F80045A667 /* WeatherData.swift in Sources */,
+				5C32A55E26D3EC9300154AA0 /* NetworkMonitor.swift in Sources */,
 				5C5A765426BD92B40045A667 /* ViewModel.swift in Sources */,
 				5C5A765B26C409E70045A667 /* TableViewController.swift in Sources */,
 				5C5A764C26BD8D3C0045A667 /* APIError.swift in Sources */,

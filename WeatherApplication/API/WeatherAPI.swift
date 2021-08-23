@@ -18,6 +18,7 @@ class WeatherAPI {
     static var coordinates = [0.0, 0.0]
     static var getLocationOnView = false
     static var numberOfRows = 0
+    static var numberOfSections = 0
     
     private let baseURL = "https://api.openweathermap.org/data/2.5/forecast"
     private let apiKey = "b630bd827224a431dcb7ff436690839b"
@@ -63,6 +64,7 @@ class WeatherAPI {
             .catch { error in Just(WeatherDetail.placeholder)}
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
+        
     }
     
     //MARK: - Fetch weather by latitude and longitude
@@ -81,5 +83,7 @@ class WeatherAPI {
             .catch { error in Just(WeatherDetail.placeholder)}
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
+        
+//        WeatherAPI.getLocationOnView = false
     }
 }
