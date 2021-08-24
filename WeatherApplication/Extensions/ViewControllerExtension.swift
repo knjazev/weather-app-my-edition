@@ -1,87 +1,13 @@
 //
-//  Extensions.swift
+//  UIViewExtension.swift
 //  WeatherApplication
 //
-//  Created by UPIT on 23.08.21.
+//  Created by UPIT on 24.08.21.
 //
 
-import Foundation
 import UIKit
-import Combine
-
-extension UITextField {
-    var textPublisher: AnyPublisher<String, Never> {
-        NotificationCenter.default
-            .publisher(for: UITextField.textDidChangeNotification, object: self)
-            .compactMap { $0.object as? UITextField }
-            .map { $0.text ?? "" }
-            .eraseToAnyPublisher()
-    }
-}
-
-// With errors
-//extension UITextField {
-//    var textPublisher: AnyPublisher<String, APIError> {
-//        NotificationCenter.default
-//            .publisher(for: UITextField.textDidChangeNotification, object: self)
-//            .compactMap { $0.object as? UITextField }
-//            .setFailureType(to: APIError.self)
-//            .map { $0.text ?? "" }
-//            .eraseToAnyPublisher()
-//    }
-//}
-
-extension UIColor {
-    struct ElementColor {
-        static var sunColor: UIColor  { return UIColor(red: 255/255, green: 117/255, blue: 62/255, alpha: 1) }
-        static var cloudColor: UIColor { return UIColor(red: 232/255, green: 182/255, blue: 182/255, alpha: 1)}
-        static var rainColor: UIColor { return UIColor(red: 0/255, green: 218/255, blue: 255/255, alpha: 1) }
-        static var thunderColor: UIColor { return UIColor(red: 248/255, green: 236/255, blue: 125/255, alpha: 1) }
-        static var fogColor: UIColor { return UIColor(red: 77/255, green: 77/255, blue: 77/255, alpha: 1)}
-        static var snowColor: UIColor { return UIColor(red: 83/255, green: 100/255, blue: 135/255, alpha: 1) }
-    }
-    
-    struct BackgroundColor {
-        static var sunColor: UIColor  { return UIColor(red: 254/255, green: 202/255, blue: 202/255, alpha: 1) }
-        static var cloudColor: UIColor { return UIColor(red: 6/255, green: 128/255, blue: 93/255, alpha: 1) }
-        static var rainColor: UIColor { return UIColor(red: 11/255, green: 97/255, blue: 241/255, alpha: 1) }
-        static var thunderColor: UIColor { return UIColor(red: 77/255, green: 77/255, blue: 77/255, alpha: 1) }
-        static var fogColor: UIColor { return UIColor(red: 182/255, green: 182/255, blue: 183/255, alpha: 1) }
-        static var snowColor: UIColor { return UIColor(red: 172/255, green: 217/255, blue: 242/255, alpha: 1) }
-    }
-    
-    struct BackgroundColorDark {
-        static var sunColor: UIColor  { return UIColor(red: 126/255, green: 100/255, blue: 100/255, alpha: 1) }
-        static var cloudColor: UIColor { return UIColor(red: 2/255, green: 63/255, blue: 46/255, alpha: 1) }
-        static var rainColor: UIColor { return UIColor(red: 5/255, green: 48/255, blue: 120/255, alpha: 1) }
-        static var thunderColor: UIColor { return UIColor(red: 38/255, green: 38/255, blue: 38/255, alpha: 1) }
-        static var fogColor: UIColor { return UIColor(red: 90/255, green: 90/255, blue: 91/255, alpha: 1) }
-        static var snowColor: UIColor { return UIColor(red: 85/255, green: 108/255, blue: 120/255, alpha: 1) }
-    }
-    
-    struct ElementColorDark {
-        static var sunColor: UIColor  { return UIColor(red: 127/255, green: 58/255, blue: 30/255, alpha: 1) }
-        static var cloudColor: UIColor { return UIColor(red: 126/255, green: 76/255, blue: 84/255, alpha: 1)}
-        static var rainColor: UIColor { return UIColor(red: 0/255, green: 108/255, blue: 127/255, alpha: 1) }
-        static var thunderColor: UIColor { return UIColor(red: 123/255, green: 117/255, blue: 62/255, alpha: 1) }
-        static var fogColor: UIColor { return UIColor(red: 38/255, green: 38/255, blue: 38/255, alpha: 1)}
-        static var snowColor: UIColor { return UIColor(red: 40/255, green: 50/255, blue: 69/255, alpha: 1) }
-    }
-}
-
-extension UIViewController {
-    var isDarkMode: Bool {
-        if #available(iOS 13.0, *) {
-            return self.traitCollection.userInterfaceStyle == .dark
-        }
-        else {
-            return false
-        }
-    }
-}
 
 extension ViewController {
-    
     func setClearLightState() {
         view.backgroundColor = UIColor.BackgroundColor.sunColor
         
@@ -92,6 +18,7 @@ extension ViewController {
         windImageLabel.image = UIImage(named: "wind.sun.max")
         humidityImageLabel.image = UIImage(named: "humidity.sun.max")
         pressureImageLabel.image = UIImage(named: "pressure.sun.max")
+        switchButton.setImage(UIImage(named: "moon.dark.sun"), for: .normal)
         
         cityLabel.textColor = UIColor.ElementColor.sunColor
         temperatureLabel.textColor = UIColor.ElementColor.sunColor
@@ -102,10 +29,16 @@ extension ViewController {
         switchButton.tintColor = UIColor.ElementColor.sunColor
         shareButton.tintColor = UIColor.ElementColor.sunColor
         
-        tabBarController?.tabBar.barTintColor = UIColor.BackgroundColor.sunColor
-        tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.sun.max")
-        tabBarController?.tabBar.tintColor = UIColor.BackgroundColor.sunColor
+        navigationController?.navigationBar.barTintColor = UIColor.BackgroundColor.sunColor
+        navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.tintColor = UIColor.ElementColor.sunColor
+        navigationController?.toolbar.barTintColor = UIColor.BackgroundColor.sunColor
+        navigationController?.toolbar.tintColor = UIColor.BackgroundColor.sunColor
+        forecastButton.tintColor = UIColor.ElementColor.sunColor
+
         textField.textColor = UIColor.BackgroundColor.sunColor
+        
+        WeatherAPI.currentUIcolor = UIColor.ElementColor.sunColor
     }
     func setRainLightState() {
         view.backgroundColor = UIColor.BackgroundColor.rainColor
@@ -116,6 +49,7 @@ extension ViewController {
         windImageLabel.image = UIImage(named: "wind.cloud.rain")
         humidityImageLabel.image = UIImage(named: "humidity.cloud.rain")
         pressureImageLabel.image = UIImage(named: "pressure.cloud.rain")
+        switchButton.setImage(UIImage(named: "moon.dark.cloud.rain"), for: .normal)
         
         cityLabel.textColor = UIColor.ElementColor.rainColor
         temperatureLabel.textColor = UIColor.ElementColor.rainColor
@@ -127,10 +61,16 @@ extension ViewController {
         switchButton.tintColor = UIColor.ElementColor.rainColor
         shareButton.tintColor = UIColor.ElementColor.rainColor
         
-        tabBarController?.tabBar.barTintColor = UIColor.BackgroundColor.rainColor
-        tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud.rain")
-        tabBarController?.tabBar.tintColor = UIColor.BackgroundColor.rainColor
+        navigationController?.navigationBar.barTintColor = UIColor.BackgroundColor.rainColor
+        navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.tintColor = UIColor.ElementColor.rainColor
+        navigationController?.toolbar.barTintColor = UIColor.BackgroundColor.rainColor
+        navigationController?.toolbar.tintColor = UIColor.BackgroundColor.rainColor
+        forecastButton.tintColor = UIColor.ElementColor.rainColor
+
+        WeatherAPI.currentUIcolor = UIColor.ElementColor.rainColor
     }
+    
     
     func setCloudsLightState() {
         view.backgroundColor = UIColor.BackgroundColor.cloudColor
@@ -142,7 +82,7 @@ extension ViewController {
         humidityImageLabel.image = UIImage(named: "humidity.cloud")
         pressureImageLabel.image = UIImage(named: "pressure.cloud")
         weatherConditionImage.image = UIImage(named: "cloud")
-        
+        switchButton.setImage(UIImage(named: "moon.dark.cloud"), for: .normal)
         
         cityLabel.textColor = UIColor.ElementColor.cloudColor
         temperatureLabel.textColor = UIColor.ElementColor.cloudColor
@@ -154,9 +94,16 @@ extension ViewController {
         switchButton.tintColor = UIColor.ElementColor.cloudColor
         shareButton.tintColor = UIColor.ElementColor.cloudColor
         
-        tabBarController?.tabBar.barTintColor = UIColor.BackgroundColor.cloudColor
-        tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud")
-        tabBarController?.tabBar.tintColor = UIColor.BackgroundColor.cloudColor
+       
+        navigationItem.backButtonDisplayMode = .minimal
+        navigationController?.navigationBar.barTintColor = UIColor.BackgroundColor.cloudColor
+        navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.tintColor = UIColor.ElementColor.cloudColor
+        navigationController?.toolbar.barTintColor = UIColor.BackgroundColor.cloudColor
+        navigationController?.toolbar.tintColor = UIColor.BackgroundColor.cloudColor
+        forecastButton.tintColor = UIColor.ElementColor.cloudColor
+        
+        WeatherAPI.currentUIcolor = UIColor.ElementColor.cloudColor
     }
     
     func setThunderLightState() {
@@ -168,6 +115,7 @@ extension ViewController {
         windImageLabel.image = UIImage(named: "wind.cloud.bolt")
         humidityImageLabel.image = UIImage(named: "humidity.cloud.bolt")
         pressureImageLabel.image = UIImage(named: "pressure.cloud.bolt")
+        switchButton.setImage(UIImage(named: "moon.dark.cloud.bolt"), for: .normal)
         
         cityLabel.textColor = UIColor.ElementColor.thunderColor
         
@@ -180,9 +128,14 @@ extension ViewController {
         switchButton.tintColor = UIColor.ElementColor.thunderColor
         shareButton.tintColor = UIColor.ElementColor.thunderColor
         
-        tabBarController?.tabBar.barTintColor = UIColor.BackgroundColor.thunderColor
-        tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud.bolt")
-        tabBarController?.tabBar.tintColor = UIColor.BackgroundColor.thunderColor
+        navigationController?.navigationBar.barTintColor = UIColor.BackgroundColor.thunderColor
+        navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.tintColor = UIColor.ElementColor.thunderColor
+        navigationController?.toolbar.barTintColor = UIColor.BackgroundColor.thunderColor
+        navigationController?.toolbar.tintColor = UIColor.BackgroundColor.thunderColor
+        forecastButton.tintColor = UIColor.ElementColor.thunderColor
+        
+        WeatherAPI.currentUIcolor = UIColor.ElementColor.thunderColor
     }
     
     func setSnowLightState() {
@@ -194,6 +147,7 @@ extension ViewController {
         windImageLabel.image = UIImage(named: "wind.cloud.snow")
         humidityImageLabel.image = UIImage(named: "humidity.cloud.snow")
         pressureImageLabel.image = UIImage(named: "pressure.cloud.snow")
+        switchButton.setImage(UIImage(named: "moon.dark.cloud.snow"), for: .normal)
         
         cityLabel.textColor = UIColor.ElementColor.snowColor
         
@@ -205,10 +159,16 @@ extension ViewController {
         textField.textColor = UIColor.BackgroundColor.snowColor
         switchButton.tintColor = UIColor.ElementColor.snowColor
         shareButton.tintColor = UIColor.ElementColor.snowColor
+        forecastButton.tintColor = UIColor.BackgroundColor.snowColor
         
-        tabBarController?.tabBar.barTintColor = UIColor.BackgroundColor.snowColor
-        tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud.snow")
-        tabBarController?.tabBar.tintColor = UIColor.BackgroundColor.snowColor
+        navigationController?.navigationBar.barTintColor = UIColor.BackgroundColor.snowColor
+        navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.tintColor = UIColor.ElementColor.snowColor
+        navigationController?.toolbar.barTintColor = UIColor.BackgroundColor.snowColor
+        navigationController?.toolbar.tintColor = UIColor.BackgroundColor.snowColor
+        forecastButton.tintColor = UIColor.ElementColor.snowColor
+         
+        WeatherAPI.currentUIcolor = UIColor.ElementColor.snowColor
     }
     
     func setFogLightState() {
@@ -220,6 +180,7 @@ extension ViewController {
         windImageLabel.image = UIImage(named: "wind.cloud.fog")
         humidityImageLabel.image = UIImage(named: "humidity.cloud.fog")
         pressureImageLabel.image = UIImage(named: "pressure.cloud.fog")
+        switchButton.setImage(UIImage(named: "moon.dark.cloud.fog"), for: .normal)
         
         cityLabel.textColor = UIColor.ElementColor.fogColor
         
@@ -231,10 +192,15 @@ extension ViewController {
         textField.textColor = UIColor.BackgroundColor.fogColor
         switchButton.tintColor = UIColor.ElementColor.fogColor
         shareButton.tintColor = UIColor.ElementColor.fogColor
+    
+        navigationController?.navigationBar.barTintColor = UIColor.BackgroundColor.fogColor
+        navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.tintColor = UIColor.ElementColor.fogColor
+        navigationController?.toolbar.barTintColor = UIColor.BackgroundColor.fogColor
+        navigationController?.toolbar.tintColor = UIColor.BackgroundColor.fogColor
+        forecastButton.tintColor = UIColor.ElementColor.fogColor
         
-        tabBarController?.tabBar.barTintColor = UIColor.BackgroundColor.fogColor
-        tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud.fog")
-        tabBarController?.tabBar.tintColor = UIColor.BackgroundColor.fogColor
+        WeatherAPI.currentUIcolor = UIColor.ElementColor.fogColor
 
     }
     
@@ -248,6 +214,7 @@ extension ViewController {
         humidityImageLabel.image = UIImage(named: "humidity.sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor)
         pressureImageLabel.image = UIImage(named: "pressure.sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor)
         weatherConditionImage.image = UIImage(named: "sun.max.dark")
+        switchButton.setImage(UIImage(named: "sun.light"), for: .normal)
         
         cityLabel.textColor = UIColor.ElementColorDark.sunColor
         temperatureLabel.textColor = UIColor.ElementColorDark.sunColor
@@ -259,9 +226,14 @@ extension ViewController {
         switchButton.tintColor = UIColor.ElementColorDark.sunColor
         shareButton.tintColor = UIColor.ElementColorDark.sunColor
         
-        tabBarController?.tabBar.barTintColor = UIColor.BackgroundColorDark.sunColor
-        tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor)
-        tabBarController?.tabBar.tintColor = UIColor.BackgroundColorDark.sunColor
+        navigationController?.navigationBar.barTintColor = UIColor.BackgroundColorDark.sunColor
+        navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.tintColor = UIColor.ElementColorDark.sunColor
+        navigationController?.toolbar.barTintColor = UIColor.BackgroundColorDark.sunColor
+        navigationController?.toolbar.tintColor = UIColor.BackgroundColorDark.sunColor
+        forecastButton.tintColor = UIColor.ElementColorDark.sunColor
+        
+        WeatherAPI.currentUIcolor = UIColor.ElementColorDark.sunColor
     }
     func setCloudsDarkState() {
         view.backgroundColor = UIColor.BackgroundColorDark.cloudColor
@@ -272,7 +244,8 @@ extension ViewController {
         windImageLabel.image = UIImage(named: "wind.cloud")?.withTintColor(UIColor.ElementColorDark.cloudColor)
         humidityImageLabel.image = UIImage(named: "humidity.cloud")?.withTintColor(UIColor.ElementColorDark.cloudColor)
         pressureImageLabel.image = UIImage(named: "pressure.cloud")?.withTintColor(UIColor.ElementColorDark.cloudColor)
-        weatherConditionImage.image = UIImage(named: "cloud.dark")
+        weatherConditionImage.image = UIImage(named: "cloud.dark")?.withTintColor(UIColor.ElementColorDark.cloudColor)
+        switchButton.setImage(UIImage(named: "sun.light"), for: .normal)
         
         cityLabel.textColor = UIColor.ElementColorDark.cloudColor
         temperatureLabel.textColor = UIColor.ElementColorDark.cloudColor
@@ -284,9 +257,14 @@ extension ViewController {
         switchButton.tintColor = UIColor.ElementColor.thunderColor
         shareButton.tintColor = UIColor.ElementColorDark.cloudColor
         
-        tabBarController?.tabBar.barTintColor = UIColor.BackgroundColorDark.cloudColor
-        tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud")?.withTintColor(UIColor.ElementColorDark.cloudColor)
-        tabBarController?.tabBar.tintColor = UIColor.BackgroundColorDark.cloudColor
+        navigationController?.navigationBar.barTintColor = UIColor.BackgroundColorDark.cloudColor
+        navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.tintColor = UIColor.ElementColorDark.cloudColor
+        navigationController?.toolbar.barTintColor = UIColor.BackgroundColorDark.cloudColor
+        navigationController?.toolbar.tintColor = UIColor.BackgroundColorDark.cloudColor
+        forecastButton.tintColor = UIColor.ElementColorDark.cloudColor
+        
+        WeatherAPI.currentUIcolor = UIColor.ElementColorDark.cloudColor
         
     }
     func setRainDarkState() {
@@ -298,7 +276,8 @@ extension ViewController {
         windImageLabel.image = UIImage(named: "wind.cloud.rain")?.withTintColor(UIColor.ElementColorDark.rainColor)
         humidityImageLabel.image = UIImage(named: "humidity.cloud.rain")?.withTintColor(UIColor.ElementColorDark.rainColor)
         pressureImageLabel.image = UIImage(named: "pressure.cloud.rain")?.withTintColor(UIColor.ElementColorDark.rainColor)
-        weatherConditionImage.image = UIImage(named: "cloud.rain.dark")
+        weatherConditionImage.image = UIImage(named: "cloud.rain.dark")?.withTintColor(UIColor.ElementColorDark.rainColor)
+        switchButton.setImage(UIImage(named: "sun.light"), for: .normal)
         
         cityLabel.textColor = UIColor.ElementColorDark.rainColor
         temperatureLabel.textColor = UIColor.ElementColorDark.rainColor
@@ -310,9 +289,14 @@ extension ViewController {
         switchButton.tintColor = UIColor.ElementColorDark.thunderColor
         shareButton.tintColor = UIColor.ElementColorDark.rainColor
         
-        tabBarController?.tabBar.barTintColor = UIColor.BackgroundColorDark.rainColor
-        tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud.rain")?.withTintColor(UIColor.ElementColorDark.rainColor)
-        tabBarController?.tabBar.tintColor = UIColor.BackgroundColorDark.rainColor
+        navigationController?.navigationBar.barTintColor = UIColor.BackgroundColorDark.rainColor
+        navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.tintColor = UIColor.ElementColorDark.rainColor
+        navigationController?.toolbar.barTintColor = UIColor.BackgroundColorDark.rainColor
+        navigationController?.toolbar.tintColor = UIColor.BackgroundColorDark.rainColor
+        forecastButton.tintColor = UIColor.ElementColorDark.rainColor
+        
+        WeatherAPI.currentUIcolor = UIColor.ElementColorDark.rainColor
     }
     func setThunderDarkState() {
         view.backgroundColor = UIColor.BackgroundColorDark.thunderColor
@@ -323,7 +307,8 @@ extension ViewController {
         windImageLabel.image = UIImage(named: "wind.cloud.bolt")?.withTintColor(UIColor.ElementColorDark.thunderColor)
         humidityImageLabel.image = UIImage(named: "humidity.cloud.bolt")?.withTintColor(UIColor.ElementColorDark.thunderColor)
         pressureImageLabel.image = UIImage(named: "pressure.cloud.bolt")?.withTintColor(UIColor.ElementColorDark.thunderColor)
-        weatherConditionImage.image = UIImage(named: "cloud.bolt.dark")
+        weatherConditionImage.image = UIImage(named: "cloud.bolt.dark")?.withTintColor(UIColor.ElementColorDark.thunderColor)
+        switchButton.setImage(UIImage(named: "sun.light"), for: .normal)
         
         cityLabel.textColor = UIColor.ElementColorDark.thunderColor
         temperatureLabel.textColor = UIColor.ElementColorDark.thunderColor
@@ -335,9 +320,14 @@ extension ViewController {
         switchButton.tintColor = UIColor.ElementColor.thunderColor
         shareButton.tintColor = UIColor.ElementColorDark.thunderColor
         
-        tabBarController?.tabBar.barTintColor = UIColor.BackgroundColorDark.thunderColor
-        tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud.bolt")
-        tabBarController?.tabBar.tintColor = UIColor.BackgroundColorDark.thunderColor
+        navigationController?.navigationBar.barTintColor = UIColor.BackgroundColorDark.thunderColor
+        navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.tintColor = UIColor.ElementColorDark.thunderColor
+        navigationController?.toolbar.barTintColor = UIColor.BackgroundColorDark.thunderColor
+        navigationController?.toolbar.tintColor = UIColor.BackgroundColorDark.thunderColor
+        forecastButton.tintColor = UIColor.ElementColorDark.thunderColor
+        
+        WeatherAPI.currentUIcolor = UIColor.ElementColorDark.thunderColor
     }
     func setFogDarkState() {
         view.backgroundColor = UIColor.BackgroundColorDark.fogColor
@@ -348,7 +338,8 @@ extension ViewController {
         windImageLabel.image = UIImage(named: "wind.cloud.fog")?.withTintColor(UIColor.ElementColorDark.fogColor)
         humidityImageLabel.image = UIImage(named: "humidity.cloud.fog")?.withTintColor(UIColor.ElementColorDark.fogColor)
         pressureImageLabel.image = UIImage(named: "pressure.cloud.fog")?.withTintColor(UIColor.ElementColorDark.fogColor)
-        weatherConditionImage.image = UIImage(named: "cloud.fog.dark")
+        weatherConditionImage.image = UIImage(named: "cloud.fog.dark")?.withTintColor(UIColor.ElementColorDark.fogColor)
+        switchButton.setImage(UIImage(named: "sun.light"), for: .normal)
         
         cityLabel.textColor = UIColor.ElementColorDark.fogColor
         temperatureLabel.textColor = UIColor.ElementColorDark.fogColor
@@ -360,9 +351,14 @@ extension ViewController {
         switchButton.tintColor = UIColor.ElementColor.thunderColor
         shareButton.tintColor = UIColor.ElementColorDark.fogColor
         
-        tabBarController?.tabBar.barTintColor = UIColor.BackgroundColorDark.fogColor
-        tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud.fog")
-        tabBarController?.tabBar.tintColor = UIColor.BackgroundColorDark.fogColor
+        navigationController?.navigationBar.barTintColor = UIColor.BackgroundColorDark.fogColor
+        navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.tintColor = UIColor.ElementColorDark.fogColor
+        navigationController?.toolbar.barTintColor = UIColor.BackgroundColorDark.fogColor
+        navigationController?.toolbar.tintColor = UIColor.BackgroundColorDark.fogColor
+        forecastButton.tintColor = UIColor.ElementColorDark.fogColor
+        
+        WeatherAPI.currentUIcolor = UIColor.ElementColorDark.fogColor
     }
     func setSnowDarkState() {
         view.backgroundColor = UIColor.BackgroundColorDark.snowColor
@@ -373,7 +369,8 @@ extension ViewController {
         windImageLabel.image = UIImage(named: "wind.cloud.snow")?.withTintColor(UIColor.ElementColorDark.snowColor)
         humidityImageLabel.image = UIImage(named: "humidity.cloud.snow")?.withTintColor(UIColor.ElementColorDark.snowColor)
         pressureImageLabel.image = UIImage(named: "pressure.cloud.snow")?.withTintColor(UIColor.ElementColorDark.snowColor)
-        weatherConditionImage.image = UIImage(named: "cloud.snow.dark")
+        weatherConditionImage.image = UIImage(named: "cloud.snow.dark")?.withTintColor(UIColor.ElementColorDark.snowColor)
+        switchButton.setImage(UIImage(named: "sun.light"), for: .normal)
         
         cityLabel.textColor = UIColor.ElementColorDark.snowColor
         temperatureLabel.textColor = UIColor.ElementColorDark.snowColor
@@ -385,9 +382,13 @@ extension ViewController {
         switchButton.tintColor = UIColor.ElementColor.thunderColor
         shareButton.tintColor = UIColor.ElementColorDark.snowColor
         
-        tabBarController?.tabBar.barTintColor = UIColor.BackgroundColorDark.snowColor
-        tabBarController?.tabBar.selectionIndicatorImage = UIImage(named: "forecast.cloud.snow")
-        tabBarController?.tabBar.tintColor = UIColor.BackgroundColorDark.snowColor
+        navigationController?.navigationBar.barTintColor = UIColor.BackgroundColorDark.snowColor
+        navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.tintColor = UIColor.ElementColorDark.snowColor
+        navigationController?.toolbar.barTintColor = UIColor.BackgroundColorDark.snowColor
+        navigationController?.toolbar.tintColor = UIColor.BackgroundColorDark.snowColor
+        forecastButton.tintColor = UIColor.ElementColorDark.snowColor
+        
+        WeatherAPI.currentUIcolor = UIColor.ElementColorDark.snowColor
     }
 }
-

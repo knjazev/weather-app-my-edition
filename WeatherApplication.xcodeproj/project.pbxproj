@@ -23,9 +23,13 @@
 		5C32A55226D0411300154AA0 /* screenshot2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54E26D0411300154AA0 /* screenshot2.jpg */; };
 		5C32A55426D0413D00154AA0 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A55326D0413D00154AA0 /* logo.png */; };
 		5C32A55626D04AFA00154AA0 /* screenshot0.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A55526D04AFA00154AA0 /* screenshot0.gif */; };
-		5C32A55926D3B0C200154AA0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A55826D3B0C200154AA0 /* Extensions.swift */; };
+		5C32A55926D3B0C200154AA0 /* UITextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A55826D3B0C200154AA0 /* UITextFieldExtensions.swift */; };
 		5C32A55B26D3B9CC00154AA0 /* remarks.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A55A26D3B9CC00154AA0 /* remarks.txt */; };
 		5C32A55E26D3EC9300154AA0 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A55D26D3EC9300154AA0 /* NetworkMonitor.swift */; };
+		5C32A56026D5418900154AA0 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A55F26D5418900154AA0 /* ViewControllerExtension.swift */; };
+		5C32A56226D5421400154AA0 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A56126D5421400154AA0 /* UIColorExtension.swift */; };
+		5C32A56426D5427F00154AA0 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A56326D5427F00154AA0 /* DateExtension.swift */; };
+		5C32A56626D542D600154AA0 /* TableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A56526D542D600154AA0 /* TableViewCellExtension.swift */; };
 		5C5A763326BD4C7C0045A667 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763226BD4C7C0045A667 /* AppDelegate.swift */; };
 		5C5A763526BD4C7C0045A667 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763426BD4C7C0045A667 /* SceneDelegate.swift */; };
 		5C5A763726BD4C7C0045A667 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763626BD4C7C0045A667 /* ViewController.swift */; };
@@ -65,9 +69,13 @@
 		5C32A54E26D0411300154AA0 /* screenshot2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = screenshot2.jpg; sourceTree = "<group>"; };
 		5C32A55326D0413D00154AA0 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		5C32A55526D04AFA00154AA0 /* screenshot0.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = screenshot0.gif; sourceTree = "<group>"; };
-		5C32A55826D3B0C200154AA0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		5C32A55826D3B0C200154AA0 /* UITextFieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtensions.swift; sourceTree = "<group>"; };
 		5C32A55A26D3B9CC00154AA0 /* remarks.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = remarks.txt; sourceTree = "<group>"; };
 		5C32A55D26D3EC9300154AA0 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		5C32A55F26D5418900154AA0 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
+		5C32A56126D5421400154AA0 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		5C32A56326D5427F00154AA0 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		5C32A56526D542D600154AA0 /* TableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellExtension.swift; sourceTree = "<group>"; };
 		5C5A762F26BD4C7C0045A667 /* WeatherApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C5A763226BD4C7C0045A667 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C5A763426BD4C7C0045A667 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -169,7 +177,11 @@
 		5C32A55726D3B09200154AA0 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				5C32A55826D3B0C200154AA0 /* Extensions.swift */,
+				5C32A55826D3B0C200154AA0 /* UITextFieldExtensions.swift */,
+				5C32A56326D5427F00154AA0 /* DateExtension.swift */,
+				5C32A55F26D5418900154AA0 /* ViewControllerExtension.swift */,
+				5C32A56126D5421400154AA0 /* UIColorExtension.swift */,
+				5C32A56526D542D600154AA0 /* TableViewCellExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -387,12 +399,16 @@
 			files = (
 				5C5A763726BD4C7C0045A667 /* ViewController.swift in Sources */,
 				5C7128F626CAD5990085148D /* TabBarController.swift in Sources */,
+				5C32A56226D5421400154AA0 /* UIColorExtension.swift in Sources */,
+				5C32A56626D542D600154AA0 /* TableViewCellExtension.swift in Sources */,
 				5C5A764926BD87170045A667 /* WeatherAPI.swift in Sources */,
 				5C5A763326BD4C7C0045A667 /* AppDelegate.swift in Sources */,
+				5C32A56026D5418900154AA0 /* ViewControllerExtension.swift in Sources */,
 				5C5A763526BD4C7C0045A667 /* SceneDelegate.swift in Sources */,
 				5C5A766126C423E00045A667 /* TableViewCell.swift in Sources */,
 				5C32A54926D0340300154AA0 /* WeatherAPI_errors.swift in Sources */,
-				5C32A55926D3B0C200154AA0 /* Extensions.swift in Sources */,
+				5C32A56426D5427F00154AA0 /* DateExtension.swift in Sources */,
+				5C32A55926D3B0C200154AA0 /* UITextFieldExtensions.swift in Sources */,
 				5C5A764726BD85F80045A667 /* WeatherData.swift in Sources */,
 				5C32A55E26D3EC9300154AA0 /* NetworkMonitor.swift in Sources */,
 				5C5A765426BD92B40045A667 /* ViewModel.swift in Sources */,

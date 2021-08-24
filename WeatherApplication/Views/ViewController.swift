@@ -10,7 +10,6 @@ import Combine
 import CoreLocation
 import Lottie
 import SnapKit
-import Reachability
 import Network
 
 class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, UIImagePickerControllerDelegate {
@@ -32,19 +31,30 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     let getLocationButton = UIButton()
     let shareButton = UIButton()
     let animationView = AnimationView(name: "tap2")
+    let forecastButton = UIBarButtonItem()
     
     private var cancellable = Set<AnyCancellable>()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isNavigationBarHidden = true
-        navigationController?.isToolbarHidden = false
         
-        let button = UIBarButtonItem(image: UIImage(named: "forecast.cloud"), style: .done, target: self, action: #selector(getForecast))
+
+        //        let input = "2021-08-24 15:00:00"
+        //
+        //
+        //        let date = Date()
+        //        let formate = date.getFormattedDate(format: "dd MMMM")
+        //        print(formate)
+        //
+//                forecastButton.image = UIImage(named: "forecast.cloud")
+//                forecastButton.target = self
+//                forecastButton.action = #selector(getForecast)
+//
+//                forecastButton.tintColor = .white
         
-        setToolbarItems([button], animated: true)
         
+        
+//        setToolbarItems([forecastButton], animated: true)
         
         NetworkMonitor.shared.startMonitoring()
         
@@ -52,8 +62,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         binding()
         textField.delegate = self
         textField.text = viewModel.city
-        
-        
         
         getLocationButton.addTarget(self, action: #selector(getLocation), for: .touchUpInside)
         switchButton.addTarget(self, action: #selector(changeMode), for: .touchUpInside)
@@ -63,16 +71,14 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
-        
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         checkTheConnection()
+        navigationController?.isNavigationBarHidden = true
+        navigationController?.isToolbarHidden = false
     }
-    
-    //    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-    //        super.traitCollectionDidChange(previousTraitCollection)
-    //    }
-    
+
     // MARK: - Hide Keyboard using return keyboard button
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -82,21 +88,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     
     //MARK: Take a screenshot for share with friends
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "tvc" {
-            _ = segue.destination as! TableViewController
-    
-        }
-    }
-    
     @objc func getForecast(_ sender: UIBarButtonItem) {
         
         let tvc = (self.storyboard?.instantiateViewController(withIdentifier:"tvc") as? TableViewController)
-        
-//        navigationController?.modalPresentationStyle = .fullScreen
-       
-        navigationController?.present(tvc!, animated: true)
-    
+        navigationController?.show(tvc!, sender: true)
     }
     
     @objc func share(_ sender: UIButton) {
@@ -114,11 +109,11 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     //MARK: Change mode
     
     @objc func changeMode(_ sender: UIButton) {
-
         switch sender.isEnabled {
         case false:
             print("wowow")
             overrideUserInterfaceStyle = .light
+            WeatherAPI.isLightMode = true
             viewDidLoad()
             self.switchButton.isEnabled = true
             
@@ -126,69 +121,115 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             if traitCollection.userInterfaceStyle == .light && WeatherAPI.getLocationOnView == true {
                 print("Light & True: \(WeatherAPI.getLocationOnView)")
                 overrideUserInterfaceStyle = .dark
+                WeatherAPI.isLightMode = false
                 getLocation(sender)
-                switchButton.setImage(UIImage(named: "light.mode"), for: .normal)
-
+//                switchButton.setImage(UIImage(named: "light.mode"), for: .normal)
+                
             }else if traitCollection.userInterfaceStyle == .dark && WeatherAPI.getLocationOnView == true {
                 print("Dark & True: \(WeatherAPI.getLocationOnView)")
                 overrideUserInterfaceStyle = .light
+                WeatherAPI.isLightMode = true
                 getLocation(sender)
-                switchButton.setImage(UIImage(named: "dark.mode"), for: .normal)
- 
+//                switchButton.setImage(UIImage(named: "dark.mode"), for: .normal)
+                
             }else if traitCollection.userInterfaceStyle == .light && WeatherAPI.getLocationOnView == false {
                 print("Light & False: \(WeatherAPI.getLocationOnView)")
                 overrideUserInterfaceStyle = .dark
+                WeatherAPI.isLightMode = false
                 //                viewDidLoad()
                 binding()
-                switchButton.setImage(UIImage(named: "light.mode"), for: .normal)
+//                switchButton.setImage(UIImage(named: "light.mode"), for: .normal)
                 
             }else {
                 print("Dark & False: \(WeatherAPI.getLocationOnView)")
                 overrideUserInterfaceStyle = .light
+                WeatherAPI.isLightMode = true
                 //                viewDidLoad()
                 binding()
-                switchButton.setImage(UIImage(named: "dark.mode"), for: .normal)
+//                switchButton.setImage(UIImage(named: "dark.mode"), for: .normal)
             }
             self.switchButton.isEnabled = true
         }
     }
     
+    func addLoader(view: UIViewController) {
+        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.style = UIActivityIndicatorView.Style.medium
+        loadingIndicator.startAnimating();
+        
+        alert.view.addSubview(loadingIndicator)
+        present(alert, animated: true, completion: nil)
+    }
+    
     //MARK: Get Location
     
     @objc func getLocation(_ sender: UIButton) {
-        WeatherAPI.trigger = 1
-        WeatherAPI.getLocationOnView = true
-        viewModel.delegatation()
         
-        let lat = Double(viewModel.locationManager.location?.coordinate.latitude ?? 0.0)
-        let lon = Double(viewModel.locationManager.location?.coordinate.longitude ?? 0.0)
-        let publisher = [lat,lon].publisher
-        let publisher2 = [lon,lat].publisher
+        addLoader(view: self)
         
-        publisher
-            .assign(to: \.coordinates[1], on: viewModel)
-            .store(in: &cancellable)
-        publisher2
-            .assign(to: \.coordinates[0], on: viewModel)
-            .store(in: &cancellable)
-        subcribeAndUpdateUI(weather: viewModel.$currentWeather2, trigrer: 1)
-    }
+            WeatherAPI.trigger = 1
+            WeatherAPI.getLocationOnView = true
+            self.viewModel.delegatation()
+            
+            let lat = Double(viewModel.locationManager.location?.coordinate.latitude ?? 0.0)
+            let lon = Double(viewModel.locationManager.location?.coordinate.longitude ?? 0.0)
+            let publisher = [lat,lon].publisher
+            let publisher2 = [lon,lat].publisher
+            
+            publisher
+                .assign(to: \.coordinates[1], on: viewModel)
+                .store(in: &cancellable)
+            publisher2
+                .assign(to: \.coordinates[0], on: viewModel)
+                .store(in: &cancellable)
+            subcribeAndUpdateUI(weather: viewModel.$currentWeather2, trigrer: 1, screenMode: true)
+
+              
+                    self.dismiss(animated: false, completion: nil)
+        }
+
+       
+//        WeatherAPI.trigger = 1
+//        WeatherAPI.getLocationOnView = true
+//        viewModel.delegatation()
+//
+//        let lat = Double(viewModel.locationManager.location?.coordinate.latitude ?? 0.0)
+//        let lon = Double(viewModel.locationManager.location?.coordinate.longitude ?? 0.0)
+//        let publisher = [lat,lon].publisher
+//        let publisher2 = [lon,lat].publisher
+//
+//        publisher
+//            .assign(to: \.coordinates[1], on: viewModel)
+//            .store(in: &cancellable)
+//        publisher2
+//            .assign(to: \.coordinates[0], on: viewModel)
+//            .store(in: &cancellable)
+//        subcribeAndUpdateUI(weather: viewModel.$currentWeather2, trigrer: 1, screenMode: true)
+        
+        
+    
     
     //MARK: Binding
     
     func binding() {
+        addLoader(view: self)
+        
         textField.textPublisher
             .assign(to: \.city, on: viewModel)
             .store(in: &cancellable)
-        subcribeAndUpdateUI(weather: viewModel.$currentWeather, trigrer: 0)
+        subcribeAndUpdateUI(weather: viewModel.$currentWeather, trigrer: 0, screenMode: false)
         
+        dismiss(animated: false, completion: nil)
     }
     
-    private func subcribeAndUpdateUI(weather: Published<WeatherDetail>.Publisher, trigrer: Int) {
+    private func subcribeAndUpdateUI(weather: Published<WeatherDetail>.Publisher, trigrer: Int, screenMode: Bool) {
         weather
             .sink(receiveCompletion: { _ in }, receiveValue: {[weak self] currentWeather in
                 WeatherAPI.numberOfRows = currentWeather.list?.count ?? 40
                 WeatherAPI.trigger = trigrer
+                WeatherAPI.getLocationOnView = screenMode
                 self?.checkTheConnection()
                 
                 if self?.traitCollection.userInterfaceStyle == .light {
@@ -317,7 +358,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         
         view.addSubview(pressureImageLabel)
         pressureImageLabel.snp.makeConstraints { maker in
-            maker.left.equalToSuperview().inset(30)
+            maker.left.equalToSuperview().inset(10)
             maker.bottomMargin.equalToSuperview().inset(30)
             maker.height.equalTo(45)
             maker.width.equalTo(45)
@@ -325,7 +366,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         
         view.addSubview(humidityImageLabel)
         humidityImageLabel.snp.makeConstraints { maker in
-            maker.left.equalToSuperview().inset(30)
+            maker.left.equalToSuperview().inset(10)
             maker.bottom.equalTo(pressureImageLabel).inset(45)
             maker.height.equalTo(45)
             maker.width.equalTo(45)
@@ -333,7 +374,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         
         view.addSubview(windImageLabel)
         windImageLabel.snp.makeConstraints { maker in
-            maker.left.equalToSuperview().inset(30)
+            maker.left.equalToSuperview().inset(10)
             maker.bottom.equalTo(humidityImageLabel).inset(45)
             maker.height.equalTo(45)
             maker.width.equalTo(45)
@@ -341,11 +382,34 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         
         view.addSubview(tempImageLabel)
         tempImageLabel.snp.makeConstraints { maker in
-            maker.left.equalToSuperview().inset(30)
+            maker.left.equalToSuperview().inset(10)
             maker.bottom.equalTo(windImageLabel).inset(45)
             maker.height.equalTo(45)
             maker.width.equalTo(45)
         }
+        
+        
+        //Light mode
+        
+        view.addSubview(switchButton)
+        //        switchButton.backgroundColor = .yellow
+        switchButton.frame.size = CGSize(width: 60, height: 60)
+        
+        if !switchButton.isSelected && traitCollection.userInterfaceStyle == .light {
+            switchButton.setImage(UIImage(named: "moon.dark.cloud.rain"), for: .normal)
+            
+        }else if !switchButton.isSelected && traitCollection.userInterfaceStyle == .dark {
+            switchButton.setImage(UIImage(named: "sun.light"), for: .normal)
+        }
+        
+        switchButton.snp.makeConstraints { maker in
+            maker.left.equalToSuperview().inset(10)
+            maker.bottom.equalTo(tempImageLabel).inset(45)
+            maker.height.equalTo(40)
+            maker.height.equalTo(45)
+            maker.width.equalTo(45)
+        }
+        
         
         //Labels with data
         
@@ -399,27 +463,28 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             maker.top.equalTo(textField).inset(60)
             maker.right.equalToSuperview().inset(0)
             maker.left.greaterThanOrEqualTo(0)
-            maker.bottom.equalTo(temperatureLabel).inset(30)
+//            maker.bottom.equalTo(temperatureLabel).inset(30)
+            maker.bottom.equalTo(switchButton).inset(30)
             maker.width.equalTo(weatherConditionImage.snp.height).multipliedBy(1.0/1.0)
         }
         
-        view.addSubview(switchButton)
-        //        switchButton.backgroundColor = .yellow
-        switchButton.frame.size = CGSize(width: 60, height: 60)
-        
-        if !switchButton.isSelected && traitCollection.userInterfaceStyle == .light {
-            switchButton.setImage(UIImage(named: "dark.mode"), for: .normal)
-            
-        }else if !switchButton.isSelected && traitCollection.userInterfaceStyle == .dark {
-            switchButton.setImage(UIImage(named: "light.mode"), for: .normal)
-        }
-        
-        switchButton.snp.makeConstraints { maker in
-            maker.bottomMargin.equalToSuperview().inset(30)
-            maker.height.equalTo(60)
-            maker.width.equalTo(60)
-            maker.right.equalToSuperview().inset(10)
-        }
+//        view.addSubview(switchButton)
+//        //        switchButton.backgroundColor = .yellow
+//        switchButton.frame.size = CGSize(width: 60, height: 60)
+//
+//        if !switchButton.isSelected && traitCollection.userInterfaceStyle == .light {
+//            switchButton.setImage(UIImage(named: "dark.mode"), for: .normal)
+//
+//        }else if !switchButton.isSelected && traitCollection.userInterfaceStyle == .dark {
+//            switchButton.setImage(UIImage(named: "light.mode"), for: .normal)
+//        }
+//
+//        switchButton.snp.makeConstraints { maker in
+//            maker.bottomMargin.equalToSuperview().inset(30)
+//            maker.height.equalTo(40)
+//            maker.width.equalTo(40)
+//            maker.right.equalToSuperview().inset(10)
+//        }
         
         view.addSubview(animationView)
         //        animationView.backgroundColor = .blue
@@ -445,6 +510,21 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         switchButton.layer.zPosition = 12
         animationView.layer.zPosition = 10
         shareButton.layer.zPosition = 11
+        
+        forecastButton.image = UIImage(named: "forecast.cloud")
+        forecastButton.target = self
+        forecastButton.action = #selector(getForecast)
+        forecastButton.tintColor = .white
+        
+        
+        setToolbarItems([forecastButton], animated: true)
+        
+        print("view.bounds.width \(view.bounds.width)")
+        print("forecastButton.width \(forecastButton.width)")
+        
+        
+        forecastButton.imageInsets.left = 0
+        
     }
     
     func checkTheConnection() {

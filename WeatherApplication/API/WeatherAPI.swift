@@ -19,7 +19,8 @@ class WeatherAPI {
     static var getLocationOnView = false
     static var numberOfRows = 0
     static var numberOfSections = 0
-    
+    static var currentUIcolor = UIColor.black
+    static var isLightMode = true
     private let baseURL = "https://api.openweathermap.org/data/2.5/forecast"
     private let apiKey = "b630bd827224a431dcb7ff436690839b"
     
