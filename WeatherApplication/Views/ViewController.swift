@@ -89,9 +89,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     //MARK: Take a screenshot for share with friends
     
     @objc func getForecast(_ sender: UIBarButtonItem) {
-        
-        let tvc = (self.storyboard?.instantiateViewController(withIdentifier:"tvc") as? TableViewController)
+        let tvc = (self.storyboard?.instantiateViewController(withIdentifier: "table") as? TestTVC)
         navigationController?.show(tvc!, sender: true)
+//        let tvc = (self.storyboard?.instantiateViewController(withIdentifier:"tvc") as? TableViewController)
+//        navigationController?.show(tvc!, sender: true)
     }
     
     @objc func share(_ sender: UIButton) {
@@ -231,6 +232,47 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
                 WeatherAPI.trigger = trigrer
                 WeatherAPI.getLocationOnView = screenMode
                 self?.checkTheConnection()
+                
+                
+                
+                
+                for item in currentWeather.list ?? [] {
+                    WeatherAPI.objectsArray.append(Objects(sectionName: item.dtTxt?.components(separatedBy: " ")[0] != nil ? "\((item.dtTxt!.components(separatedBy: " ")[0]))" : "", sectionObjects: []))
+                }
+
+//                WeatherAPI.objectsArray = WeatherAPI.objectsArray.uniqued()
+                WeatherAPI.sectionArray =  WeatherAPI.objectsArray.uniqued()
+                var counter = 0
+                for item in currentWeather.list ?? [] {
+                    
+
+                    if (item.dtTxt?.components(separatedBy: " ")[0] != nil ? "\((item.dtTxt!.components(separatedBy: " ")[0]))" : "") ==
+                        WeatherAPI.sectionArray[counter].sectionName {
+                        
+                        print("API:\(item.dtTxt!)")
+                        print("___________")
+                        print("Section: \(WeatherAPI.sectionArray[counter].sectionName)")
+                        WeatherAPI.sectionArray[counter].sectionObjects.append("\(item.dtTxt?.components(separatedBy: " ")[1].dropLast(3) != nil ? "\((item.dtTxt!.components(separatedBy: " ")[1].dropLast(3)))" : "")  | \(item.main?.temp != nil ? "\(Int((item.main?.temp!)!)) ºC" : "")")
+
+                    }else {
+                        WeatherAPI.sectionArray[counter].sectionObjects.append("\(item.dtTxt?.components(separatedBy: " ")[1].dropLast(3) != nil ? "\((item.dtTxt!.components(separatedBy: " ")[1].dropLast(3)))" : "")  | \(item.main?.temp != nil ? "\(Int((item.main?.temp!)!)) ºC" : "")")
+                        counter = counter + 1
+                    }
+                }
+                
+                
+                self?.cityLabel.text =
+                    currentWeather.city?.name != nil ?
+                    "\((currentWeather.city?.name!)!)"
+                    : ""
+                
+                self?.temperatureLabel.text =
+                    currentWeather.list?[0].main?.temp != nil ?
+                    "\(Int((currentWeather.list?[0].main?.temp!)!)) ºC"
+                    : ""
+                
+                
+                
                 
                 if self?.traitCollection.userInterfaceStyle == .light {
                     

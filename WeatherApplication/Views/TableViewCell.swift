@@ -54,7 +54,6 @@ class TableViewCell: UITableViewCell {
         
         timeLabel.font = UIFont(name: "Montserrat-Medium", size: 30)
         timeLabel.snp.makeConstraints { maker in
-            
             maker.top.equalTo(monthLabel.snp.bottom).inset(-10)
             maker.left.equalTo(dayLabel.snp.left).inset(0)
         }

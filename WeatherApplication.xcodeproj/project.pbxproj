@@ -30,6 +30,7 @@
 		5C32A56226D5421400154AA0 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A56126D5421400154AA0 /* UIColorExtension.swift */; };
 		5C32A56426D5427F00154AA0 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A56326D5427F00154AA0 /* DateExtension.swift */; };
 		5C32A56626D542D600154AA0 /* TableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A56526D542D600154AA0 /* TableViewCellExtension.swift */; };
+		5C32A56A26D666F200154AA0 /* TestTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A56926D666F200154AA0 /* TestTVC.swift */; };
 		5C5A763326BD4C7C0045A667 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763226BD4C7C0045A667 /* AppDelegate.swift */; };
 		5C5A763526BD4C7C0045A667 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763426BD4C7C0045A667 /* SceneDelegate.swift */; };
 		5C5A763726BD4C7C0045A667 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A763626BD4C7C0045A667 /* ViewController.swift */; };
@@ -76,6 +77,7 @@
 		5C32A56126D5421400154AA0 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		5C32A56326D5427F00154AA0 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		5C32A56526D542D600154AA0 /* TableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellExtension.swift; sourceTree = "<group>"; };
+		5C32A56926D666F200154AA0 /* TestTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTVC.swift; sourceTree = "<group>"; };
 		5C5A762F26BD4C7C0045A667 /* WeatherApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C5A763226BD4C7C0045A667 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C5A763426BD4C7C0045A667 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				5C5A763626BD4C7C0045A667 /* ViewController.swift */,
 				5C5A765A26C409E60045A667 /* TableViewController.swift */,
 				5C5A766026C423E00045A667 /* TableViewCell.swift */,
+				5C32A56926D666F200154AA0 /* TestTVC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				5C32A56026D5418900154AA0 /* ViewControllerExtension.swift in Sources */,
 				5C5A763526BD4C7C0045A667 /* SceneDelegate.swift in Sources */,
 				5C5A766126C423E00045A667 /* TableViewCell.swift in Sources */,
+				5C32A56A26D666F200154AA0 /* TestTVC.swift in Sources */,
 				5C32A54926D0340300154AA0 /* WeatherAPI_errors.swift in Sources */,
 				5C32A56426D5427F00154AA0 /* DateExtension.swift in Sources */,
 				5C32A55926D3B0C200154AA0 /* UITextFieldExtensions.swift in Sources */,

@@ -10,6 +10,11 @@ import Combine
 import UIKit
 import CoreLocation
 
+struct Objects: Hashable {
+    var sectionName: String
+    var sectionObjects: [String]
+}
+
 class WeatherAPI {
     
     static let shared = WeatherAPI()
@@ -21,6 +26,15 @@ class WeatherAPI {
     static var numberOfSections = 0
     static var currentUIcolor = UIColor.black
     static var isLightMode = true
+    static var setOfDates = [String]()
+    
+    
+    static var objectsArray = [Objects]()
+    static var sectionArray = [Objects]()
+    static var dayNumber = 0
+    
+   
+    
     private let baseURL = "https://api.openweathermap.org/data/2.5/forecast"
     private let apiKey = "b630bd827224a431dcb7ff436690839b"
     
