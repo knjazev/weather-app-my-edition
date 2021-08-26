@@ -50,7 +50,7 @@ class WeatherAPI_errors {
     //MARK: - Fetch weather by city
     
     func fetchWeather(for city: String) -> AnyPublisher<WeatherDetail, APIError> {
-        WeatherAPI.cityStatic = city
+        StaticContext.cityStatic = city
         
         guard let url = absoluteURL(city: city) else {
             return Fail(error: APIError.url)
@@ -86,7 +86,7 @@ class WeatherAPI_errors {
     //MARK: - Fetch weather by latitude and longitude
     
     func fetchWeather(latitude: Double, longitude: Double) -> AnyPublisher<WeatherDetail, APIError> {
-        WeatherAPI.coordinates = [latitude, longitude]
+        StaticContext.coordinates = [latitude, longitude]
         
         guard let url = absoluteURL(latitude: latitude, longitude: longitude) else {
             return Fail(error: APIError.url)

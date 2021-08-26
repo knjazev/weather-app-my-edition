@@ -37,27 +37,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
 
-        //        let input = "2021-08-24 15:00:00"
-        //
-        //
-        //        let date = Date()
-        //        let formate = date.getFormattedDate(format: "dd MMMM")
-        //        print(formate)
-        //
-//                forecastButton.image = UIImage(named: "forecast.cloud")
-//                forecastButton.target = self
-//                forecastButton.action = #selector(getForecast)
-//
-//                forecastButton.tintColor = .white
-        
-        
-        
-//        setToolbarItems([forecastButton], animated: true)
-        
         NetworkMonitor.shared.startMonitoring()
-        
         initialize()
         binding()
         textField.delegate = self
@@ -78,7 +59,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         navigationController?.isNavigationBarHidden = true
         navigationController?.isToolbarHidden = false
     }
-
+    
     // MARK: - Hide Keyboard using return keyboard button
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -86,14 +67,14 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         return true
     }
     
-    //MARK: Take a screenshot for share with friends
+    //MARK: Get Forecast of current location
     
     @objc func getForecast(_ sender: UIBarButtonItem) {
-        let tvc = (self.storyboard?.instantiateViewController(withIdentifier: "table") as? TestTVC)
-        navigationController?.show(tvc!, sender: true)
-//        let tvc = (self.storyboard?.instantiateViewController(withIdentifier:"tvc") as? TableViewController)
-//        navigationController?.show(tvc!, sender: true)
+        let tvc = (self.storyboard?.instantiateViewController(withIdentifier: "tvc") as? TableViewController)
+        navigationController?.show(tvc!, sender: self)
     }
+    
+    //MARK: Take a screenshot for share with friends
     
     @objc func share(_ sender: UIButton) {
         UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, UIScreen.main.scale)
@@ -107,115 +88,74 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         present(vc, animated: true)
     }
     
-    //MARK: Change mode
+    //MARK: Change screen mode
     
     @objc func changeMode(_ sender: UIButton) {
         switch sender.isEnabled {
         case false:
             print("wowow")
             overrideUserInterfaceStyle = .light
-            WeatherAPI.isLightMode = true
+            StaticContext.isLightMode = true
             viewDidLoad()
             self.switchButton.isEnabled = true
             
         case true:
-            if traitCollection.userInterfaceStyle == .light && WeatherAPI.getLocationOnView == true {
-                print("Light & True: \(WeatherAPI.getLocationOnView)")
+            if traitCollection.userInterfaceStyle == .light && StaticContext.getLocationOnView == true {
+                print("Light & True: \(StaticContext.getLocationOnView)")
                 overrideUserInterfaceStyle = .dark
-                WeatherAPI.isLightMode = false
+                StaticContext.isLightMode = false
                 getLocation(sender)
-//                switchButton.setImage(UIImage(named: "light.mode"), for: .normal)
-                
-            }else if traitCollection.userInterfaceStyle == .dark && WeatherAPI.getLocationOnView == true {
-                print("Dark & True: \(WeatherAPI.getLocationOnView)")
+            }else if traitCollection.userInterfaceStyle == .dark && StaticContext.getLocationOnView == true {
+                print("Dark & True: \(StaticContext.getLocationOnView)")
                 overrideUserInterfaceStyle = .light
-                WeatherAPI.isLightMode = true
+                StaticContext.isLightMode = true
                 getLocation(sender)
-//                switchButton.setImage(UIImage(named: "dark.mode"), for: .normal)
-                
-            }else if traitCollection.userInterfaceStyle == .light && WeatherAPI.getLocationOnView == false {
-                print("Light & False: \(WeatherAPI.getLocationOnView)")
+            }else if traitCollection.userInterfaceStyle == .light && StaticContext.getLocationOnView == false {
+                print("Light & False: \(StaticContext.getLocationOnView)")
                 overrideUserInterfaceStyle = .dark
-                WeatherAPI.isLightMode = false
-                //                viewDidLoad()
+                StaticContext.isLightMode = false
                 binding()
-//                switchButton.setImage(UIImage(named: "light.mode"), for: .normal)
-                
             }else {
-                print("Dark & False: \(WeatherAPI.getLocationOnView)")
+                print("Dark & False: \(StaticContext.getLocationOnView)")
                 overrideUserInterfaceStyle = .light
-                WeatherAPI.isLightMode = true
-                //                viewDidLoad()
+                StaticContext.isLightMode = true
                 binding()
-//                switchButton.setImage(UIImage(named: "dark.mode"), for: .normal)
             }
             self.switchButton.isEnabled = true
         }
     }
-    
-    func addLoader(view: UIViewController) {
-        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
-        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.style = UIActivityIndicatorView.Style.medium
-        loadingIndicator.startAnimating();
-        
-        alert.view.addSubview(loadingIndicator)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    //MARK: Get Location
+
+    //MARK: Get current location
     
     @objc func getLocation(_ sender: UIButton) {
         
-        addLoader(view: self)
+        StaticContext.shared.addLoader(view: self)
         
-            WeatherAPI.trigger = 1
-            WeatherAPI.getLocationOnView = true
-            self.viewModel.delegatation()
-            
-            let lat = Double(viewModel.locationManager.location?.coordinate.latitude ?? 0.0)
-            let lon = Double(viewModel.locationManager.location?.coordinate.longitude ?? 0.0)
-            let publisher = [lat,lon].publisher
-            let publisher2 = [lon,lat].publisher
-            
-            publisher
-                .assign(to: \.coordinates[1], on: viewModel)
-                .store(in: &cancellable)
-            publisher2
-                .assign(to: \.coordinates[0], on: viewModel)
-                .store(in: &cancellable)
-            subcribeAndUpdateUI(weather: viewModel.$currentWeather2, trigrer: 1, screenMode: true)
-
-              
-                    self.dismiss(animated: false, completion: nil)
-        }
-
-       
-//        WeatherAPI.trigger = 1
-//        WeatherAPI.getLocationOnView = true
-//        viewModel.delegatation()
-//
-//        let lat = Double(viewModel.locationManager.location?.coordinate.latitude ?? 0.0)
-//        let lon = Double(viewModel.locationManager.location?.coordinate.longitude ?? 0.0)
-//        let publisher = [lat,lon].publisher
-//        let publisher2 = [lon,lat].publisher
-//
-//        publisher
-//            .assign(to: \.coordinates[1], on: viewModel)
-//            .store(in: &cancellable)
-//        publisher2
-//            .assign(to: \.coordinates[0], on: viewModel)
-//            .store(in: &cancellable)
-//        subcribeAndUpdateUI(weather: viewModel.$currentWeather2, trigrer: 1, screenMode: true)
+        StaticContext.trigger = 1
+        StaticContext.getLocationOnView = true
+        self.viewModel.delegatation()
+        
+        let lat = Double(viewModel.locationManager.location?.coordinate.latitude ?? 0.0)
+        let lon = Double(viewModel.locationManager.location?.coordinate.longitude ?? 0.0)
+        let publisher = [lat,lon].publisher
+        let publisher2 = [lon,lat].publisher
+        
+        publisher
+            .assign(to: \.coordinates[1], on: viewModel)
+            .store(in: &cancellable)
+        publisher2
+            .assign(to: \.coordinates[0], on: viewModel)
+            .store(in: &cancellable)
+        subcribeAndUpdateUI(weather: viewModel.$currentWeather2, trigrer: 1, screenMode: true)
         
         
-    
+        self.dismiss(animated: false, completion: nil)
+    }
     
     //MARK: Binding
     
     func binding() {
-        addLoader(view: self)
+        StaticContext.shared.addLoader(view: self)
         
         textField.textPublisher
             .assign(to: \.city, on: viewModel)
@@ -228,99 +168,161 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     private func subcribeAndUpdateUI(weather: Published<WeatherDetail>.Publisher, trigrer: Int, screenMode: Bool) {
         weather
             .sink(receiveCompletion: { _ in }, receiveValue: {[weak self] currentWeather in
-                WeatherAPI.numberOfRows = currentWeather.list?.count ?? 40
-                WeatherAPI.trigger = trigrer
-                WeatherAPI.getLocationOnView = screenMode
+//                StaticContext.numberOfRows = currentWeather.list?.count ?? 40
+                StaticContext.trigger = trigrer
+                StaticContext.getLocationOnView = screenMode
                 self?.checkTheConnection()
                 
-                
-                
+                // table view
                 
                 for item in currentWeather.list ?? [] {
-                    WeatherAPI.objectsArray.append(Objects(sectionName: item.dtTxt?.components(separatedBy: " ")[0] != nil ? "\((item.dtTxt!.components(separatedBy: " ")[0]))" : "", sectionObjects: []))
+                    StaticContext.objectsArray.append(Objects(sectionName: item.dtTxt?.components(separatedBy: " ")[0] != nil ? "\((item.dtTxt!.components(separatedBy: " ")[0]))" : "", sectionObjects: []))
                 }
-
-//                WeatherAPI.objectsArray = WeatherAPI.objectsArray.uniqued()
-                WeatherAPI.sectionArray =  WeatherAPI.objectsArray.uniqued()
+                
+                StaticContext.sectionArray =  StaticContext.objectsArray.uniqued()
                 var counter = 0
                 for item in currentWeather.list ?? [] {
                     
-
                     if (item.dtTxt?.components(separatedBy: " ")[0] != nil ? "\((item.dtTxt!.components(separatedBy: " ")[0]))" : "") ==
-                        WeatherAPI.sectionArray[counter].sectionName {
+                        StaticContext.sectionArray[counter].sectionName {
                         
                         print("API:\(item.dtTxt!)")
                         print("___________")
-                        print("Section: \(WeatherAPI.sectionArray[counter].sectionName)")
-                        WeatherAPI.sectionArray[counter].sectionObjects.append("\(item.dtTxt?.components(separatedBy: " ")[1].dropLast(3) != nil ? "\((item.dtTxt!.components(separatedBy: " ")[1].dropLast(3)))" : "")  | \(item.main?.temp != nil ? "\(Int((item.main?.temp!)!)) ºC" : "")")
-
+                        print("Section: \(StaticContext.sectionArray[counter].sectionName)")
+                        StaticContext.sectionArray[counter].sectionObjects.append("\(item.dtTxt?.components(separatedBy: " ")[1].dropLast(3) != nil ? "\((item.dtTxt!.components(separatedBy: " ")[1].dropLast(3)))" : "")  | \(item.main?.temp != nil ? "\(Int((item.main?.temp!)!)) ºC" : "")")
+                        
                     }else {
-                        WeatherAPI.sectionArray[counter].sectionObjects.append("\(item.dtTxt?.components(separatedBy: " ")[1].dropLast(3) != nil ? "\((item.dtTxt!.components(separatedBy: " ")[1].dropLast(3)))" : "")  | \(item.main?.temp != nil ? "\(Int((item.main?.temp!)!)) ºC" : "")")
                         counter = counter + 1
+                        StaticContext.sectionArray[counter].sectionObjects.append("\(item.dtTxt?.components(separatedBy: " ")[1].dropLast(3) != nil ? "\((item.dtTxt!.components(separatedBy: " ")[1].dropLast(3)))" : "")  | \(item.main?.temp != nil ? "\(Int((item.main?.temp!)!)) ºC" : "")")
                     }
                 }
-                
-                
-                self?.cityLabel.text =
-                    currentWeather.city?.name != nil ?
-                    "\((currentWeather.city?.name!)!)"
-                    : ""
-                
-                self?.temperatureLabel.text =
-                    currentWeather.list?[0].main?.temp != nil ?
-                    "\(Int((currentWeather.list?[0].main?.temp!)!)) ºC"
-                    : ""
-                
-                
                 
                 
                 if self?.traitCollection.userInterfaceStyle == .light {
                     
                     //MARK: Light mode
                     
-                    switch currentWeather.list?[0].weather?[0].main?.rawValue {
-                    
-                    case "Clear":
-                        self?.setClearLightState()
-                    case "Rain":
-                        self?.setRainLightState()
-                    case "Clouds":
-                        self?.setCloudsLightState()
-                    case "Thunderstorm":
-                        self?.setThunderLightState()
-                    case "Snow":
-                        self?.setSnowLightState()
-                    case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
-                        self?.setFogLightState()
+                    switch currentWeather.list?[0].sys?.pod {
+                    case .d:
+                        switch currentWeather.list?[0].weather?[0].main?.rawValue {
+                        
+                        case "Clear":
+                            self?.setClearLightState()
+                        case "Rain":
+                            self?.setRainLightState()
+                        case "Clouds":
+                            self?.setCloudsLightState()
+                        case "Thunderstorm":
+                            self?.setThunderLightState()
+                        case "Snow":
+                            self?.setSnowLightState()
+                        case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
+                            self?.setFogLightState()
+                        default:
+                            self?.setRainLightState()
+                        }
+                        
+                    case .n:
+                        switch currentWeather.list?[0].weather?[0].main?.rawValue {
+                        
+                        case "Clear":
+                            self?.setClearLightStateNight()
+                        case "Rain":
+                            self?.setRainLightStateNight()
+                        case "Clouds":
+                            self?.setCloudsLightStateNight()
+                        case "Thunderstorm":
+                            self?.setThunderLightStateNight()
+                        case "Snow":
+                            self?.setSnowLightStateNight()
+                        case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
+                            self?.setFogLightStateNight()
+                        default:
+                            self?.setRainLightStateNight()
+                        }
+
                     default:
-                        self?.setRainLightState()
+                        switch currentWeather.list?[0].weather?[0].main?.rawValue {
+                        
+                        case "Clear":
+                            self?.setClearLightState()
+                        case "Rain":
+                            self?.setRainLightState()
+                        case "Clouds":
+                            self?.setCloudsLightState()
+                        case "Thunderstorm":
+                            self?.setThunderLightState()
+                        case "Snow":
+                            self?.setSnowLightState()
+                        case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
+                            self?.setFogLightState()
+                        default:
+                            self?.setRainLightState()
+                        }
                     }
-                    
-                    self?.weatherConditionImage.image = UIImage(named:  self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 100) ?? "sun.max")
-                    
+
                     // MARK: Dark mode
                     
                 } else if self?.traitCollection.userInterfaceStyle == .dark {
-                    
-                    switch currentWeather.list?[0].weather?[0].main?.rawValue {
-                    
-                    case "Clear":
-                        self?.setClearDarkState()
-                    case "Rain":
-                        self?.setRainDarkState()
-                    case "Clouds":
-                        self?.setCloudsDarkState()
-                    case "Thunderstorm":
-                        self?.setThunderDarkState()
-                    case "Snow":
-                        self?.setSnowDarkState()
-                    case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
-                        self?.setFogDarkState()
+
+                    switch currentWeather.list?[0].sys?.pod {
+                    case .d:
+                        switch currentWeather.list?[0].weather?[0].main?.rawValue {
+                        
+                        case "Clear":
+                            self?.setClearDarkState()
+                        case "Rain":
+                            self?.setRainDarkState()
+                        case "Clouds":
+                            self?.setCloudsDarkState()
+                        case "Thunderstorm":
+                            self?.setThunderDarkState()
+                        case "Snow":
+                            self?.setSnowDarkState()
+                        case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
+                            self?.setFogLightState()
+                        default:
+                            self?.setRainDarkState()
+                        }
+                        
+                    case .n:
+                        switch currentWeather.list?[0].weather?[0].main?.rawValue {
+                        
+                        case "Clear":
+                            self?.setClearDarkStateNight()
+                        case "Rain":
+                            self?.setRainDarkStateNight()
+                        case "Clouds":
+                            self?.setCloudsDarkStateNight()
+                        case "Thunderstorm":
+                            self?.setThunderDarkStateNight()
+                        case "Snow":
+                            self?.setSnowDarkStateNight()
+                        case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
+                            self?.setFogDarkStateNight()
+                        default:
+                            self?.setRainDarkStateNight()
+                        }
+                        
                     default:
-                        self?.setRainDarkState()
+                        switch currentWeather.list?[0].weather?[0].main?.rawValue {
+                        
+                        case "Clear":
+                            self?.setClearDarkState()
+                        case "Rain":
+                            self?.setRainDarkState()
+                        case "Clouds":
+                            self?.setCloudsDarkState()
+                        case "Thunderstorm":
+                            self?.setThunderDarkState()
+                        case "Snow":
+                            self?.setSnowDarkState()
+                        case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
+                            self?.setFogLightState()
+                        default:
+                            self?.setRainDarkState()
+                        }
                     }
-                    
-                    self?.weatherConditionImage.image = UIImage(named:  (self?.viewModel.getweatherConditionName(weatherConditionID: currentWeather.list?[0].weather?[0].id! ?? 100) ?? "sun.max") + ".dark")
                 }
                 
                 self?.cityLabel.text =
@@ -394,8 +396,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             maker.centerY.equalTo(textField)
             maker.width.equalTo(getLocationButton.snp.height).multipliedBy(1.0/1.0)
         }
-        
-        
+
         //Image Labels
         
         view.addSubview(pressureImageLabel)
@@ -435,19 +436,18 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         
         view.addSubview(switchButton)
         //        switchButton.backgroundColor = .yellow
-        switchButton.frame.size = CGSize(width: 60, height: 60)
+//        switchButton.frame.size = CGSize(width: 60, height: 60)
         
         if !switchButton.isSelected && traitCollection.userInterfaceStyle == .light {
-            switchButton.setImage(UIImage(named: "moon.dark.cloud.rain"), for: .normal)
+            switchButton.setImage(UIImage(named: "moon.cloud.rain"), for: .normal)
             
         }else if !switchButton.isSelected && traitCollection.userInterfaceStyle == .dark {
-            switchButton.setImage(UIImage(named: "sun.light"), for: .normal)
+            switchButton.setImage(UIImage(named: "sun.sun"), for: .normal)
         }
         
         switchButton.snp.makeConstraints { maker in
-            maker.left.equalToSuperview().inset(10)
-            maker.bottom.equalTo(tempImageLabel).inset(45)
-            maker.height.equalTo(40)
+            maker.right.equalToSuperview().inset(10)
+            maker.bottomMargin.equalToSuperview().inset(30)
             maker.height.equalTo(45)
             maker.width.equalTo(45)
         }
@@ -505,33 +505,14 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             maker.top.equalTo(textField).inset(60)
             maker.right.equalToSuperview().inset(0)
             maker.left.greaterThanOrEqualTo(0)
-//            maker.bottom.equalTo(temperatureLabel).inset(30)
-            maker.bottom.equalTo(switchButton).inset(30)
+            maker.bottom.equalTo(tempImageLabel).inset(30)
             maker.width.equalTo(weatherConditionImage.snp.height).multipliedBy(1.0/1.0)
         }
         
-//        view.addSubview(switchButton)
-//        //        switchButton.backgroundColor = .yellow
-//        switchButton.frame.size = CGSize(width: 60, height: 60)
-//
-//        if !switchButton.isSelected && traitCollection.userInterfaceStyle == .light {
-//            switchButton.setImage(UIImage(named: "dark.mode"), for: .normal)
-//
-//        }else if !switchButton.isSelected && traitCollection.userInterfaceStyle == .dark {
-//            switchButton.setImage(UIImage(named: "light.mode"), for: .normal)
-//        }
-//
-//        switchButton.snp.makeConstraints { maker in
-//            maker.bottomMargin.equalToSuperview().inset(30)
-//            maker.height.equalTo(40)
-//            maker.width.equalTo(40)
-//            maker.right.equalToSuperview().inset(10)
-//        }
         
         view.addSubview(animationView)
-        //        animationView.backgroundColor = .blue
         animationView.loopMode = .loop
-        animationView.play()
+//        animationView.play()
         animationView.snp.makeConstraints { maker in
             maker.width.equalTo(80)
             maker.width.equalTo(animationView.snp.height).multipliedBy(1.0/1.0)
@@ -541,32 +522,26 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         
         view.addSubview(shareButton)
         //        shareButton.backgroundColor = .red
-        shareButton.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+        shareButton.setImage(UIImage(named: "share.light.sun"), for: .normal)
         shareButton.snp.makeConstraints { maker in
-            maker.width.equalTo(60)
+            maker.width.equalTo(45)
+            maker.right.equalToSuperview().inset(10)
             maker.width.equalTo(shareButton.snp.height).multipliedBy(1.0/1.0)
-            maker.center.equalTo(animationView.snp.center)
-            maker.bottomMargin.equalToSuperview().inset(80)
+//            maker.center.equalTo(animationView.snp.center)
+            maker.bottom.equalTo(switchButton).inset(45)
         }
         
         switchButton.layer.zPosition = 12
         animationView.layer.zPosition = 10
         shareButton.layer.zPosition = 11
-        
+
         forecastButton.image = UIImage(named: "forecast.cloud")
         forecastButton.target = self
         forecastButton.action = #selector(getForecast)
         forecastButton.tintColor = .white
         
-        
         setToolbarItems([forecastButton], animated: true)
-        
-        print("view.bounds.width \(view.bounds.width)")
-        print("forecastButton.width \(forecastButton.width)")
-        
-        
         forecastButton.imageInsets.left = 0
-        
     }
     
     func checkTheConnection() {
@@ -582,7 +557,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
                     }
                 }
             }))
-            
             present(ac, animated: true)
         }
     }

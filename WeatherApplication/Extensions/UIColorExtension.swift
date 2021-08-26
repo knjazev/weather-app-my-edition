@@ -43,4 +43,10 @@ extension UIColor {
         static var fogColor: UIColor { return UIColor(red: 38/255, green: 38/255, blue: 38/255, alpha: 1)}
         static var snowColor: UIColor { return UIColor(red: 40/255, green: 50/255, blue: 69/255, alpha: 1) }
     }
+    struct NightSkyLight {
+        static var nightSkyColor: UIColor  { return UIColor(red: 12/255, green: 28/255, blue: 52/255, alpha: 1) }
+    }
+    struct NightSkyDark {
+        static var nightSkyColor: UIColor  { return UIColor(red: 7/255, green: 7/255, blue: 10/255, alpha: 1) }
+    }
 }

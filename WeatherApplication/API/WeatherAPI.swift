@@ -10,28 +10,28 @@ import Combine
 import UIKit
 import CoreLocation
 
-struct Objects: Hashable {
-    var sectionName: String
-    var sectionObjects: [String]
-}
+//struct Objects: Hashable {
+//    var sectionName: String
+//    var sectionObjects: [String]
+//}
 
 class WeatherAPI {
     
     static let shared = WeatherAPI()
-    static var trigger = 0
-    static var cityStatic = "Casablanca"
-    static var coordinates = [0.0, 0.0]
-    static var getLocationOnView = false
-    static var numberOfRows = 0
-    static var numberOfSections = 0
-    static var currentUIcolor = UIColor.black
-    static var isLightMode = true
-    static var setOfDates = [String]()
-    
-    
-    static var objectsArray = [Objects]()
-    static var sectionArray = [Objects]()
-    static var dayNumber = 0
+//    static var trigger = 0
+//    static var cityStatic = "Casablanca"
+//    static var coordinates = [0.0, 0.0]
+//    static var getLocationOnView = false
+//    static var numberOfRows = 0
+//    static var numberOfSections = 0
+//    static var currentUIcolor = UIColor.black
+//    static var isLightMode = true
+//    static var setOfDates = [String]()
+//    
+//    
+//    static var objectsArray = [Objects]()
+//    static var sectionArray = [Objects]()
+//    static var dayNumber = 0
     
    
     
@@ -66,7 +66,7 @@ class WeatherAPI {
     //MARK: - Fetch weather by city
     
     func fetchWeather(for city: String) -> AnyPublisher<WeatherDetail, Never> {
-        WeatherAPI.cityStatic = city
+        StaticContext.cityStatic = city
         
         guard let url = absoluteURL(city: city) else {
             return Just(WeatherDetail.placeholder)
@@ -85,7 +85,7 @@ class WeatherAPI {
     //MARK: - Fetch weather by latitude and longitude
     
     func fetchWeather(latitude: Double, longitude: Double) -> AnyPublisher<WeatherDetail, Never> {
-        WeatherAPI.coordinates = [latitude, longitude]
+        StaticContext.coordinates = [latitude, longitude]
         
         guard let url = absoluteURL(latitude: latitude, longitude: longitude) else {
             return Just(WeatherDetail.placeholder)

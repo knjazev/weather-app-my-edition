@@ -11,8 +11,8 @@ import CoreLocation
 
 final class ViewModel: NSObject, ObservableObject {
     // input
-    @Published var city: String = WeatherAPI.cityStatic
-    @Published var coordinates = WeatherAPI.coordinates
+    @Published var city: String = StaticContext.cityStatic
+    @Published var coordinates = StaticContext.coordinates
     // output
     @Published var currentWeather = WeatherDetail.placeholder
     @Published var currentWeather2 = WeatherDetail.placeholder
@@ -25,28 +25,6 @@ final class ViewModel: NSObject, ObservableObject {
     
     //try with error
 //    var weatherAPI = WeatherAPI_errors()
-    
-    func getweatherConditionName(weatherConditionID: Int) -> String {
-
-        switch weatherConditionID {
-        case 200...232:
-            return "cloud.bolt"
-        case 300...321:
-            return "cloud.rain"
-        case 500...531:
-            return "cloud.rain"
-        case 600...622:
-            return "cloud.snow"
-        case 701...781:
-            return "cloud.fog"
-        case 800:
-            return "sun.max"
-        case 801...804:
-            return "cloud"
-        default:
-            return "vector_logo"
-        }
-    }
     
     func delegatation() {
         locationManager.delegate = self
