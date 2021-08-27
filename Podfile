@@ -6,7 +6,6 @@ target 'WeatherApplication' do
     pod 'SnapKit', '~> 5.0.0'
     pod 'lottie-ios'
     pod 'SnapKit', '~> 5.0.0'
-    pod 'ReachabilitySwift'
 
 
   # Pods for WeatherApplication

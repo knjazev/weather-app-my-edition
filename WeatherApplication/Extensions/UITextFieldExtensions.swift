@@ -17,17 +17,3 @@ extension UITextField {
             .eraseToAnyPublisher()
     }
 }
-
-// With errors
-//extension UITextField {
-//    var textPublisher: AnyPublisher<String, APIError> {
-//        NotificationCenter.default
-//            .publisher(for: UITextField.textDidChangeNotification, object: self)
-//            .compactMap { $0.object as? UITextField }
-//            .setFailureType(to: APIError.self)
-//            .map { $0.text ?? "" }
-//            .eraseToAnyPublisher()
-//    }
-//}
-
-

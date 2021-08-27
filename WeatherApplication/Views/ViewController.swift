@@ -19,11 +19,13 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     let cityLabel = UILabel()
     let textField = UITextField()
     let weatherConditionImage = UIImageView()
+    let timeLabel = UILabel()
     let temperatureLabel = UILabel()
     let humidityLabel = UILabel()
     let pressureLabel = UILabel()
     let windLabel = UILabel()
     let switchButton = UIButton(type: .custom)
+    let timeImageLabel = UIImageView()
     let tempImageLabel = UIImageView()
     let humidityImageLabel = UIImageView()
     let pressureImageLabel = UIImageView()
@@ -37,8 +39,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        NetworkMonitor.shared.startMonitoring()
         initialize()
         binding()
         textField.delegate = self
@@ -53,13 +53,16 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
+    override func viewWillAppear(_ animated: Bool) {
+        NetworkMonitor.shared.startMonitoring()
+    }
     
     override func viewDidAppear(_ animated: Bool) {
-        checkTheConnection()
+//        checkTheConnection()
         navigationController?.isNavigationBarHidden = true
         navigationController?.isToolbarHidden = false
     }
-    
+
     // MARK: - Hide Keyboard using return keyboard button
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -93,7 +96,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     @objc func changeMode(_ sender: UIButton) {
         switch sender.isEnabled {
         case false:
-            print("wowow")
             overrideUserInterfaceStyle = .light
             StaticContext.isLightMode = true
             viewDidLoad()
@@ -128,9 +130,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     //MARK: Get current location
     
     @objc func getLocation(_ sender: UIButton) {
-        
         StaticContext.shared.addLoader(view: self)
-        
         StaticContext.trigger = 1
         StaticContext.getLocationOnView = true
         self.viewModel.delegatation()
@@ -146,9 +146,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         publisher2
             .assign(to: \.coordinates[0], on: viewModel)
             .store(in: &cancellable)
+        
         subcribeAndUpdateUI(weather: viewModel.$currentWeather2, trigrer: 1, screenMode: true)
-        
-        
         self.dismiss(animated: false, completion: nil)
     }
     
@@ -156,7 +155,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     
     func binding() {
         StaticContext.shared.addLoader(view: self)
-        
         textField.textPublisher
             .assign(to: \.city, on: viewModel)
             .store(in: &cancellable)
@@ -168,10 +166,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     private func subcribeAndUpdateUI(weather: Published<WeatherDetail>.Publisher, trigrer: Int, screenMode: Bool) {
         weather
             .sink(receiveCompletion: { _ in }, receiveValue: {[weak self] currentWeather in
-//                StaticContext.numberOfRows = currentWeather.list?.count ?? 40
+                
+                self?.checkTheConnection()
                 StaticContext.trigger = trigrer
                 StaticContext.getLocationOnView = screenMode
-                self?.checkTheConnection()
                 
                 // table view
                 
@@ -186,9 +184,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
                     if (item.dtTxt?.components(separatedBy: " ")[0] != nil ? "\((item.dtTxt!.components(separatedBy: " ")[0]))" : "") ==
                         StaticContext.sectionArray[counter].sectionName {
                         
-                        print("API:\(item.dtTxt!)")
-                        print("___________")
-                        print("Section: \(StaticContext.sectionArray[counter].sectionName)")
                         StaticContext.sectionArray[counter].sectionObjects.append("\(item.dtTxt?.components(separatedBy: " ")[1].dropLast(3) != nil ? "\((item.dtTxt!.components(separatedBy: " ")[1].dropLast(3)))" : "")  | \(item.main?.temp != nil ? "\(Int((item.main?.temp!)!)) ºC" : "")")
                         
                     }else {
@@ -200,12 +195,11 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
                 
                 if self?.traitCollection.userInterfaceStyle == .light {
                     
-                    //MARK: Light mode
+                    //MARK: Light mode + day/night
                     
                     switch currentWeather.list?[0].sys?.pod {
                     case .d:
                         switch currentWeather.list?[0].weather?[0].main?.rawValue {
-                        
                         case "Clear":
                             self?.setClearLightState()
                         case "Rain":
@@ -224,7 +218,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
                         
                     case .n:
                         switch currentWeather.list?[0].weather?[0].main?.rawValue {
-                        
                         case "Clear":
                             self?.setClearLightStateNight()
                         case "Rain":
@@ -243,7 +236,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
 
                     default:
                         switch currentWeather.list?[0].weather?[0].main?.rawValue {
-                        
                         case "Clear":
                             self?.setClearLightState()
                         case "Rain":
@@ -261,7 +253,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
                         }
                     }
 
-                    // MARK: Dark mode
+                    // MARK: Dark mode + day/night
                     
                 } else if self?.traitCollection.userInterfaceStyle == .dark {
 
@@ -329,6 +321,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
                     currentWeather.city?.name != nil ?
                     "\((currentWeather.city?.name!)!)"
                     : "Type city name"
+
+                self?.timeLabel.text = self?.getDateAndTimeFromTimeZone(timeZoneIdentifier: currentWeather.city?.timezone ?? 10800)
                 
                 self?.temperatureLabel.text =
                     currentWeather.list?[0].main?.temp != nil ?
@@ -431,12 +425,18 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             maker.width.equalTo(45)
         }
         
+        view.addSubview(timeImageLabel)
+        timeImageLabel.snp.makeConstraints { maker in
+            maker.left.equalToSuperview().inset(10)
+            maker.bottom.equalTo(tempImageLabel).inset(45)
+            maker.height.equalTo(45)
+            maker.width.equalTo(45)
+        }
+        
         
         //Light mode
         
         view.addSubview(switchButton)
-        //        switchButton.backgroundColor = .yellow
-//        switchButton.frame.size = CGSize(width: 60, height: 60)
         
         if !switchButton.isSelected && traitCollection.userInterfaceStyle == .light {
             switchButton.setImage(UIImage(named: "moon.cloud.rain"), for: .normal)
@@ -500,15 +500,25 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             maker.height.equalTo(tempImageLabel.snp.height)
         }
         
+        timeLabel.text = "18 March 12:00"
+        timeLabel.font = UIFont(name: "Montserrat-Thin", size: 30)
+        view.addSubview(timeLabel)
+        
+        timeLabel.snp.makeConstraints { maker in
+            maker.left.equalTo(timeImageLabel).inset(55)
+            maker.right.lessThanOrEqualToSuperview().inset(100)
+            maker.centerY.equalTo(timeImageLabel)
+            maker.height.equalTo(timeLabel.snp.height)
+        }
+        
         view.addSubview(weatherConditionImage)
         weatherConditionImage.snp.makeConstraints { maker in
             maker.top.equalTo(textField).inset(60)
             maker.right.equalToSuperview().inset(0)
             maker.left.greaterThanOrEqualTo(0)
-            maker.bottom.equalTo(tempImageLabel).inset(30)
+            maker.bottom.equalTo(timeImageLabel).inset(30)
             maker.width.equalTo(weatherConditionImage.snp.height).multipliedBy(1.0/1.0)
         }
-        
         
         view.addSubview(animationView)
         animationView.loopMode = .loop
@@ -521,13 +531,11 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         }
         
         view.addSubview(shareButton)
-        //        shareButton.backgroundColor = .red
         shareButton.setImage(UIImage(named: "share.light.sun"), for: .normal)
         shareButton.snp.makeConstraints { maker in
             maker.width.equalTo(45)
             maker.right.equalToSuperview().inset(10)
             maker.width.equalTo(shareButton.snp.height).multipliedBy(1.0/1.0)
-//            maker.center.equalTo(animationView.snp.center)
             maker.bottom.equalTo(switchButton).inset(45)
         }
         
@@ -544,8 +552,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         forecastButton.imageInsets.left = 0
     }
     
-    func checkTheConnection() {
-        if NetworkMonitor.shared.isReachable {
+    func checkTheConnection(){
+        if NetworkMonitor.shared.isReachable || NetworkMonitor.shared.isReachableOnCellular {
         }else {
             let ac = UIAlertController(title: "No internet connection", message: "", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
@@ -560,6 +568,15 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             present(ac, animated: true)
         }
     }
+    
+    func getDateAndTimeFromTimeZone(timeZoneIdentifier: Int) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm | dd MMM"
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: timeZoneIdentifier)
+
+        return dateFormatter.string(from: Date())
+    }
+    
 }
 
 

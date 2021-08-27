@@ -24,18 +24,9 @@ class NetworkMonitor {
 
             if path.status == .satisfied {
                 print("We're connected!")
-                print("isReachable \(self?.isReachable)")
-//                let ac = UIAlertController(title: "Good", message: "", preferredStyle: .alert)
-//                ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
-//                view.present(ac, animated: true)
             } else {
                 print("No connection.")
-                print("isReachable \(self?.isReachable)")
-//                let ac = UIAlertController(title: "No internet connection", message: "", preferredStyle: .alert)
-//                ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
-//                view.present(ac, animated: true)
-                
-                
+
             }
             print(path.isExpensive)
         }

@@ -19,6 +19,8 @@ static var coordinates = [0.0, 0.0] // for default
 static var getLocationOnView = false // determines what kind of request on view now
 static var currentUIcolor = UIColor.black // needs for tableView title
 static var isLightMode = true //determines current mode on screen
+static var currentCellTextColor = UIColor.ElementColor.rainColor // for section in a tableView
+
 static var objectsArray = [Objects]()
 static var sectionArray = [Objects]()
     

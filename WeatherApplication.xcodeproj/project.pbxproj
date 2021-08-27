@@ -8,23 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		323FB637441E03DD7443351B /* libPods-WeatherApplication.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B182F980D083CE9D3128A903 /* libPods-WeatherApplication.a */; };
-		5C32A53926CFD00400154AA0 /* share3.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A53826CFD00400154AA0 /* share3.json */; };
-		5C32A53B26CFD29400154AA0 /* arrow.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A53A26CFD29400154AA0 /* arrow.json */; };
-		5C32A53D26CFD3F100154AA0 /* arrows.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A53C26CFD3F100154AA0 /* arrows.json */; };
-		5C32A53F26CFD8B700154AA0 /* dot.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A53E26CFD8B700154AA0 /* dot.json */; };
-		5C32A54126CFD9C200154AA0 /* share4.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54026CFD9C200154AA0 /* share4.json */; };
-		5C32A54326CFDA7900154AA0 /* linkedin2.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54226CFDA7900154AA0 /* linkedin2.json */; };
-		5C32A54526CFDAF000154AA0 /* linkedin.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54426CFDAF000154AA0 /* linkedin.json */; };
 		5C32A54726CFF81800154AA0 /* tap2.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A54626CFF81800154AA0 /* tap2.json */; };
 		5C32A54926D0340300154AA0 /* WeatherAPI_errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A54826D0340200154AA0 /* WeatherAPI_errors.swift */; };
 		5C32A55426D0413D00154AA0 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A55326D0413D00154AA0 /* logo.png */; };
-		5C32A55626D04AFA00154AA0 /* screenshot0.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A55526D04AFA00154AA0 /* screenshot0.gif */; };
 		5C32A55926D3B0C200154AA0 /* UITextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A55826D3B0C200154AA0 /* UITextFieldExtensions.swift */; };
 		5C32A55B26D3B9CC00154AA0 /* remarks.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5C32A55A26D3B9CC00154AA0 /* remarks.txt */; };
 		5C32A55E26D3EC9300154AA0 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A55D26D3EC9300154AA0 /* NetworkMonitor.swift */; };
 		5C32A56026D5418900154AA0 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A55F26D5418900154AA0 /* ViewControllerExtension.swift */; };
 		5C32A56226D5421400154AA0 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A56126D5421400154AA0 /* UIColorExtension.swift */; };
-		5C32A56426D5427F00154AA0 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A56326D5427F00154AA0 /* DateExtension.swift */; };
+		5C32A56426D5427F00154AA0 /* OtherExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A56326D5427F00154AA0 /* OtherExtensions.swift */; };
 		5C32A56626D542D600154AA0 /* TableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A56526D542D600154AA0 /* TableViewCellExtension.swift */; };
 		5C32A56A26D666F200154AA0 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A56926D666F200154AA0 /* TableViewController.swift */; };
 		5C32A56D26D7B1BF00154AA0 /* StaticContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C32A56C26D7B1BF00154AA0 /* StaticContext.swift */; };
@@ -44,8 +36,7 @@
 		5C5A764E26BD8DCD0045A667 /* Test iOS task for interns.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5C5A764D26BD8DCD0045A667 /* Test iOS task for interns.pdf */; };
 		5C5A765426BD92B40045A667 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A765326BD92B40045A667 /* ViewModel.swift */; };
 		5C5A766126C423E00045A667 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A766026C423E00045A667 /* TableViewCell.swift */; };
-		5CB04D5626CC1E7D000C82B2 /* share2.json in Resources */ = {isa = PBXBuildFile; fileRef = 5CB04D5326CC1E7C000C82B2 /* share2.json */; };
-		5CB04D5726CC1E7D000C82B2 /* share.json in Resources */ = {isa = PBXBuildFile; fileRef = 5CB04D5426CC1E7C000C82B2 /* share.json */; };
+		5C8FE07626D964D8004AF901 /* screenshot0.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5C8FE07526D964D7004AF901 /* screenshot0.gif */; };
 		5CB04D5826CC1E7D000C82B2 /* WHOOPASS.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 5CB04D5526CC1E7C000C82B2 /* WHOOPASS.TTF */; };
 		5CB04D5E26CD77C8000C82B2 /* MONTSERRAT-EXTRABOLD.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 5CB04D5C26CD77C2000C82B2 /* MONTSERRAT-EXTRABOLD.TTF */; };
 		5CB04D5F26CD77CA000C82B2 /* MONTSERRAT-MEDIUM.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 5CB04D5B26CD77C2000C82B2 /* MONTSERRAT-MEDIUM.TTF */; };
@@ -54,23 +45,15 @@
 
 /* Begin PBXFileReference section */
 		4F0297EC64762BD0FBFC3B75 /* Pods-WeatherApplication.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApplication.debug.xcconfig"; path = "Target Support Files/Pods-WeatherApplication/Pods-WeatherApplication.debug.xcconfig"; sourceTree = "<group>"; };
-		5C32A53826CFD00400154AA0 /* share3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share3.json; sourceTree = "<group>"; };
-		5C32A53A26CFD29400154AA0 /* arrow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arrow.json; sourceTree = "<group>"; };
-		5C32A53C26CFD3F100154AA0 /* arrows.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arrows.json; sourceTree = "<group>"; };
-		5C32A53E26CFD8B700154AA0 /* dot.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dot.json; sourceTree = "<group>"; };
-		5C32A54026CFD9C200154AA0 /* share4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share4.json; sourceTree = "<group>"; };
-		5C32A54226CFDA7900154AA0 /* linkedin2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = linkedin2.json; sourceTree = "<group>"; };
-		5C32A54426CFDAF000154AA0 /* linkedin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = linkedin.json; sourceTree = "<group>"; };
 		5C32A54626CFF81800154AA0 /* tap2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tap2.json; sourceTree = "<group>"; };
 		5C32A54826D0340200154AA0 /* WeatherAPI_errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI_errors.swift; sourceTree = "<group>"; };
 		5C32A55326D0413D00154AA0 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		5C32A55526D04AFA00154AA0 /* screenshot0.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = screenshot0.gif; sourceTree = "<group>"; };
 		5C32A55826D3B0C200154AA0 /* UITextFieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtensions.swift; sourceTree = "<group>"; };
 		5C32A55A26D3B9CC00154AA0 /* remarks.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = remarks.txt; sourceTree = "<group>"; };
 		5C32A55D26D3EC9300154AA0 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		5C32A55F26D5418900154AA0 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		5C32A56126D5421400154AA0 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
-		5C32A56326D5427F00154AA0 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		5C32A56326D5427F00154AA0 /* OtherExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherExtensions.swift; sourceTree = "<group>"; };
 		5C32A56526D542D600154AA0 /* TableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellExtension.swift; sourceTree = "<group>"; };
 		5C32A56926D666F200154AA0 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		5C32A56C26D7B1BF00154AA0 /* StaticContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticContext.swift; sourceTree = "<group>"; };
@@ -92,8 +75,7 @@
 		5C5A764D26BD8DCD0045A667 /* Test iOS task for interns.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Test iOS task for interns.pdf"; sourceTree = "<group>"; };
 		5C5A765326BD92B40045A667 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		5C5A766026C423E00045A667 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		5CB04D5326CC1E7C000C82B2 /* share2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share2.json; sourceTree = "<group>"; };
-		5CB04D5426CC1E7C000C82B2 /* share.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share.json; sourceTree = "<group>"; };
+		5C8FE07526D964D7004AF901 /* screenshot0.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = screenshot0.gif; sourceTree = "<group>"; };
 		5CB04D5526CC1E7C000C82B2 /* WHOOPASS.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = WHOOPASS.TTF; sourceTree = "<group>"; };
 		5CB04D5B26CD77C2000C82B2 /* MONTSERRAT-MEDIUM.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MONTSERRAT-MEDIUM.TTF"; sourceTree = "<group>"; };
 		5CB04D5C26CD77C2000C82B2 /* MONTSERRAT-EXTRABOLD.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MONTSERRAT-EXTRABOLD.TTF"; sourceTree = "<group>"; };
@@ -146,16 +128,7 @@
 		5C32A53526CEC6EA00154AA0 /* Lottie JSON */ = {
 			isa = PBXGroup;
 			children = (
-				5C32A53C26CFD3F100154AA0 /* arrows.json */,
-				5C32A54426CFDAF000154AA0 /* linkedin.json */,
 				5C32A54626CFF81800154AA0 /* tap2.json */,
-				5C32A54226CFDA7900154AA0 /* linkedin2.json */,
-				5C32A54026CFD9C200154AA0 /* share4.json */,
-				5C32A53A26CFD29400154AA0 /* arrow.json */,
-				5C32A53E26CFD8B700154AA0 /* dot.json */,
-				5CB04D5426CC1E7C000C82B2 /* share.json */,
-				5CB04D5326CC1E7C000C82B2 /* share2.json */,
-				5C32A53826CFD00400154AA0 /* share3.json */,
 			);
 			path = "Lottie JSON";
 			sourceTree = "<group>";
@@ -164,11 +137,11 @@
 			isa = PBXGroup;
 			children = (
 				5C32A55326D0413D00154AA0 /* logo.png */,
+				5C8FE07526D964D7004AF901 /* screenshot0.gif */,
 				5C32A57026D80E6600154AA0 /* screenshot1.PNG */,
 				5C32A57126D80E6600154AA0 /* screenshot2.PNG */,
 				5C32A56E26D80E6500154AA0 /* screenshot3.PNG */,
 				5C32A56F26D80E6500154AA0 /* screenshot4.PNG */,
-				5C32A55526D04AFA00154AA0 /* screenshot0.gif */,
 			);
 			path = screenshots;
 			sourceTree = "<group>";
@@ -177,7 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				5C32A55826D3B0C200154AA0 /* UITextFieldExtensions.swift */,
-				5C32A56326D5427F00154AA0 /* DateExtension.swift */,
+				5C32A56326D5427F00154AA0 /* OtherExtensions.swift */,
 				5C32A55F26D5418900154AA0 /* ViewControllerExtension.swift */,
 				5C32A56126D5421400154AA0 /* UIColorExtension.swift */,
 				5C32A56526D542D600154AA0 /* TableViewCellExtension.swift */,
@@ -350,25 +323,16 @@
 				5C32A57326D80E6600154AA0 /* screenshot4.PNG in Resources */,
 				5C32A57226D80E6600154AA0 /* screenshot3.PNG in Resources */,
 				5C5A764E26BD8DCD0045A667 /* Test iOS task for interns.pdf in Resources */,
-				5CB04D5626CC1E7D000C82B2 /* share2.json in Resources */,
 				5C32A57426D80E6600154AA0 /* screenshot1.PNG in Resources */,
-				5C32A53F26CFD8B700154AA0 /* dot.json in Resources */,
+				5C8FE07626D964D8004AF901 /* screenshot0.gif in Resources */,
 				5C5A763C26BD4C7D0045A667 /* Assets.xcassets in Resources */,
-				5C32A53D26CFD3F100154AA0 /* arrows.json in Resources */,
-				5C32A54526CFDAF000154AA0 /* linkedin.json in Resources */,
-				5C32A54326CFDA7900154AA0 /* linkedin2.json in Resources */,
-				5C32A55626D04AFA00154AA0 /* screenshot0.gif in Resources */,
 				5C32A54726CFF81800154AA0 /* tap2.json in Resources */,
 				5CB04D6026CD77CC000C82B2 /* MONTSERRAT-THIN.TTF in Resources */,
-				5C32A53B26CFD29400154AA0 /* arrow.json in Resources */,
-				5C32A53926CFD00400154AA0 /* share3.json in Resources */,
 				5C32A57526D80E6600154AA0 /* screenshot2.PNG in Resources */,
 				5CB04D5826CC1E7D000C82B2 /* WHOOPASS.TTF in Resources */,
 				5CB04D5E26CD77C8000C82B2 /* MONTSERRAT-EXTRABOLD.TTF in Resources */,
 				5C32A55B26D3B9CC00154AA0 /* remarks.txt in Resources */,
 				5C5A763A26BD4C7C0045A667 /* Main.storyboard in Resources */,
-				5CB04D5726CC1E7D000C82B2 /* share.json in Resources */,
-				5C32A54126CFD9C200154AA0 /* share4.json in Resources */,
 				5CB04D5F26CD77CA000C82B2 /* MONTSERRAT-MEDIUM.TTF in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,7 +380,7 @@
 				5C5A766126C423E00045A667 /* TableViewCell.swift in Sources */,
 				5C32A56A26D666F200154AA0 /* TableViewController.swift in Sources */,
 				5C32A54926D0340300154AA0 /* WeatherAPI_errors.swift in Sources */,
-				5C32A56426D5427F00154AA0 /* DateExtension.swift in Sources */,
+				5C32A56426D5427F00154AA0 /* OtherExtensions.swift in Sources */,
 				5C32A55926D3B0C200154AA0 /* UITextFieldExtensions.swift in Sources */,
 				5C5A764726BD85F80045A667 /* WeatherData.swift in Sources */,
 				5C32A55E26D3EC9300154AA0 /* NetworkMonitor.swift in Sources */,

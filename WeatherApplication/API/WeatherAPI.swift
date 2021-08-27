@@ -18,23 +18,7 @@ import CoreLocation
 class WeatherAPI {
     
     static let shared = WeatherAPI()
-//    static var trigger = 0
-//    static var cityStatic = "Casablanca"
-//    static var coordinates = [0.0, 0.0]
-//    static var getLocationOnView = false
-//    static var numberOfRows = 0
-//    static var numberOfSections = 0
-//    static var currentUIcolor = UIColor.black
-//    static var isLightMode = true
-//    static var setOfDates = [String]()
-//    
-//    
-//    static var objectsArray = [Objects]()
-//    static var sectionArray = [Objects]()
-//    static var dayNumber = 0
-    
-   
-    
+
     private let baseURL = "https://api.openweathermap.org/data/2.5/forecast"
     private let apiKey = "b630bd827224a431dcb7ff436690839b"
     
@@ -78,8 +62,7 @@ class WeatherAPI {
             .decode(type: WeatherDetail.self, decoder: JSONDecoder())
             .catch { error in Just(WeatherDetail.placeholder)}
             .receive(on: RunLoop.main)
-            .eraseToAnyPublisher()
-        
+            .eraseToAnyPublisher() 
     }
     
     //MARK: - Fetch weather by latitude and longitude
@@ -98,7 +81,5 @@ class WeatherAPI {
             .catch { error in Just(WeatherDetail.placeholder)}
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
-        
-//        WeatherAPI.getLocationOnView = false
     }
 }
