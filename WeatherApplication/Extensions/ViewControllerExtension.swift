@@ -877,6 +877,7 @@ extension ViewController {
 
         navigationController?.navigationBar.barTintColor = UIColor.NightSkyDark.nightSkyColor
         navigationController?.navigationBar.isTranslucent = false
+       
         self.navigationController?.navigationBar.tintColor = UIColor.ElementColorDark.snowColor
         navigationController?.toolbar.barTintColor = UIColor.NightSkyDark.nightSkyColor
         navigationController?.toolbar.tintColor = UIColor.BackgroundColorDark.snowColor
@@ -886,3 +887,5 @@ extension ViewController {
         StaticContext.currentCellTextColor = UIColor.BackgroundColorDark.snowColor
     }
 }
+
+

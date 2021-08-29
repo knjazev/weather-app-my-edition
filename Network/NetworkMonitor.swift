@@ -14,19 +14,38 @@ class NetworkMonitor {
 
     let monitor = NWPathMonitor()
     private var status: NWPath.Status = .requiresConnection
-    var isReachable: Bool { status == .satisfied }
+    var isReachable: Bool {
+        status == .satisfied
+    }
     var isReachableOnCellular: Bool = true
 
-    func startMonitoring() {
+    func startMonitoring(view: UIViewController) {
         monitor.pathUpdateHandler = { [weak self] path in
             self?.status = path.status
             self?.isReachableOnCellular = path.isExpensive
+           
+            if path.status == .satisfied{
 
-            if path.status == .satisfied {
-                print("We're connected!")
+               
             } else {
-                print("No connection.")
+                DispatchQueue.main.async {
+                let ac = UIAlertController(title: "No internet connection", message: "", preferredStyle: .alert)
+//                ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
 
+                ac.addAction(UIAlertAction(title: "Refresh", style: .default, handler: { action in
+
+                    self?.startMonitoring(view: view)
+
+                    
+                    
+//                    if let bundleIdentifier = Bundle.main.bundleIdentifier, let appSettings = URL(string: UIApplication.openSettingsURLString + bundleIdentifier) {
+//                        if UIApplication.shared.canOpenURL(appSettings) {
+//                            UIApplication.shared.open(appSettings)
+//                        }
+//                    }
+                }))
+                view.present(ac, animated: true)
+                }
             }
             print(path.isExpensive)
         }

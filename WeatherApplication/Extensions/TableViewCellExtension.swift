@@ -129,7 +129,6 @@ extension TableViewCell {
             cell.timeLabel.textColor = UIColor.ElementColor.thunderColor
             cell.imageLabel.image = UIImage(named: "night.cloud.bolt")
             
-            
         case 300...321, 500...531:
             cell.backgroundColor = UIColor.NightSkyLight.nightSkyColor
             cell.tempLabel.textColor = UIColor.ElementColor.rainColor
@@ -212,7 +211,7 @@ extension TableViewCell {
             cell.dayLabel.textColor = UIColor.ElementColorDark.sunColor
             cell.monthLabel.textColor = UIColor.ElementColorDark.sunColor
             cell.timeLabel.textColor = UIColor.ElementColorDark.sunColor
-            cell.imageLabel.image = UIImage(named: "night.sun.max.dark")
+            cell.imageLabel.image = UIImage(named: "night.sun.dark")
         case 801...804:
             cell.backgroundColor = UIColor.NightSkyDark.nightSkyColor
             cell.tempLabel.textColor = UIColor.ElementColorDark.cloudColor
