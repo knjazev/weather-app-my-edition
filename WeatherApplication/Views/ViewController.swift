@@ -54,10 +54,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
-        
-//        }
-        
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         
     }
@@ -130,29 +128,28 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     //MARK: Get current location
     
     @objc func getLocation(_ sender: UIButton) {
-            
-            NetworkMonitor.shared.startMonitoring(view: self)
         
-            StaticContext.shared.addLoader(view: self)
-            StaticContext.trigger = 1
-            StaticContext.getLocationOnView = true
-            self.viewModel.delegatation()
-            
-            let lat = Double(viewModel.locationManager.location?.coordinate.latitude ?? 0.0)
-            let lon = Double(viewModel.locationManager.location?.coordinate.longitude ?? 0.0)
-            let publisher = [lat,lon].publisher
-            let publisher2 = [lon,lat].publisher
-            
-            publisher
-                .assign(to: \.coordinates[1], on: viewModel)
-                .store(in: &cancellable)
-            publisher2
-                .assign(to: \.coordinates[0], on: viewModel)
-                .store(in: &cancellable)
-            
-            subcribeAndUpdateUI(weather: viewModel.$currentWeather2, trigrer: 1, screenMode: true)
-            self.dismiss(animated: false, completion: nil)
-
+        NetworkMonitor.shared.startMonitoring(view: self)
+        
+        StaticContext.shared.addLoader(view: self)
+        StaticContext.trigger = 1
+        StaticContext.getLocationOnView = true
+        self.viewModel.delegatation()
+        
+        let lat = Double(viewModel.locationManager.location?.coordinate.latitude ?? 0.0)
+        let lon = Double(viewModel.locationManager.location?.coordinate.longitude ?? 0.0)
+        let publisher = [lat,lon].publisher
+        let publisher2 = [lon,lat].publisher
+        
+        publisher
+            .assign(to: \.coordinates[1], on: viewModel)
+            .store(in: &cancellable)
+        publisher2
+            .assign(to: \.coordinates[0], on: viewModel)
+            .store(in: &cancellable)
+        
+        subcribeAndUpdateUI(weather: viewModel.$currentWeather2, trigrer: 1, screenMode: true)
+        self.dismiss(animated: false, completion: nil)
     }
     
     //MARK: Binding
@@ -176,7 +173,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
                 switch currentWeather.list?[0].sys?.pod {
                 case .d:
                     StaticContext.timeOfAday = "d"
-                    
                 case .n:
                     StaticContext.timeOfAday = "n"
                 default:
@@ -459,8 +455,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             maker.height.equalTo(45)
             maker.width.equalTo(45)
         }
-        
-        
+
         //Light mode
         
         switchButton.setImage(UIImage(named: "cloud.rain"), for: .normal)
@@ -479,8 +474,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             maker.height.equalTo(45)
             maker.width.equalTo(45)
         }
-        
-        
+
         //Labels with data
         
         pressureLabel.text = "1000 hPa"
@@ -566,7 +560,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         //            maker.bottomMargin.equalToSuperview().inset(80)
         //        }
         
-        
         view.addSubview(shareButton)
         shareButton.setImage(UIImage(named: "share.light.cloud.rain"), for: .normal)
         shareButton.snp.makeConstraints { maker in
@@ -579,7 +572,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         switchButton.layer.zPosition = 12
         //        animationView.layer.zPosition = 10
         shareButton.layer.zPosition = 11
-        
         forecastButton.image = UIImage(named: "forecast.cloud")
         forecastButton.target = self
         forecastButton.action = #selector(getForecast)
@@ -589,23 +581,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         forecastButton.imageInsets.left = 0
     }
     
-    //    func checkTheConnection(){
-    //        if NetworkMonitor.shared.isReachable || NetworkMonitor.shared.isReachableOnCellular {
-    //        }else {
-    //            let ac = UIAlertController(title: "No internet connection", message: "", preferredStyle: .alert)
-    //            ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
-    //
-    //            ac.addAction(UIAlertAction(title: "Settings", style: .default, handler: { action in
-    //                if let bundleIdentifier = Bundle.main.bundleIdentifier, let appSettings = URL(string: UIApplication.openSettingsURLString + bundleIdentifier) {
-    //                    if UIApplication.shared.canOpenURL(appSettings) {
-    //                        UIApplication.shared.open(appSettings)
-    //                    }
-    //                }
-    //            }))
-    //            present(ac, animated: true)
-    //        }
-    //    }
-    
     func getDateAndTimeFromTimeZone(timeZoneIdentifier: Int) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm | dd MMM"
@@ -613,7 +588,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         
         return dateFormatter.string(from: Date())
     }
-    
 }
 
 

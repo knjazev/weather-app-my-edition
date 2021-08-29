@@ -35,7 +35,6 @@
 		5C5A764E26BD8DCD0045A667 /* Test iOS task for interns.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5C5A764D26BD8DCD0045A667 /* Test iOS task for interns.pdf */; };
 		5C5A765426BD92B40045A667 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A765326BD92B40045A667 /* ViewModel.swift */; };
 		5C5A766126C423E00045A667 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A766026C423E00045A667 /* TableViewCell.swift */; };
-		5C8FE07826DA861F004AF901 /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8FE07726DA861F004AF901 /* TestTableViewController.swift */; };
 		5CB04D5826CC1E7D000C82B2 /* WHOOPASS.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 5CB04D5526CC1E7C000C82B2 /* WHOOPASS.TTF */; };
 		5CB04D5E26CD77C8000C82B2 /* MONTSERRAT-EXTRABOLD.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 5CB04D5C26CD77C2000C82B2 /* MONTSERRAT-EXTRABOLD.TTF */; };
 		5CB04D5F26CD77CA000C82B2 /* MONTSERRAT-MEDIUM.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 5CB04D5B26CD77C2000C82B2 /* MONTSERRAT-MEDIUM.TTF */; };
@@ -76,7 +75,6 @@
 		5C5A764D26BD8DCD0045A667 /* Test iOS task for interns.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Test iOS task for interns.pdf"; sourceTree = "<group>"; };
 		5C5A765326BD92B40045A667 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		5C5A766026C423E00045A667 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		5C8FE07726DA861F004AF901 /* TestTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
 		5CB04D5526CC1E7C000C82B2 /* WHOOPASS.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = WHOOPASS.TTF; sourceTree = "<group>"; };
 		5CB04D5B26CD77C2000C82B2 /* MONTSERRAT-MEDIUM.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MONTSERRAT-MEDIUM.TTF"; sourceTree = "<group>"; };
 		5CB04D5C26CD77C2000C82B2 /* MONTSERRAT-EXTRABOLD.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MONTSERRAT-EXTRABOLD.TTF"; sourceTree = "<group>"; };
@@ -110,7 +108,6 @@
 				5C5A763626BD4C7C0045A667 /* ViewController.swift */,
 				5C5A766026C423E00045A667 /* TableViewCell.swift */,
 				5C32A56926D666F200154AA0 /* TableViewController.swift */,
-				5C8FE07726DA861F004AF901 /* TestTableViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -373,7 +370,6 @@
 				5C32A56626D542D600154AA0 /* TableViewCellExtension.swift in Sources */,
 				5C5A764926BD87170045A667 /* WeatherAPI.swift in Sources */,
 				5C5A763326BD4C7C0045A667 /* AppDelegate.swift in Sources */,
-				5C8FE07826DA861F004AF901 /* TestTableViewController.swift in Sources */,
 				5C32A56026D5418900154AA0 /* ViewControllerExtension.swift in Sources */,
 				5C32A56D26D7B1BF00154AA0 /* StaticContext.swift in Sources */,
 				5C5A763526BD4C7C0045A667 /* SceneDelegate.swift in Sources */,

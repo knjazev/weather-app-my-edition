@@ -54,90 +54,38 @@ class TableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
         cell.backgroundColor = UIColor.ElementColor.cloudColor
         cell.dayLabel.textColor = UIColor.ElementColorDark.cloudColor
-        
-        
         UpdateUI(cell: cell, indexPath: indexPath)
-        
-        
-//        switch StaticContext.trigger {
-//        case 0:
-//            subcribeAndUpdateUI(weather: viewModel.$currentWeather, cell: cell, indexPath: indexPath)
-//        case 1:
-//            subcribeAndUpdateUI(weather: viewModel.$currentWeather2, cell: cell, indexPath: indexPath)
-//        default:
-//            subcribeAndUpdateUI(weather: viewModel.$currentWeather, cell: cell, indexPath: indexPath)
-//        }
         
         return cell
     }
     
-    
     func UpdateUI(cell: TableViewCell, indexPath: IndexPath) {
         
         if StaticContext.isLightMode == true {
-//            if let weatherConditionID = StaticContext.staticWeatherConditionID {
+            //            if let weatherConditionID = StaticContext.staticWeatherConditionID {
             switch StaticContext.timeOfAday {
-                case "d":
-                    cell.setLightStateUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
-                case "n":
-                    cell.setLightStateNightUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
-                default:
-                    cell.setLightStateUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
-            
+            case "d":
+                cell.setLightStateUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
+            case "n":
+                cell.setLightStateNightUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
+            default:
+                cell.setLightStateUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
             }
         }else if StaticContext.isLightMode == false {
-    
-                switch StaticContext.timeOfAday {
-                case "d":
-                    cell.setDarkStateUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
-                case "n":
-                    cell.setDarkStateNightUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
-                default:
-                    cell.setDarkStateUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
-        }
-        
+            
+            switch StaticContext.timeOfAday {
+            case "d":
+                cell.setDarkStateUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
+            case "n":
+                cell.setDarkStateNightUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
+            default:
+                cell.setDarkStateUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
+            }
         }
         
         self.title = StaticContext.cityStatic
         
         cell.dayLabel.text =  StaticContext.sectionArray[indexPath.section].sectionObjects[indexPath.row]
-        
-    }
-    
-    private func subcribeAndUpdateUI(weather: Published<WeatherDetail>.Publisher, cell: TableViewCell, indexPath: IndexPath) {
-        weather
-            .sink(receiveCompletion: { _ in }, receiveValue: {[weak self] currentWeather in
-                if StaticContext.isLightMode == true {
-                    if let weatherConditionID = currentWeather.list?[indexPath.row].weather?[0].id {
-                        switch currentWeather.list?[0].sys?.pod {
-                        case .d:
-                            cell.setLightStateUsingConditionID(id: weatherConditionID, cell: cell)
-                        case .n:
-                            cell.setLightStateNightUsingConditionID(id: weatherConditionID, cell: cell)
-                        default:
-                            cell.setLightStateUsingConditionID(id: weatherConditionID, cell: cell)
-                        }
-                    }
-                } else if StaticContext.isLightMode == false {
-                    if let weatherConditionID = currentWeather.list?[indexPath.row].weather?[0].id {
-                        switch currentWeather.list?[0].sys?.pod {
-                        case .d:
-                            cell.setDarkStateUsingConditionID(id: weatherConditionID, cell: cell)
-                        case .n:
-                            cell.setDarkStateNightUsingConditionID(id: weatherConditionID, cell: cell)
-                        default:
-                            cell.setDarkStateUsingConditionID(id: weatherConditionID, cell: cell)
-                        }
-                    }
-                }
-                
-                self?.title = currentWeather.city?.name != nil ?
-                    "\((currentWeather.city?.name!)!)"
-                    : ""
-                
-                cell.dayLabel.text =  StaticContext.sectionArray[indexPath.section].sectionObjects[indexPath.row]
-            })
-            .store(in: &cancellable)
     }
 }
 
