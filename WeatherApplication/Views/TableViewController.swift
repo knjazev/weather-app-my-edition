@@ -15,6 +15,7 @@ class TableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.allowsSelection = false
         tableView.rowHeight = 100
         navigationController?.isNavigationBarHidden = false
@@ -51,6 +52,7 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
         UpdateUI(cell: cell, indexPath: indexPath)
+        
         return cell
     }
     
@@ -59,21 +61,21 @@ class TableViewController: UITableViewController {
         if StaticContext.isLightMode == true {
             switch StaticContext.timeOfAday {
             case "d":
-                cell.setLightStateUsingConditionID(id: StaticContext.arrayOfConditions[indexPath.row], cell: cell)
+                cell.setLightStateUsingConditionID(id: StaticContext.sectionArray[indexPath.section].sectionConditionImage[indexPath.row], cell: cell)
             case "n":
-                cell.setLightStateNightUsingConditionID(id: StaticContext.arrayOfConditions[indexPath.row], cell: cell)
+                cell.setLightStateNightUsingConditionID(id: StaticContext.sectionArray[indexPath.section].sectionConditionImage[indexPath.row], cell: cell)
             default:
-                cell.setLightStateUsingConditionID(id: StaticContext.arrayOfConditions[indexPath.row], cell: cell)
+                cell.setLightStateUsingConditionID(id: StaticContext.sectionArray[indexPath.section].sectionConditionImage[indexPath.row], cell: cell)
             }
         }else if StaticContext.isLightMode == false {
             
             switch StaticContext.timeOfAday {
             case "d":
-                cell.setDarkStateUsingConditionID(id: StaticContext.arrayOfConditions[indexPath.row], cell: cell)
+                cell.setDarkStateUsingConditionID(id: StaticContext.sectionArray[indexPath.section].sectionConditionImage[indexPath.row], cell: cell)
             case "n":
-                cell.setDarkStateNightUsingConditionID(id: StaticContext.arrayOfConditions[indexPath.row], cell: cell)
+                cell.setDarkStateNightUsingConditionID(id: StaticContext.sectionArray[indexPath.section].sectionConditionImage[indexPath.row], cell: cell)
             default:
-                cell.setDarkStateUsingConditionID(id: StaticContext.arrayOfConditions[indexPath.row], cell: cell)
+                cell.setDarkStateUsingConditionID(id: StaticContext.sectionArray[indexPath.section].sectionConditionImage[indexPath.row], cell: cell)
             }
         }
         

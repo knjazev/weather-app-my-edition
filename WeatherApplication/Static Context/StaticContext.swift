@@ -24,9 +24,6 @@ static var staticWeatherConditionID = 800
 static var staticWeatherConditionString = "Rain"
 
 static var timeOfAday = "d"
-
-    
-static var arrayOfConditions = [Int]()
 static var objectsArray = [Objects]()
 static var sectionArray = [Objects]()
     
@@ -45,4 +42,5 @@ static var sectionArray = [Objects]()
 struct Objects: Hashable {
     var sectionName: String
     var sectionObjects: [String]
+    var sectionConditionImage: [Int]
 }

@@ -39,8 +39,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NetworkMonitor.shared.startMonitoring(view: self)
+
         initialize()
         binding()
         textField.delegate = self
@@ -59,8 +58,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     override func viewWillAppear(_ animated: Bool) {
         
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
+        NetworkMonitor.shared.startMonitoring(view: self)
         navigationController?.isNavigationBarHidden = true
         navigationController?.isToolbarHidden = false
     }
@@ -130,7 +130,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     @objc func getLocation(_ sender: UIButton) {
         
         NetworkMonitor.shared.startMonitoring(view: self)
-        
         StaticContext.shared.addLoader(view: self)
         StaticContext.trigger = 1
         StaticContext.getLocationOnView = true
@@ -160,8 +159,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             .assign(to: \.city, on: viewModel)
             .store(in: &cancellable)
         subcribeAndUpdateUI(weather: viewModel.$currentWeather, trigrer: 0, screenMode: false)
-      
-        
         dismiss(animated: false, completion: nil)
     }
     
@@ -187,13 +184,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
                 StaticContext.currentUIcolor = UIColor.ElementColor.sunColor
                 StaticContext.currentCellTextColor = UIColor.BackgroundColor.sunColor
                 
-                // table view
-                
                 for item in currentWeather.list ?? [] {
-                    StaticContext.arrayOfConditions.append(item.weather?[0].id ?? 800)
-                    StaticContext.objectsArray.append(Objects(sectionName: item.dtTxt?.components(separatedBy: " ")[0] != nil ? "\((item.dtTxt!.components(separatedBy: " ")[0]))" : "", sectionObjects: []))
+                    StaticContext.objectsArray.append(Objects(sectionName: item.dtTxt?.components(separatedBy: " ")[0] != nil ? "\((item.dtTxt!.components(separatedBy: " ")[0]))" : "", sectionObjects: [], sectionConditionImage: []) )
                 }
-                
+
                 StaticContext.sectionArray = StaticContext.objectsArray.uniqued()
                 var counter = 0
                 for item in currentWeather.list ?? [] { 
@@ -201,10 +195,12 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
                         StaticContext.sectionArray[counter].sectionName {
                         
                         StaticContext.sectionArray[counter].sectionObjects.append("\(item.dtTxt?.components(separatedBy: " ")[1].dropLast(3) != nil ? "\((item.dtTxt!.components(separatedBy: " ")[1].dropLast(3)))" : "")  | \(item.main?.temp != nil ? "\(Int((item.main?.temp!)!)) ºC" : "")")
+                        StaticContext.sectionArray[counter].sectionConditionImage.append(item.weather?[0].id != nil ? Int(item.weather?[0].id! ?? 800) : 800)
                         
                     }else {
                         counter = counter + 1
                         StaticContext.sectionArray[counter].sectionObjects.append("\(item.dtTxt?.components(separatedBy: " ")[1].dropLast(3) != nil ? "\((item.dtTxt!.components(separatedBy: " ")[1].dropLast(3)))" : "")  | \(item.main?.temp != nil ? "\(Int((item.main?.temp!)!)) ºC" : "")")
+                        StaticContext.sectionArray[counter].sectionConditionImage.append(item.weather?[0].id != nil ? Int(item.weather?[0].id! ?? 800) : 800)
                     }
                 }
 

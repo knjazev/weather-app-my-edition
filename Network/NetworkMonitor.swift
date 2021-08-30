@@ -18,6 +18,7 @@ class NetworkMonitor {
         status == .satisfied
     }
     var isReachableOnCellular: Bool = true
+    var isReachableOnWiFi: Bool = true
 
     func startMonitoring(view: UIViewController) {
         monitor.pathUpdateHandler = { [weak self] path in
@@ -26,27 +27,19 @@ class NetworkMonitor {
            
             if path.status == .satisfied{
 
-               
-            } else {
+            }else {
                 DispatchQueue.main.async {
                 let ac = UIAlertController(title: "No internet connection", message: "", preferredStyle: .alert)
-//                ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
-
                 ac.addAction(UIAlertAction(title: "Refresh", style: .default, handler: { action in
 
                     self?.startMonitoring(view: view)
 
-                    
-                    
-//                    if let bundleIdentifier = Bundle.main.bundleIdentifier, let appSettings = URL(string: UIApplication.openSettingsURLString + bundleIdentifier) {
-//                        if UIApplication.shared.canOpenURL(appSettings) {
-//                            UIApplication.shared.open(appSettings)
-//                        }
-//                    }
                 }))
                 view.present(ac, animated: true)
                 }
             }
+            
+
             print(path.isExpensive)
         }
 
