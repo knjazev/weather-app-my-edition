@@ -100,26 +100,26 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         case false:
             overrideUserInterfaceStyle = .light
             StaticContext.isLightMode = true
-            viewDidLoad()
+            setState(conditionID: StaticContext.staticWeatherConditionString, timeOfADay: StaticContext.timeOfAday)
             self.switchButton.isEnabled = true
             
         case true:
             if traitCollection.userInterfaceStyle == .light && StaticContext.getLocationOnView == true {
                 overrideUserInterfaceStyle = .dark
                 StaticContext.isLightMode = false
-                getLocation(sender)
+                setState(conditionID: StaticContext.staticWeatherConditionString, timeOfADay: StaticContext.timeOfAday)
             }else if traitCollection.userInterfaceStyle == .dark && StaticContext.getLocationOnView == true {
                 overrideUserInterfaceStyle = .light
                 StaticContext.isLightMode = true
-                getLocation(sender)
+                 setState(conditionID: StaticContext.staticWeatherConditionString, timeOfADay: StaticContext.timeOfAday)
             }else if traitCollection.userInterfaceStyle == .light && StaticContext.getLocationOnView == false {
                 overrideUserInterfaceStyle = .dark
                 StaticContext.isLightMode = false
-                binding()
+                setState(conditionID: StaticContext.staticWeatherConditionString, timeOfADay: StaticContext.timeOfAday)
             }else {
                 overrideUserInterfaceStyle = .light
                 StaticContext.isLightMode = true
-                binding()
+                setState(conditionID: StaticContext.staticWeatherConditionString, timeOfADay: StaticContext.timeOfAday)
             }
             self.switchButton.isEnabled = true
         }
@@ -160,6 +160,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             .assign(to: \.city, on: viewModel)
             .store(in: &cancellable)
         subcribeAndUpdateUI(weather: viewModel.$currentWeather, trigrer: 0, screenMode: false)
+      
         
         dismiss(animated: false, completion: nil)
     }
@@ -169,6 +170,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             .sink(receiveCompletion: { _ in }, receiveValue: {[weak self] currentWeather in
                 
                 StaticContext.staticWeatherConditionID = currentWeather.list?[0].weather?[0].id ?? 800
+                StaticContext.staticWeatherConditionString = currentWeather.list?[0].weather?[0].main?.rawValue ?? "Rain"
                 
                 switch currentWeather.list?[0].sys?.pod {
                 case .d:
@@ -205,132 +207,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
                         StaticContext.sectionArray[counter].sectionObjects.append("\(item.dtTxt?.components(separatedBy: " ")[1].dropLast(3) != nil ? "\((item.dtTxt!.components(separatedBy: " ")[1].dropLast(3)))" : "")  | \(item.main?.temp != nil ? "\(Int((item.main?.temp!)!)) ºC" : "")")
                     }
                 }
-                
-                
-                if self?.traitCollection.userInterfaceStyle == .light {
-                    
-                    //MARK: Light mode + day/night
-                    
-                    switch currentWeather.list?[0].sys?.pod {
-                    case .d:
-                        switch currentWeather.list?[0].weather?[0].main?.rawValue {
-                        case "Clear":
-                            self?.setClearLightState()
-                        case "Rain":
-                            self?.setRainLightState()
-                        case "Clouds":
-                            self?.setCloudsLightState()
-                        case "Thunderstorm":
-                            self?.setThunderLightState()
-                        case "Snow":
-                            self?.setSnowLightState()
-                        case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
-                            self?.setFogLightState()
-                        default:
-                            self?.setRainLightState()
-                        }
-                        
-                    case .n:
-                        switch currentWeather.list?[0].weather?[0].main?.rawValue {
-                        case "Clear":
-                            self?.setClearLightStateNight()
-                        case "Rain":
-                            self?.setRainLightStateNight()
-                        case "Clouds":
-                            self?.setCloudsLightStateNight()
-                        case "Thunderstorm":
-                            self?.setThunderLightStateNight()
-                        case "Snow":
-                            self?.setSnowLightStateNight()
-                        case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
-                            self?.setFogLightStateNight()
-                        default:
-                            self?.setRainLightStateNight()
-                        }
-                        
-                    default:
-                        switch currentWeather.list?[0].weather?[0].main?.rawValue {
-                        case "Clear":
-                            self?.setClearLightState()
-                        case "Rain":
-                            self?.setRainLightState()
-                        case "Clouds":
-                            self?.setCloudsLightState()
-                        case "Thunderstorm":
-                            self?.setThunderLightState()
-                        case "Snow":
-                            self?.setSnowLightState()
-                        case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
-                            self?.setFogLightState()
-                        default:
-                            self?.setRainLightState()
-                        }
-                    }
-                    
-                    // MARK: Dark mode + day/night
-                    
-                } else if self?.traitCollection.userInterfaceStyle == .dark {
-                    
-                    switch currentWeather.list?[0].sys?.pod {
-                    case .d:
-                        switch currentWeather.list?[0].weather?[0].main?.rawValue {
-                        
-                        case "Clear":
-                            self?.setClearDarkState()
-                        case "Rain":
-                            self?.setRainDarkState()
-                        case "Clouds":
-                            self?.setCloudsDarkState()
-                        case "Thunderstorm":
-                            self?.setThunderDarkState()
-                        case "Snow":
-                            self?.setSnowDarkState()
-                        case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
-                            self?.setFogLightState()
-                        default:
-                            self?.setRainDarkState()
-                        }
-                        
-                    case .n:
-                        switch currentWeather.list?[0].weather?[0].main?.rawValue {
-                        
-                        case "Clear":
-                            self?.setClearDarkStateNight()
-                        case "Rain":
-                            self?.setRainDarkStateNight()
-                        case "Clouds":
-                            self?.setCloudsDarkStateNight()
-                        case "Thunderstorm":
-                            self?.setThunderDarkStateNight()
-                        case "Snow":
-                            self?.setSnowDarkStateNight()
-                        case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
-                            self?.setFogDarkStateNight()
-                        default:
-                            self?.setRainDarkStateNight()
-                        }
-                        
-                    default:
-                        switch currentWeather.list?[0].weather?[0].main?.rawValue {
-                        
-                        case "Clear":
-                            self?.setClearDarkState()
-                        case "Rain":
-                            self?.setRainDarkState()
-                        case "Clouds":
-                            self?.setCloudsDarkState()
-                        case "Thunderstorm":
-                            self?.setThunderDarkState()
-                        case "Snow":
-                            self?.setSnowDarkState()
-                        case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
-                            self?.setFogLightState()
-                        default:
-                            self?.setRainDarkState()
-                        }
-                    }
-                }
-                
+
+                self?.setState(conditionID: StaticContext.staticWeatherConditionString, timeOfADay: StaticContext.timeOfAday)
+            
                 self?.cityLabel.text =
                     currentWeather.city?.name != nil ?
                     "\((currentWeather.city?.name!)!)"

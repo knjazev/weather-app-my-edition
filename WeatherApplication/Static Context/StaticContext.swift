@@ -21,6 +21,7 @@ static var currentUIcolor = UIColor.black // needs for tableView title
 static var isLightMode = true //determines current mode on screen
 static var currentCellTextColor = UIColor.ElementColor.rainColor // for section in a tableView
 static var staticWeatherConditionID = 800
+static var staticWeatherConditionString = "Rain"
 
 static var timeOfAday = "d"
 

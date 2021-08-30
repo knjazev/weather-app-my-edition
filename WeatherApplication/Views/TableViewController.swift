@@ -8,7 +8,6 @@
 import UIKit
 import Combine
 
-
 class TableViewController: UITableViewController {
     
     private let viewModel = ViewModel()
