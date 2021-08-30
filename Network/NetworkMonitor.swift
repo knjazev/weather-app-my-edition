@@ -38,8 +38,6 @@ class NetworkMonitor {
                 view.present(ac, animated: true)
                 }
             }
-            
-
             print(path.isExpensive)
         }
 

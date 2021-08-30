@@ -58,12 +58,8 @@ final class ViewModel: NSObject, ObservableObject {
 
 extension ViewModel: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last {
+        if locations.last != nil {
             locationManager.stopUpdatingLocation()
-            let lat = location.coordinate.latitude
-            let lon  = location.coordinate.longitude
-            
-            weatherAPI.fetchWeather(latitude: lat, longitude: lon)
         }
     }
     

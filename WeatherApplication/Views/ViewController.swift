@@ -39,7 +39,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
         initialize()
         binding()
         textField.delegate = self
@@ -53,10 +54,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -100,26 +97,26 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
         case false:
             overrideUserInterfaceStyle = .light
             StaticContext.isLightMode = true
-            setState(conditionID: StaticContext.staticWeatherConditionString, timeOfADay: StaticContext.timeOfAday)
+            setState(conditionID: StaticContext.staticWeatherConditionID, timeOfADay: StaticContext.timeOfAday)
             self.switchButton.isEnabled = true
             
         case true:
             if traitCollection.userInterfaceStyle == .light && StaticContext.getLocationOnView == true {
                 overrideUserInterfaceStyle = .dark
                 StaticContext.isLightMode = false
-                setState(conditionID: StaticContext.staticWeatherConditionString, timeOfADay: StaticContext.timeOfAday)
+                setState(conditionID: StaticContext.staticWeatherConditionID, timeOfADay: StaticContext.timeOfAday)
             }else if traitCollection.userInterfaceStyle == .dark && StaticContext.getLocationOnView == true {
                 overrideUserInterfaceStyle = .light
                 StaticContext.isLightMode = true
-                 setState(conditionID: StaticContext.staticWeatherConditionString, timeOfADay: StaticContext.timeOfAday)
+                 setState(conditionID: StaticContext.staticWeatherConditionID, timeOfADay: StaticContext.timeOfAday)
             }else if traitCollection.userInterfaceStyle == .light && StaticContext.getLocationOnView == false {
                 overrideUserInterfaceStyle = .dark
                 StaticContext.isLightMode = false
-                setState(conditionID: StaticContext.staticWeatherConditionString, timeOfADay: StaticContext.timeOfAday)
+                setState(conditionID: StaticContext.staticWeatherConditionID, timeOfADay: StaticContext.timeOfAday)
             }else {
                 overrideUserInterfaceStyle = .light
                 StaticContext.isLightMode = true
-                setState(conditionID: StaticContext.staticWeatherConditionString, timeOfADay: StaticContext.timeOfAday)
+                setState(conditionID: StaticContext.staticWeatherConditionID, timeOfADay: StaticContext.timeOfAday)
             }
             self.switchButton.isEnabled = true
         }
@@ -167,8 +164,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
             .sink(receiveCompletion: { _ in }, receiveValue: {[weak self] currentWeather in
                 
                 StaticContext.staticWeatherConditionID = currentWeather.list?[0].weather?[0].id ?? 800
-                StaticContext.staticWeatherConditionString = currentWeather.list?[0].weather?[0].main?.rawValue ?? "Rain"
-                
+              
                 switch currentWeather.list?[0].sys?.pod {
                 case .d:
                     StaticContext.timeOfAday = "d"
@@ -204,7 +200,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
                     }
                 }
 
-                self?.setState(conditionID: StaticContext.staticWeatherConditionString, timeOfADay: StaticContext.timeOfAday)
+                self?.setState(conditionID: StaticContext.staticWeatherConditionID, timeOfADay: StaticContext.timeOfAday)
             
                 self?.cityLabel.text =
                     currentWeather.city?.name != nil ?

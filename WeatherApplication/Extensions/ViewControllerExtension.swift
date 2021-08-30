@@ -10,14 +10,15 @@ import UIKit
 extension ViewController {
     
     //MARK: Day mode
-
-    func setState(conditionID: String, timeOfADay: String) {
+    
+    func setState(conditionID: Int, timeOfADay: String) {
         
         if traitCollection.userInterfaceStyle == .light {
+            textField.keyboardAppearance = .light
             switch timeOfADay {
             case "d":
                 switch conditionID {
-                case "Clear":
+                case 800:
                     view.backgroundColor = UIColor.BackgroundColor.sunColor
                     
                     getLocationButton.setImage(UIImage(named: "location.sun.max"), for: UIControl.State.normal)
@@ -54,7 +55,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColor.sunColor
                     StaticContext.currentCellTextColor = UIColor.BackgroundColor.sunColor
                     
-                case "Rain":
+                case 300...321, 500...531:
                     
                     view.backgroundColor = UIColor.BackgroundColor.rainColor
                     
@@ -91,7 +92,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColor.rainColor
                     StaticContext.currentCellTextColor = UIColor.BackgroundColor.rainColor
                     
-                case "Clouds":
+                case 801...804:
                     view.backgroundColor = UIColor.BackgroundColor.cloudColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud"), for: UIControl.State.normal)
@@ -129,7 +130,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColor.cloudColor
                     StaticContext.currentCellTextColor = UIColor.BackgroundColor.cloudColor
                     
-                case "Thunderstorm":
+                case 200...232:
                     view.backgroundColor = UIColor.BackgroundColor.thunderColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.bolt"), for: UIControl.State.normal)
@@ -165,7 +166,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColor.thunderColor
                     StaticContext.currentCellTextColor = UIColor.BackgroundColor.thunderColor
                     
-                case "Snow":
+                case 600...622:
                     view.backgroundColor = UIColor.BackgroundColor.snowColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.snow"), for: UIControl.State.normal)
@@ -202,7 +203,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColor.snowColor
                     StaticContext.currentCellTextColor = UIColor.BackgroundColor.snowColor
                     
-                case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
+                case 701...781:
                     view.backgroundColor = UIColor.BackgroundColor.fogColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.fog"), for: UIControl.State.normal)
@@ -275,8 +276,9 @@ extension ViewController {
                 }
                 
             case "n":
+                textField.keyboardAppearance = .dark
                 switch conditionID {
-                case "Clear":
+                case 800:
                     view.backgroundColor = UIColor.NightSkyLight.nightSkyColor
                     
                     getLocationButton.setImage(UIImage(named: "location.sun.max"), for: UIControl.State.normal)
@@ -310,7 +312,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColor.sunColor
                     StaticContext.currentCellTextColor = UIColor.NightSkyLight.nightSkyColor
                     
-                case "Rain":
+                case 300...321, 500...531:
                     view.backgroundColor = UIColor.NightSkyLight.nightSkyColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.rain"), for: UIControl.State.normal)
@@ -344,7 +346,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColor.rainColor
                     StaticContext.currentCellTextColor = UIColor.NightSkyLight.nightSkyColor
                     
-                case "Clouds":
+                case 801...804:
                     view.backgroundColor = UIColor.NightSkyLight.nightSkyColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud"), for: UIControl.State.normal)
@@ -380,7 +382,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColor.cloudColor
                     StaticContext.currentCellTextColor = UIColor.NightSkyLight.nightSkyColor
                     
-                case "Thunderstorm":
+                case 200...232:
                     view.backgroundColor = UIColor.NightSkyLight.nightSkyColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.bolt"), for: UIControl.State.normal)
@@ -414,7 +416,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColor.thunderColor
                     StaticContext.currentCellTextColor = UIColor.NightSkyLight.nightSkyColor
                     
-                case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
+                case 701...781:
                     view.backgroundColor = UIColor.NightSkyLight.nightSkyColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.fog"), for: UIControl.State.normal)
@@ -448,7 +450,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColor.fogColor
                     StaticContext.currentCellTextColor = UIColor.NightSkyLight.nightSkyColor
                     
-                case "Snow":
+                case 600...622:
                     view.backgroundColor = UIColor.NightSkyLight.nightSkyColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.snow"), for: UIControl.State.normal)
@@ -516,23 +518,23 @@ extension ViewController {
                     
                     StaticContext.currentUIcolor = UIColor.ElementColor.rainColor
                     StaticContext.currentCellTextColor = UIColor.NightSkyLight.nightSkyColor
-                    
                 }
                 
             default:
-                print("weatherApp")
+                print("default")
                 
             }
             
+            //MARK: Night mode
+            
         }else if traitCollection.userInterfaceStyle == .dark {
+            textField.keyboardAppearance = .dark
             
             switch timeOfADay {
-            
             case "d":
                 switch conditionID {
                 
-                case "Clear":
-                    
+                case 800:
                     view.backgroundColor = UIColor.BackgroundColorDark.sunColor
                     
                     getLocationButton.setImage(UIImage(named: "location.sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor), for: UIControl.State.normal)
@@ -568,7 +570,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColorDark.sunColor
                     StaticContext.currentCellTextColor = UIColor.BackgroundColorDark.sunColor
                     
-                case "Clouds":
+                case 801...804:
                     view.backgroundColor = UIColor.BackgroundColorDark.cloudColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud")?.withTintColor(UIColor.ElementColorDark.cloudColor), for: UIControl.State.normal)
@@ -604,7 +606,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColorDark.cloudColor
                     StaticContext.currentCellTextColor = UIColor.BackgroundColorDark.cloudColor
                     
-                case "Rain":
+                case 300...321, 500...531:
                     view.backgroundColor = UIColor.BackgroundColorDark.rainColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.rain")?.withTintColor(UIColor.ElementColorDark.rainColor), for: UIControl.State.normal)
@@ -640,7 +642,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColorDark.rainColor
                     StaticContext.currentCellTextColor = UIColor.BackgroundColorDark.rainColor
                     
-                case "Thunderstorm":
+                case 200...232:
                     view.backgroundColor = UIColor.BackgroundColorDark.thunderColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.bolt")?.withTintColor(UIColor.ElementColorDark.thunderColor), for: UIControl.State.normal)
@@ -675,8 +677,8 @@ extension ViewController {
                     
                     StaticContext.currentUIcolor = UIColor.ElementColorDark.thunderColor
                     StaticContext.currentCellTextColor = UIColor.BackgroundColorDark.thunderColor
-
-                case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
+                    
+                case 701...781:
                     view.backgroundColor = UIColor.BackgroundColorDark.fogColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.fog")?.withTintColor(UIColor.ElementColorDark.fogColor), for: UIControl.State.normal)
@@ -713,7 +715,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColorDark.fogColor
                     StaticContext.currentCellTextColor = UIColor.BackgroundColorDark.fogColor
                     
-                case "Snow":
+                case 600...622:
                     view.backgroundColor = UIColor.BackgroundColorDark.snowColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.snow")?.withTintColor(UIColor.ElementColorDark.snowColor), for: UIControl.State.normal)
@@ -789,7 +791,7 @@ extension ViewController {
                 
             case "n":
                 switch conditionID {
-                case "Clear":
+                case 800:
                     view.backgroundColor = UIColor.NightSkyDark.nightSkyColor
                     
                     getLocationButton.setImage(UIImage(named: "location.sun.max")?.withTintColor(UIColor.ElementColorDark.sunColor), for: UIControl.State.normal)
@@ -824,7 +826,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColorDark.sunColor
                     StaticContext.currentCellTextColor = UIColor.NightSkyDark.nightSkyColor
                     
-                case "Clouds":
+                case 801...804:
                     view.backgroundColor = UIColor.NightSkyDark.nightSkyColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud")?.withTintColor(UIColor.ElementColorDark.cloudColor), for: UIControl.State.normal)
@@ -859,7 +861,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColorDark.cloudColor
                     StaticContext.currentCellTextColor = UIColor.NightSkyDark.nightSkyColor
                     
-                case "Rain":
+                case 300...321, 500...531:
                     view.backgroundColor = UIColor.NightSkyDark.nightSkyColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.rain")?.withTintColor(UIColor.ElementColorDark.rainColor), for: UIControl.State.normal)
@@ -894,7 +896,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColorDark.rainColor
                     StaticContext.currentCellTextColor = UIColor.NightSkyDark.nightSkyColor
                     
-                case "Thunderstorm":
+                case 200...232:
                     view.backgroundColor = UIColor.NightSkyDark.nightSkyColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.bolt")?.withTintColor(UIColor.ElementColorDark.thunderColor), for: UIControl.State.normal)
@@ -929,7 +931,7 @@ extension ViewController {
                     StaticContext.currentUIcolor = UIColor.ElementColorDark.thunderColor
                     StaticContext.currentCellTextColor = UIColor.NightSkyDark.nightSkyColor
                     
-                case "Fog", "Tornado", "Haze", "Dust", "Sand", "Ash", "Squall" :
+                case 701...781:
                     view.backgroundColor = UIColor.NightSkyDark.nightSkyColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.fog")?.withTintColor(UIColor.ElementColorDark.fogColor), for: UIControl.State.normal)
@@ -963,8 +965,8 @@ extension ViewController {
                     
                     StaticContext.currentUIcolor = UIColor.ElementColorDark.fogColor
                     StaticContext.currentCellTextColor = UIColor.NightSkyDark.nightSkyColor
-
-                case "Snow":
+                    
+                case 600...622:
                     view.backgroundColor = UIColor.NightSkyDark.nightSkyColor
                     
                     getLocationButton.setImage(UIImage(named: "location.cloud.snow")?.withTintColor(UIColor.ElementColorDark.snowColor), for: UIControl.State.normal)
@@ -1037,11 +1039,8 @@ extension ViewController {
                 }
                 
             default:
-                print("hello")
+                print("default")
             }
-            
         }
-        
     }
-    
 }
