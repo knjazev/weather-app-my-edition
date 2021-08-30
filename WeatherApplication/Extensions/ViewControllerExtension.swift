@@ -73,7 +73,6 @@ extension ViewController {
         textField.backgroundColor = UIColor.ElementColor.rainColor
         textField.textColor = UIColor.BackgroundColor.rainColor
         switchButton.tintColor = UIColor.ElementColor.rainColor
-//        shareButton.tintColor = UIColor.ElementColor.rainColor
         
         navigationController?.navigationBar.barTintColor = UIColor.BackgroundColor.rainColor
         navigationController?.navigationBar.isTranslucent = false
@@ -493,7 +492,7 @@ extension ViewController {
         textField.textColor = UIColor.NightSkyLight.nightSkyColor
         
         StaticContext.currentUIcolor = UIColor.ElementColor.sunColor
-        StaticContext.currentCellTextColor = UIColor.BackgroundColor.sunColor
+        StaticContext.currentCellTextColor = UIColor.NightSkyLight.nightSkyColor
     }
     func setRainLightStateNight() {
         view.backgroundColor = UIColor.NightSkyLight.nightSkyColor
@@ -527,7 +526,7 @@ extension ViewController {
         forecastButton.tintColor = UIColor.ElementColor.rainColor
 
         StaticContext.currentUIcolor = UIColor.ElementColor.rainColor
-        StaticContext.currentCellTextColor = UIColor.BackgroundColor.rainColor
+        StaticContext.currentCellTextColor = UIColor.NightSkyLight.nightSkyColor
     }
     
     func setCloudsLightStateNight() {
@@ -564,7 +563,7 @@ extension ViewController {
         forecastButton.tintColor = UIColor.ElementColor.cloudColor
         
         StaticContext.currentUIcolor = UIColor.ElementColor.cloudColor
-        StaticContext.currentCellTextColor = UIColor.BackgroundColor.cloudColor
+        StaticContext.currentCellTextColor = UIColor.NightSkyLight.nightSkyColor
     }
     
     func setThunderLightStateNight() {
@@ -599,7 +598,7 @@ extension ViewController {
         forecastButton.tintColor = UIColor.ElementColor.thunderColor
         
         StaticContext.currentUIcolor = UIColor.ElementColor.thunderColor
-        StaticContext.currentCellTextColor = UIColor.BackgroundColor.thunderColor
+        StaticContext.currentCellTextColor = UIColor.NightSkyLight.nightSkyColor
     }
     
     func setSnowLightStateNight() {
@@ -635,7 +634,7 @@ extension ViewController {
         forecastButton.tintColor = UIColor.ElementColor.snowColor
          
         StaticContext.currentUIcolor = UIColor.ElementColor.snowColor
-        StaticContext.currentCellTextColor = UIColor.BackgroundColor.snowColor
+        StaticContext.currentCellTextColor = UIColor.NightSkyLight.nightSkyColor
     }
     
     func setFogLightStateNight() {
@@ -670,7 +669,7 @@ extension ViewController {
         forecastButton.tintColor = UIColor.ElementColor.fogColor
         
         StaticContext.currentUIcolor = UIColor.ElementColor.fogColor
-        StaticContext.currentCellTextColor = UIColor.BackgroundColor.fogColor
+        StaticContext.currentCellTextColor = UIColor.NightSkyLight.nightSkyColor
 
     }
     
@@ -707,7 +706,7 @@ extension ViewController {
         forecastButton.tintColor = UIColor.ElementColorDark.sunColor
         
         StaticContext.currentUIcolor = UIColor.ElementColorDark.sunColor
-        StaticContext.currentCellTextColor = UIColor.BackgroundColorDark.sunColor
+        StaticContext.currentCellTextColor = UIColor.NightSkyDark.nightSkyColor
     }
     func setCloudsDarkStateNight() {
         view.backgroundColor = UIColor.NightSkyDark.nightSkyColor
@@ -742,7 +741,7 @@ extension ViewController {
         forecastButton.tintColor = UIColor.ElementColorDark.cloudColor
         
         StaticContext.currentUIcolor = UIColor.ElementColorDark.cloudColor
-        StaticContext.currentCellTextColor = UIColor.BackgroundColorDark.cloudColor
+        StaticContext.currentCellTextColor = UIColor.NightSkyDark.nightSkyColor
         
     }
     func setRainDarkStateNight() {
@@ -778,7 +777,7 @@ extension ViewController {
         forecastButton.tintColor = UIColor.ElementColorDark.rainColor
         
         StaticContext.currentUIcolor = UIColor.ElementColorDark.rainColor
-        StaticContext.currentCellTextColor = UIColor.BackgroundColorDark.rainColor
+        StaticContext.currentCellTextColor = UIColor.NightSkyDark.nightSkyColor
     }
     func setThunderDarkStateNight() {
         view.backgroundColor = UIColor.NightSkyDark.nightSkyColor
@@ -813,7 +812,7 @@ extension ViewController {
         forecastButton.tintColor = UIColor.ElementColorDark.thunderColor
         
         StaticContext.currentUIcolor = UIColor.ElementColorDark.thunderColor
-        StaticContext.currentCellTextColor = UIColor.BackgroundColorDark.thunderColor
+        StaticContext.currentCellTextColor = UIColor.NightSkyDark.nightSkyColor
     }
     func setFogDarkStateNight() {
         view.backgroundColor = UIColor.NightSkyDark.nightSkyColor
@@ -848,7 +847,7 @@ extension ViewController {
         forecastButton.tintColor = UIColor.ElementColorDark.fogColor
         
         StaticContext.currentUIcolor = UIColor.ElementColorDark.fogColor
-        StaticContext.currentCellTextColor = UIColor.BackgroundColorDark.fogColor
+        StaticContext.currentCellTextColor = UIColor.NightSkyDark.nightSkyColor
     }
     func setSnowDarkStateNight() {
         view.backgroundColor = UIColor.NightSkyDark.nightSkyColor
@@ -884,7 +883,7 @@ extension ViewController {
         forecastButton.tintColor = UIColor.ElementColorDark.snowColor
         
         StaticContext.currentUIcolor = UIColor.ElementColorDark.snowColor
-        StaticContext.currentCellTextColor = UIColor.BackgroundColorDark.snowColor
+        StaticContext.currentCellTextColor = UIColor.NightSkyDark.nightSkyColor
     }
 }
 

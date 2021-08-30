@@ -24,6 +24,8 @@ static var staticWeatherConditionID = 800
 
 static var timeOfAday = "d"
 
+    
+static var arrayOfConditions = [Int]()
 static var objectsArray = [Objects]()
 static var sectionArray = [Objects]()
     

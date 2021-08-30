@@ -11,7 +11,6 @@ import Combine
 
 class TableViewController: UITableViewController {
     
-    
     private let viewModel = ViewModel()
     private var cancellable = Set<AnyCancellable>()
     
@@ -52,40 +51,39 @@ class TableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
-        cell.backgroundColor = UIColor.ElementColor.cloudColor
-        cell.dayLabel.textColor = UIColor.ElementColorDark.cloudColor
         UpdateUI(cell: cell, indexPath: indexPath)
-        
         return cell
     }
     
     func UpdateUI(cell: TableViewCell, indexPath: IndexPath) {
         
         if StaticContext.isLightMode == true {
-            //            if let weatherConditionID = StaticContext.staticWeatherConditionID {
             switch StaticContext.timeOfAday {
             case "d":
-                cell.setLightStateUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
+                cell.setLightStateUsingConditionID(id: StaticContext.arrayOfConditions[indexPath.row], cell: cell)
             case "n":
-                cell.setLightStateNightUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
+                cell.setLightStateNightUsingConditionID(id: StaticContext.arrayOfConditions[indexPath.row], cell: cell)
             default:
-                cell.setLightStateUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
+                cell.setLightStateUsingConditionID(id: StaticContext.arrayOfConditions[indexPath.row], cell: cell)
             }
         }else if StaticContext.isLightMode == false {
             
             switch StaticContext.timeOfAday {
             case "d":
-                cell.setDarkStateUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
+                cell.setDarkStateUsingConditionID(id: StaticContext.arrayOfConditions[indexPath.row], cell: cell)
             case "n":
-                cell.setDarkStateNightUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
+                cell.setDarkStateNightUsingConditionID(id: StaticContext.arrayOfConditions[indexPath.row], cell: cell)
             default:
-                cell.setDarkStateUsingConditionID(id: StaticContext.staticWeatherConditionID, cell: cell)
+                cell.setDarkStateUsingConditionID(id: StaticContext.arrayOfConditions[indexPath.row], cell: cell)
             }
         }
+        
+       
         
         self.title = StaticContext.cityStatic
         
         cell.dayLabel.text =  StaticContext.sectionArray[indexPath.section].sectionObjects[indexPath.row]
+        
     }
 }
 

@@ -182,14 +182,17 @@ class ViewController: UIViewController, UITextFieldDelegate, UITabBarDelegate, U
                 StaticContext.trigger = trigrer
                 StaticContext.getLocationOnView = screenMode
                 StaticContext.cityStatic = currentWeather.city?.name ?? "Casablanca"
+                StaticContext.currentUIcolor = UIColor.ElementColor.sunColor
+                StaticContext.currentCellTextColor = UIColor.BackgroundColor.sunColor
                 
                 // table view
                 
                 for item in currentWeather.list ?? [] {
+                    StaticContext.arrayOfConditions.append(item.weather?[0].id ?? 800)
                     StaticContext.objectsArray.append(Objects(sectionName: item.dtTxt?.components(separatedBy: " ")[0] != nil ? "\((item.dtTxt!.components(separatedBy: " ")[0]))" : "", sectionObjects: []))
                 }
                 
-                StaticContext.sectionArray =  StaticContext.objectsArray.uniqued()
+                StaticContext.sectionArray = StaticContext.objectsArray.uniqued()
                 var counter = 0
                 for item in currentWeather.list ?? [] { 
                     if (item.dtTxt?.components(separatedBy: " ")[0] != nil ? "\((item.dtTxt!.components(separatedBy: " ")[0]))" : "") ==

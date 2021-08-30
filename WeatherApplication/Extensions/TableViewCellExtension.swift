@@ -17,8 +17,7 @@ extension TableViewCell {
             cell.monthLabel.textColor = UIColor.ElementColor.thunderColor
             cell.timeLabel.textColor = UIColor.ElementColor.thunderColor
             cell.imageLabel.image = UIImage(named: "cloud.bolt")
-            
-            
+
         case 300...321, 500...531:
             cell.backgroundColor = UIColor.BackgroundColor.rainColor
             cell.tempLabel.textColor = UIColor.ElementColor.rainColor
